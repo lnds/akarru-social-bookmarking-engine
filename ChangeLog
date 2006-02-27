@@ -1,0 +1,86 @@
+2006-02-21  eadiaz
+
+	* fixes bugs on queries, joins generated multi records
+
+2006-02-15  eadiaz
+
+	* Some images were left out
+
+2006-02-13  eadiaz
+
+	* Added circulation and site circulation code.
+	* templates for circulation code
+	* Changes on database structure with micro content flag field
+	(reserved fr future use) Changes and adjustment in stylesheet
+	* Added circulation.  In comments we addes users that voted for the
+	story.	Fixed some page display problems by adding an div.
+	* new way to organize cats.
+	* No more anonymous votes.
+	* blogmemes log added
+	* Check if meme exists
+	* statistics still buggy, too much memory usage, we must work on it
+	* Changes in database model.  Optimizations on query.
+	* removed feed_burner.php, using circulation instead.  users.php
+	fixed bugs in check user existence.  in common.php changes to read
+	categories, because of changes on display of categories.
+	* Fixed bug: can't change password
+	* Fix bug that allows multiples registrations of users.
+
+2006-02-01  eadiaz
+
+	* a common smarty variable time introduced
+	* many unnecesary joins eliminated because of new database model.
+	* disallow admin power to vote many times
+	* shows adds only when enough space to do so.
+
+2006-01-30  eadiaz
+
+	* Innodb tables Added a column to posts for votes acountability and
+	performance boost
+	* A new look for memes display
+	* Minos user interface changes for a better look
+	* Influence and popularity changed formulas Change in database to
+	improve performance, votes column added categories and folksonmy
+	seudo cache.
+
+2006-01-25  eadiaz
+
+	* all .conf files merged on site.conf 
+	* final post (submit) step
+	* changed to show a preview of meme before publish.
+
+
+2006-01-23  eadiaz
+
+	* master_page now integrates many unnecesary templates
+	* folksonomy_bar.tpl main_content.tpl merged on master_page.tpl
+	* bottombar.tpl button_bar.tpl categories.tpl merged on
+	master_page.tpl
+	* menubar.tpl and top_banner.tpl merged on masterpage.tpl
+	* Added missing create.sql DDL script
+
+2006-01-20  eadiaz
+
+	* bug on anonymous votes fixed
+	* release of 01.20.2006
+	* neo_index no longer supported, use index.php
+	* neo_index.php is replaced by index.php
+	* smarty caching enabled
+	* promotion algorithm adjusted.  refactoring of vote code.
+	* bad regex for trackback detection eliminated
+	* avoid INF values on log10 call in pop and infl calcs
+
+2006-01-19  eadiaz
+
+	* Added administrative files: ChangeLog, LEEME, LICENCIA,LICENSE
+	* locale configuration and pngfix.js added
+	* warning, akarru.gui will be lost on next big release
+	* Now includes images form blogmemes.com
+	* added scripts
+	* New release
+	* xmlrpc support
+	* added templates for smarty support
+	* added configuration files for smarty
+	* Initial revision
+	* akarru beta
+

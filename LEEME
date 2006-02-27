@@ -1,0 +1,51 @@
+version 0.2.1.19
+
+A partir de ahora la numeracion de versiones sera de la siguiente manera:
+
+X.x.M.D
+
+Donde X es el numero mayor de version, x el numero menor de version siempre
+incremental. M es el mes y D el dia de creacion de la distribucion.
+
+Esta version incluye varios bug fixes.
+Algnas cosas nuevas:
+- descubrimiento primitivo de trackbacks
+- folksonomia ahora solo muestra los top 100 de las etiquetas
+- estadisticas de usuarios (stats.php)
+- influencia y popularidad
+- algoritmo experimental de promocion de memes
+- script promote_queue ejecutable por el admin
+- varios cambios en la BD para mejorar performance
+
+version 0.1.0.1
+
+Esta es la version 0.1.0.1 de akarru.
+
+Encontraras que mucho de la configuracion original de blogmemes esta en esta version.
+En el siguiente release vamos a dejar configurable varios de los titulos.
+Se deben modificar al menos estos archivos:
+
+config.php : con algunos valores globales
+database.php: con la conexion a la base de datos.
+common.php: contiene otros valores globales.
+
+Este software usa smarty, un excelente paquete de templates para php. 
+No todas las paginas han sido modificads para usar smarty, esto cambiara en futuras versiones.
+
+Estructura de directorios:
+
+smarty: contienes los templates y los archivos de configuracion para smarty
+akarru.lib contiene la logica de negocios
+akarru.gui es un directorio que desaparecera en el futuro, pero contiene mucho del antiguo metodo de dibujo de las paginas
+styles: contiene los estilos css. Esta distribucion no contiene los graficos.
+
+
+Este software se distribuye bajo la licencia GNU GPL.
+
+Para usar este software requieres mysql 4.0.3 o superior.
+PHP 4.1 o superior.
+Smarty 2.6.11 o superior.
+
+Puedes bajar smarty desde http://smarty.php.net/
+
+(c) 2006 Eduardo Diaz
