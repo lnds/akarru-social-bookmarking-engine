@@ -1,4 +1,5 @@
 <?php
+  $page = $_GET['page'];
   include_once('akarru.lib/common.php');
   $smarty->assign('content_title', 'preguntas frecuentes');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);

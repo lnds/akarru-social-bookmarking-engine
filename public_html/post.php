@@ -29,6 +29,8 @@
 	 $bm_errors = 0;
 	 $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 	 if ($_POST['step'] == 1) {
+   		 $title = $_POST['title'];
+		 $url   = $_POST['url'];
 		 if (empty($title)) {
 			 $smarty->assign('error_title', true);
 			 $bm_errors++;
@@ -55,6 +57,13 @@
 		 }
 	 }
 	 elseif ($_POST['step'] == 2) {
+		 $title = $_POST['title'];
+		 $url   = $_POST['url'];
+		 $content_body = $_POST['content_body'];
+		 $category = $_POST['category'];
+		 $meme_trackback = $_POST['meme_trackback'];
+		 $meme_tags = $_POST['meme_tags'];
+
 		 $smarty->assign('title', check_plain($title));
 		 $smarty->assign('url', check_plain($url));
 		 if (empty($content_body)) {
@@ -83,6 +92,14 @@
 	 else if ($_POST['step'] == 3) {
 		 if (!empty($_POST['do_edit'])) {
 			 $step = 2;
+			 $title = $_POST['title'];
+			 $url   = $_POST['url'];
+			 $content_body = $_POST['content_body'];
+			 $category = $_POST['category'];
+			 $meme_trackback = $_POST['meme_trackback'];
+			 $meme_tags = $_POST['meme_tags'];
+
+
 			 $smarty->assign('title', check_plain($title));
 			 $smarty->assign('url', check_plain($url));
 			 $smarty->assign('content_body', check_plain($content_body));
