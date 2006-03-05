@@ -1,7 +1,7 @@
 <?php
 // by Edd Dumbill (C) 1999-2002
 // <edd@usefulinc.com>
-// $Id: xmlrpcs.inc,v 1.1 2006/01/19 01:38:12 eadiaz Exp $
+// $Id: xmlrpcs.inc,v 1.40 2005/11/21 10:56:20 ggiunta Exp $
 
 // Copyright (c) 1999,2000,2002 Edd Dumbill.
 // All rights reserved.
