@@ -1,6 +1,17 @@
 <?php
 
-	
+function sanitize($value)
+{
+   if (get_magic_quotes_gpc()) {
+       $value = stripslashes($value);
+   }
+   // Quote if not integer
+   if (!is_numeric($value)) {
+       $value = "'" . mysql_real_escape_string($value) . "'";
+   }
+   return $value;
+}
+
 
   class database {
 
@@ -66,6 +77,7 @@
 	// private, this do the real query
 	function do_query($sql)
 	{
+
 		$query = mysql_query($sql) or die("error: ".mysql_error());
 		return $query;
 	}

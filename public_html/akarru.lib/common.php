@@ -7,7 +7,7 @@ $smarty->template_dir = '/home/ediaz/domains/blogmemes.com/smarty/templates';
 $smarty->compile_dir = '/home/ediaz/domains/blogmemes.com/smarty/templates_c';
 $smarty->config_dir = '/home/ediaz/domains/blogmemes.com/smarty/configs';
 $smarty->cache_dir = '/home/ediaz/domains/blogmemes.com/smarty/cache';
-$smarty->caching = true;
+$smarty->caching = false;
 include_once("config.php");
 include_once('akarru.lib/database.php');
 include_once('akarru.lib/users.php');

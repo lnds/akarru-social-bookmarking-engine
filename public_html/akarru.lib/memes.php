@@ -15,6 +15,7 @@ class memes {
 
 	function get_voters($meme_id)
 	{
+		$meme_id = sanitize($meme_id);
 		$sql = "select distinct(u.username) from users u join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
 		return $this->db->fetch($sql);
 	}
@@ -490,12 +491,19 @@ class memes {
 									 
 	function promote_all()
 	{
-		$sql = 'select p.ID, count(pv.ID) votes from posts p join post_votes pv on pv.post_id = p.ID group by p.ID';
+		$sql = 'select p.ID from posts p join post_votes pv on pv.post_id = p.ID group by p.ID';
 		$memes = $this->db->fetch($sql);
 		foreach ($memes as $meme) {
 			$this->promote($meme->ID);
-			$this->db->execute('update posts set votes = '.$meme->votes.' where ID = '.$meme->ID);
 		}
+
+		$sql = 'select p.ID, count(pc.ID) votes from posts p join post_coments pc on pc.post_id = p.ID group by p.ID';
+		$memes = $this->db->fetch($sql);
+		foreach ($memes as $meme) {
+			$this->promote($meme->ID);
+			$this->db->execute('update posts set comments = '.$meme->votes.' where ID = '.$meme->ID);
+		}
+
 		return;
 	}
 }

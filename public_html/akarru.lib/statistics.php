@@ -65,18 +65,19 @@ class statistics {
 	}
 
 
-	function top_posters($limit = 25)
+	function top_posters($limit = 10)
 	{
 		$memes = $this->count_memes()+1;
-		$sql  = ' select u.username, u.ID, count(distinct (p.ID)) memes, count(distinct (v.ID)) votes, count(distinct(c.ID)) comments, ';
-		$sql .= " 100.0*((count(distinct (v.ID)) - count(distinct(p.ID)) + count(distinct(c.ID))+1)/$memes) as rank ";
-		$sql .= ' from users u, posts p left join post_votes v on v.user_id = u.ID left join post_comments c on c.user_id = u.ID ';
+		$sql  = ' select u.username, u.ID, count(distinct (p.ID)) memes, sum(p.votes) votes, count(distinct(c.ID)) comments, ';
+		$sql .= " (sum(p.votes) + count(distinct(c.ID)) ) as rank ";
+		$sql .= ' from users u, posts p left join post_comments c on c.user_id = u.ID ';
 		$sql .= ' where (p.submitted_user_id = u.ID) and (u.ID > 1) ';
 		$sql .= ' group by u.username, u.ID order by rank desc limit '.$limit;
 		$users = $this->db->fetch($sql);
 		foreach ($users as $u)
 		{
-			$sql = 'select count(distinct (v.ID) pop from post_votes v, posts p where v.post_id = p.ID and p.submitted_user_id = '.$u->ID;
+			$u->rank = 100.0 * ($u->rank / $memes);
+			$sql = 'select count(distinct (v.ID)) pop from post_votes v, posts p where v.post_id = p.ID and p.submitted_user_id = '.$u->ID;
 			$u->popularity = $u->memes * log10($this->db->fetch_scalar($sql)+10);
 			$result[] = $u;
 			

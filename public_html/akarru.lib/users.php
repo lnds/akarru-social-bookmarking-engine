@@ -64,9 +64,11 @@ class users {
 	}
 
 
-	function do_login($user, $pass)
+	function do_login($user_name, $pass)
 	{
-		$user = $this->db->fetch_object("select ID, username, password, email,join_date,admin,website,blog,fullname from users where lower(username)='".strtolower($user)."'");
+		$user_name = sanitize(strtolower($user_name));
+
+		$user = $this->db->fetch_object("select ID, username, password, email,join_date,admin,website,blog,fullname from users where lower(username)=$user_name");
 		if ($user->password == md5($pass)) 
 		{
 			$_SESSION['user_data'] = $user;
@@ -79,11 +81,11 @@ class users {
 	function update_profile($data)
 	{
 		$sql  = ' update users set ';
-		$sql .= ' email = \''.$data['email'].'\',';
-		$sql .= ' fullname= \''.$data['fullname'].'\',';
-		$sql .= ' website = \''.$data['website'].'\',';
-		$sql .= ' blog = \''.$data['blog'].'\' ';
-		$sql .= ' where ID = '.$data['user_id'];
+		$sql .= ' email = '.sanitize($data['email']).',';
+		$sql .= ' fullname= '.sanitize($data['fullname']).',';
+		$sql .= ' website = '.sanitize($data['website']).',';
+		$sql .= ' blog = '.sanitize($data['blog']).' ';
+		$sql .= ' where ID = '.sanitize($data['user_id']);
 		$this->db->execute($sql);
 
 		$this->user->email = $data['email'];

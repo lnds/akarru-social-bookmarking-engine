@@ -20,6 +20,7 @@ class categories {
 
 	function get_category_name($cat_id)
 	{
+		$cat_id = sanitize($cat_id);
 		$sql="select pc.cat_title as category_name from post_cats pc where pc.ID = $cat_id";
 		return $this->db->fetch_scalar($sql);
 	}
