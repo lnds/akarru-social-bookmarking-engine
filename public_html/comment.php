@@ -1,4 +1,8 @@
 <?php
+  $meme_id = $_GET['meme_id'];
+  if (empty($meme_id)) {
+	  $meme_id = $_POST['meme_id'];
+  }
   if (empty($meme_id)) {
 	  header("Location: index.php");
 	  exit();
@@ -8,7 +12,7 @@
   $smarty->assign('content_title', 'comentarios');
   $memes = new memes($bm_db, $bm_user);
   if (!empty($_POST)) {
-	  $memes->add_comment($meme_id, $comment);
+	  $memes->add_comment($meme_id, $_POST['comment']);
   }
   $meme = $memes->get_meme($meme_id);
   $comments = $memes->get_comments($meme_id);
