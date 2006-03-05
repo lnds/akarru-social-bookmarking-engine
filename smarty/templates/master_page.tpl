@@ -2,9 +2,9 @@
 <head>
 <title>{#site_caption#}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<style type="text/css" media="all">@import "styles/memes.css";</style>
+<style type="text/css" media="all">@import "/styles/memes.css";</style>
 <!--[if gte IE 5.5000]>
-<script type="text/javascript" src="scripts/pngfix.js"></script>
+<script type="text/javascript" src="/scripts/pngfix.js"></script>
 <![endif]-->
 {config_load file="site.conf"}
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />

@@ -1,7 +1,7 @@
 <h2>Promueve BlogMemes en tu sitio</h2>
 
 <p>
-Te gusta BlogMemes, compartes nuestro <a href="http://www.lnds.net/2006/02/no_pesquen.html">esp&iacute;ritu</a>?
+¿Te gusta BlogMemes?
 </p>
 <p>
 Entonces te invitamos a promover este sitio.
