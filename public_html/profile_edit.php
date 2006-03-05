@@ -5,6 +5,7 @@
 	  exit();
 	  return;
   }
+  $user_id = $_GET['user_id'];
   if ($bm_users->get_user_id() != $user_id) {
 	  header("Location: login.php");
 	  exit();
