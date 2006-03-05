@@ -8,9 +8,17 @@ print '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>';
 <rss version="2.0">
 <channel>
 <title><?= $bm_site_name ?></title>
-<language><?= $bm_lang ?></language>
 <link><?= $bm_url ?></link>
 <description><?= $bm_desc ?></description>
+<language><?= $bm_lang ?></language>
+<copyright>(c) 2005 Eduardo Diaz Cortes</copyright>
+<generator>akarru social bookmarking engine</generator>
+<ttl>5</ttl>
+<image>
+<url>http://botones.blogalaxia.com/img/blogalaxia0.gif</url>
+<title>Blogmemes in Blogalaxia</title>
+<link>http://www.blogalaxia.com/top100.php?top=1</link>
+</image>
 <?php
 foreach ($memes as $meme)
 {
