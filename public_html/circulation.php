@@ -1,12 +1,9 @@
 <?php
+	$meme_id = $_GET['meme_id'];
 	if (empty($_GET['meme_id'])) {
-		if (empty($meme_id)) {
 			header("Location: index.php");
 			exit();
 			return;
-		}
-	}
-  $meme_id = $_GET['meme_id'];
   include_once('akarru.lib/common.php');
   $smarty->assign('content_title', 'circulaci&oacute;n');
 
