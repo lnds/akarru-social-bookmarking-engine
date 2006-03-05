@@ -1,7 +1,8 @@
 <?php
   include_once('akarru.lib/common.php');
   $memes = new memes($bm_db, $bm_user, 0);
-
+  $cat_id = $_GET['cat_id'];
+  $page = $_GET['page'];
   $cat = $memes->get_category($cat_id);
   $smarty->assign('content_title', $cat->cat_title);
   $smarty->assign('content_feed', 'cat_feed.php?cat_id='.$cat_id);
