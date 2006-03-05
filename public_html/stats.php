@@ -37,7 +37,7 @@
   $smarty->assign('clicks', $stats->count_clicks());
   $smarty->assign('memes', $stats->count_memes());
   $smarty->assign('votes', $stats->count_votes());
-  $posters = $stats->top_posters(200); 
+  $posters = $stats->top_posters(50); 
   if (!empty($sort)) {
 	  usort($posters, $sort);
   }
