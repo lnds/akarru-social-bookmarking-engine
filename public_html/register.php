@@ -1,7 +1,11 @@
 <?php
   include_once('akarru.lib/common.php');
   if (!empty($_POST))  {
-	  
+
+	  $user = $_POST['user'];
+	  $pass = $_POST['passs'];
+	  $email = $_POST['email'];
+	  $confirm_pass = $_POST['confirm_pass'];
 	  $bm_errors = 0;
 	  if (empty($user)) {
 		  $smarty->assign('error_user', true);
