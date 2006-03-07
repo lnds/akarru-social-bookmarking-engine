@@ -3,7 +3,7 @@
   if (!empty($_POST))  {
 
 	  $user = $_POST['user'];
-	  $pass = $_POST['passs'];
+	  $pass = $_POST['pass'];
 	  $email = $_POST['email'];
 	  $confirm_pass = $_POST['confirm_pass'];
 	  $bm_errors = 0;
