@@ -3,7 +3,7 @@
 <div class="infoboxBody">
 <div style="padding-left:1em;font-size:11px">
   <table width="240" border="0">
-  <tr><td><b>{#profile_username_label#}</b></td><td>{$user_profile->username}</td></tr>
+  <tr><td><b>{#profile_username_label#}</b></td><td>{$user_profile->username}</td><td rowspan=4" nowrap="nowrap"><img src="{$user_profile->gravatar}" alt="{$user_profile->fullname}" /><br/>{#profile_gravatar_label#}</td></tr>
   <tr><td><b>{#profile_fullname_label#}</b></td><td>{$user_profile->fullname}</td></tr>
   <tr><td><b>{#profile_join_date#}</b></td><td>{$user_profile->join_date|date_format:"%d/%m/%Y %H:%M"}</td></tr>
   <tr><td><b>{#profile_blog_label#}</b></td><td><a href="{$user_profile->blog}">{$user_profile->blog}</a></td></tr>
@@ -12,7 +12,7 @@
 </div>
 <div style="padding-left:1em">
 {if $user_profile->username eq $logged_username}
-<a href="profile_edit.php?user_id={$logged_userid}">modificar perfil</a><br/>
+<a href="profile_edit.php?user_id={$logged_userid}">{#profile_modify_label#}</a><br/>
 {/if}
 <h2>{#profile_stat_label#}</h2>
 <div style="padding-left:1em;font-size:10px;">

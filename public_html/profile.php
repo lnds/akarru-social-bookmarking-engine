@@ -14,6 +14,8 @@
   $profile = $bm_users->get_user_profile($user_name, $memes);
   $smarty->assign('user_profile', $profile);
   $smarty->assign('memes', $memes->get_memes_by_user($profile->id, $page));
+
+
   if ($memes->pages > 1) 
 	  $smarty->assign('pages', $memes->pages+1);
   $smarty->assign('content_title', $bl_profile.' '.$profile->username);

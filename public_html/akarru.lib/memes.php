@@ -16,8 +16,15 @@ class memes {
 	function get_voters($meme_id)
 	{
 		$meme_id = sanitize($meme_id);
-		$sql = "select distinct(u.username) from users u join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
-		return $this->db->fetch($sql);
+		$sql = "select u.username, u.email from users u left join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
+		$data = $this->db->fetch($sql);
+		$result = array();
+		foreach ($data as $user)
+		{
+			$user->small_gravatar = get_gravatar($bm_url, $user->email, 16);
+			$result[] = $user;
+		}
+		return $result;
 	}
 
 	function search_memes($term){
@@ -102,10 +109,17 @@ class memes {
 
 	function get_comments($meme_id)
 	{
-		$sql  = ' select c.title, c.content, c.date_posted, u.username ';
-		$sql .= ' from post_comments c join users u on c.user_id = u.ID ';
+		$sql  = ' select c.title, c.content, c.date_posted, u.username, u.email ';
+		$sql .= ' from post_comments c left join users u on c.user_id = u.ID ';
 		$sql .= ' where post_id = '.$meme_id;
-		return $this->db->fetch($sql);
+		$data = $this->db->fetch($sql);
+		$result = array();
+		foreach ($data as $comment)
+		{
+			$comment->small_gravatar = get_gravatar($bm_url, $comment->email, 16);
+			$result[] = $comment;
+		}
+		return $result;
 	}
 
 	function get_tags($meme_id)

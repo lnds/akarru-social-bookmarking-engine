@@ -19,6 +19,7 @@
 </tr>
 {foreach name=posters  from=$posters item=poster}
 <tr><td>{$smarty.foreach.posters.index+1}</td>
+    <td><img border="0" src="{$poster->small_gravatar}" /></td>
     <td><a href="profile.php?user_name={$poster->username}">{$poster->username}</a></td>
     <td align="right">{$poster->memes}</td>
     <td align="right">{$poster->votes}</td>

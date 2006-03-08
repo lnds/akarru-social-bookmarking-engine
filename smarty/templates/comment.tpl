@@ -38,7 +38,7 @@
 <div class="infobox">
 <div>
 <div class="whowhen-class">
-{#comment_sender#}<a class="whowhen-class" href="profile.php?user_name={$comment->username}">{$comment->username}</a> {$comment->date_posted|date_format:$bf_date_posted}
+&nbsp;{#comment_sender#}<img src="{$comment->small_gravatar}" />&nbsp;<a class="whowhen-class" href="profile.php?user_name={$comment->username}">{$comment->username}</a> {$comment->date_posted|date_format:$bf_date_posted}
 </div>
 <div style="padding:1em">{$comment->content|nl2br}</div>
 </div>
@@ -74,7 +74,7 @@ Estos son los usuarios que han votado a favor de esta historia, por qu&eacute; l
 que vale la pena:</p>
 <p>
 {foreach from=$voters item=voter}
-<a href="profile.php?user_name={$voter->username}">{$voter->username}</a>&nbsp;&nbsp;
+<img src="{$voter->small_gravatar}" />&nbsp;<a href="profile.php?user_name={$voter->username}">{$voter->username}</a>&nbsp;&nbsp;
 {/foreach}
 </p>
 <p>

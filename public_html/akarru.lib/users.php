@@ -106,7 +106,7 @@ class users {
 
 	function get_user_profile_by_id($user_id, $memes, $promote_level = 5)
 	{
-		$sql  = ' select u.id, u.username, u.fullname, u.blog, u.join_date, u.website ';
+		$sql  = ' select u.id, u.username, u.email, u.fullname, u.blog, u.join_date, u.website ';
 		$sql .= ' from users u left join posts p on p.submitted_user_id = u.id ';
 		$sql .= " where u.id = $user_id ";
 		$profile = $this->db->fetch_object($sql);
@@ -121,6 +121,11 @@ class users {
 
 		$memes->get_memes_by_user($profile->id);
 		$profile->promoted_memes = $memes->memes_count;
+
+		// gravatar
+		$profile->gravatar = get_gravatar($bm_url, $profile->email, 80); 
+		$profile->small_gravatar = get_gravatar($bm_url, $profile->email, 40);  
+
 
 		return $profile;
 	}

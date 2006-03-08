@@ -68,14 +68,15 @@ class statistics {
 	function top_posters($limit = 10)
 	{
 		$memes = $this->count_memes()+1;
-		$sql  = ' select u.username, u.ID, count(distinct (p.ID)) memes, sum(p.votes) votes, count(distinct(c.ID)) comments, ';
+		$sql  = ' select u.username, u.ID, u.email, count(distinct (p.ID)) memes, sum(p.votes) votes, count(distinct(c.ID)) comments, ';
 		$sql .= " (sum(p.votes) + count(distinct(c.ID)) ) as rank ";
 		$sql .= ' from users u, posts p left join post_comments c on c.user_id = u.ID ';
 		$sql .= ' where (p.submitted_user_id = u.ID) and (u.ID > 1) ';
-		$sql .= ' group by u.username, u.ID order by rank desc limit '.$limit;
+		$sql .= ' group by u.username, u.email, u.ID order by rank desc limit '.$limit;
 		$users = $this->db->fetch($sql);
 		foreach ($users as $u)
 		{
+			$u->small_gravatar = get_gravatar($bm_url, $u->email, 40);
 			$u->rank = 100.0 * ($u->rank / $memes);
 			$sql = 'select count(distinct (v.ID)) pop from post_votes v, posts p where v.post_id = p.ID and p.submitted_user_id = '.$u->ID;
 			$u->popularity = $u->memes * log10($this->db->fetch_scalar($sql)+10);
