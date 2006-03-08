@@ -23,15 +23,11 @@
 	</div>
     </div>
     <div class="meme-content"><br/><a href="{$meme->url}" onclick="goto_url({$meme->ID})">{$meme->title}</a>
-	<div class="whowhen-class">{#posted_by_label#}&nbsp;<a class="whowhen-class" 
+	<div class="whowhen-class">&nbsp;{#posted_by_label#}&nbsp;<img src="{$meme->small_gravatar}" />&nbsp;<a class="whowhen-class" 
 	style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted} 
 	{if $meme->vote_count > 7}&nbsp;|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
-  {if $meme->is_micro_content}
-  <p style="font-size:11pt">(Este es un <b>micro cuento</b>, <a href="http://www.blogmemes.com/comment.php?meme_id=896">escribe el tuyo</a>)</p>
-  {/if}
-	
-	  <p style="right-margin:1em">
+	<p style="right-margin:1em">
 	  	  {$meme->content|nl2br}
 	  </p>
     </div>

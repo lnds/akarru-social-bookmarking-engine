@@ -17,14 +17,7 @@ class memes {
 	{
 		$meme_id = sanitize($meme_id);
 		$sql = "select u.username, u.email from users u left join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
-		$data = $this->db->fetch($sql);
-		$result = array();
-		foreach ($data as $user)
-		{
-			$user->small_gravatar = get_gravatar($bm_url, $user->email, 16);
-			$result[] = $user;
-		}
-		return $result;
+		return $this->filter_result($sql);
 	}
 
 	function search_memes($term){
@@ -33,7 +26,7 @@ class memes {
 		$sql.=" group by p.title,p.content,p.date_posted,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username ";
 		$sql.=" order by p.date_posted desc";
 
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
 
 	function get_category_name($cat_id)
@@ -57,7 +50,7 @@ class memes {
 		
 		
 		$sql =  'select p.title,p.is_micro_content,p.content,p.date_posted,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,p.rank, ';
-		$sql .= 'pc.cat_title,u.username, pc.ID as cat_id,votes as vote_count, count(pcom.ID) as comment_count ';
+		$sql .= 'pc.cat_title,u.username, u.email, pc.ID as cat_id,votes as vote_count, count(pcom.ID) as comment_count ';
 		$sql .= 'from posts p, post_cats pc, users u left join post_comments pcom on pcom.post_id=p.ID ';
 		$sql .= 'where pc.ID=p.category and u.ID=p.submitted_user_id and p.votes >= '.$this->promote_threshold;
 		$sql .= " group by p.title,p.content,p.date_posted,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username ";
@@ -76,20 +69,18 @@ class memes {
 			if ($limit > 0)  { $sql .= ' LIMIT '.$limit; }
 			else { $sql .= ' LIMIT '.$this->records_to_page; }
 		}
-
-		if ($show_sql == 2) {
-			echo $sql;
-		}
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
 
 
 	function get_meme($id)
 	{
-		$sql =  'select p.title,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username,pc.ID as cat_id, p.votes as vote_count, count(pcom.ID) as comment_count from posts p, post_cats pc, users u left join post_comments pcom on pcom.post_id=p.ID where pc.ID=p.category and u.ID=p.submitted_user_id ';
+		$sql =  'select p.title,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, count(pcom.ID) as comment_count from posts p, post_cats pc, users u left join post_comments pcom on pcom.post_id=p.ID where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and p.ID='.$id;
 		$sql .= " group by p.title,p.content,p.date_posted,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username ";
-		return $this->db->fetch_object($sql);
+		$result = $this->db->fetch_object($sql);
+		$result->small_gravatar = get_gravatar($bm_url, $comment->email, 16); 
+		return $result;
 	}
 
 	function add_comment($meme_id, $comment)
@@ -112,14 +103,7 @@ class memes {
 		$sql  = ' select c.title, c.content, c.date_posted, u.username, u.email ';
 		$sql .= ' from post_comments c left join users u on c.user_id = u.ID ';
 		$sql .= ' where post_id = '.$meme_id;
-		$data = $this->db->fetch($sql);
-		$result = array();
-		foreach ($data as $comment)
-		{
-			$comment->small_gravatar = get_gravatar($bm_url, $comment->email, 16);
-			$result[] = $comment;
-		}
-		return $result;
+		return $this->filter_result($sql);
 	}
 
 	function get_tags($meme_id)
@@ -131,7 +115,7 @@ class memes {
 	function get_new_memes($page=0, $sort='')
 	{
 		$sql =  'select p.title,p.is_micro_content,p.content,p.date_posted,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID, ';
-		$sql .=  'pc.cat_title,u.username,pc.ID as cat_id, p.votes as vote_count ';
+		$sql .=  'pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count ';
 		$sql .= ' from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and p.votes < '.$this->promote_threshold.' ';
 		$this->memes_count = $this->db->count_rows($sql);
@@ -149,7 +133,7 @@ class memes {
 		}
 		if($page!=0){ $page--; if ($page < 0) $page = 0; $sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
 		else { $sql .= ' LIMIT '.$this->records_to_page; }
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
 
 	function get_memes_by_user($user_id, $page=0, $sort='')
@@ -169,7 +153,7 @@ class memes {
 		}
 		if($page!=0){ $page--; if ($page < 0) $page = 0; $sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
 		else { $sql .= ' LIMIT '.$this->records_to_page; }
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
 
 
@@ -191,9 +175,20 @@ class memes {
 		if ($limit != 0) { $sql .= ' LIMIT '.$limit; }
 		else if($page!=0){ $page--; if ($page < 0) $page = 0; $sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
 		else { $sql .= ' LIMIT '.$this->records_to_page; }
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
 
+	function filter_result($sql)
+	{
+		$data = $this->db->fetch($sql);
+		$result = array();
+		foreach ($data as $meme)
+		{
+			$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16);
+			$result[] = $meme;
+		}
+		return $result;
+	}
 
 
 	function get_memes_by_tag($tag_id='',$page='', $sort=''){
@@ -212,8 +207,10 @@ class memes {
 		$this->pages = ceil($this->memes_count / $this->records_to_page);
 		if($page!=0){ $page--; if ($page < 0) $page = 0; $sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
 		else { $sql .= ' LIMIT '.$this->records_to_page; }
-		return $this->db->fetch($sql);
+		return $this->filter_result($sql);
 	}
+
+
 
 	function get_votes($meme_id)
 	{
@@ -283,27 +280,6 @@ class memes {
 		return $this->db->fetch_scalar($sql);
 	}
 
-	function add_micro_content($title, $content, $cat)
-	{
-		$title = check_plain($title);
-		$content = check_plain($content);
-		$url = '#';
-		$user_id = $this->user_id;
-		$date_posted = time();
-		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,submitted_user_id,is_micro_content) ';
-		$sql .= "values('$title', '$content', $date_posted, $date_posted,$cat,$user_id,1)";
-		if ($this->db->execute($sql)) {
-			$meme_id = $this->db->insert_id;
-			$url = 'comment.php?meme_id='.$meme_id;
-			$this->db->execute("update posts set url='$url' where ID = $meme_id");
-			$this->vote($meme_id, $user_id, true);
-			$this->ping_technorati($meme_id);
-			$this->ping_feedburner($meme_id);
-			$this->ping_bitacoras($meme_id);
-			$this->ping_blogalaxia($meme_id);
-		}
-		return true;
-	}
 
 	function add_meme($data)
 	{
