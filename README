@@ -3,7 +3,7 @@ If you want to make comments send them to admin@blogmemes.com
 
 If you want to configurate akarru for your proyect you must change the conf files included on smarty/configs directory.
 Almost all messages are there.
-In future releases the localization of akarru will be enhanced.
+
 
 You must configure your database connection and other parameters on config.php file.
 
@@ -11,6 +11,15 @@ You must install the last release of smarty template engine from: http://smarty.
 
 Also you must use mysql 4.1+.
 
+== smarty templates in english and frech ==
+
+Thanks to Claude Gaillard we have included the smarty versions of french and english.
+
+You can check them in smartyEng.zip and smarty_fr.zip.
+
+== trac site ==
+
+Visit our trac site: http://trac.blogmemes.com/
 
 Enjoy
 Eduardo Diaz

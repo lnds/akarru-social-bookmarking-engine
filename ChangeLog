@@ -1,205 +1,269 @@
+2006-03-09 02:51  eadiaz
+
+	* trunk/public_html/index.php: $page variable wasn't initializated
+	  properly
+
+2006-03-08 18:00  eadiaz
+
+	* trunk/public_html/anon16.png, trunk/public_html/anon40.png,
+	  trunk/public_html/anon80.png: images uses for users without
+	  gravatar
+
+2006-03-08 17:59  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php,
+	  trunk/smarty/templates/comment.tpl,
+	  trunk/smarty/templates/memes_grid.tpl: Full support of gravatars
+	  along all site.
+
+2006-03-08 14:58  eadiaz
+
+	* trunk/public_html/akarru.lib/html_manager.php,
+	  trunk/public_html/akarru.lib/memes.php,
+	  trunk/public_html/akarru.lib/statistics.php,
+	  trunk/public_html/akarru.lib/users.php,
+	  trunk/public_html/profile.php, trunk/smarty/configs/site.conf,
+	  trunk/smarty/templates/comment.tpl,
+	  trunk/smarty/templates/profile.tpl,
+	  trunk/smarty/templates/stats.tpl: Added support for gravatar
+	  (wwww.gravatar.com), now user's gravatar is shown in profile,
+	  and comments.
+	  We will add this display on memes too, on next release.
+
+2006-03-07 14:11  eadiaz
+
+	* trunk/public_html/register.php: fix typo in line 6, was 'passs',
+	  should be 'pass'.
+
+2006-03-07 11:28  eadiaz
+
+	* trunk/ChangeLog, trunk/ChangeLog.cvs: ChangeLog.cvs contains old
+	  ChangeLog when we used cvs as CMS.
+
 2006-03-07 11:18  eadiaz
 
-	* public_html/register.php: register.php didn't allow registration
-	  because variables must be obtained via $_GET now
+	* trunk/public_html/register.php: register.php didn't allow
+	  registration because variables must be obtained via $_GET now
 
 2006-03-07 01:28  eadiaz
 
-	* public_html/akarru.gui/register_form.php:
+	* trunk/public_html/akarru.gui/register_form.php:
 
 2006-03-05 16:47  eadiaz
 
-	* public_html/show_cat.php: Security fix, no more auto variables,
-	  all from $_GET or $_POST
+	* trunk/public_html/show_cat.php: Security fix, no more auto
+	  variables, all from $_GET or $_POST
 
 2006-03-05 01:13  eadiaz
 
-	* public_html/lib/xmlrpc.inc, public_html/lib/xmlrpcs.inc:
+	* trunk/public_html/lib/xmlrpc.inc,
+	  trunk/public_html/lib/xmlrpcs.inc:
 
 2006-03-05 01:03  eadiaz
 
-	* ChangeLog: New ChangeLog Update
+	* trunk/ChangeLog: New ChangeLog Update
 	  New Release
 
 2006-03-05 00:51  eadiaz
 
-	* smarty/templates/master_page.tpl, smarty/templates/promote.tpl:
-	  Minor changes on master_page.tpl and promote.tpl
+	* trunk/smarty/templates/master_page.tpl,
+	  trunk/smarty/templates/promote.tpl: Minor changes on
+	  master_page.tpl and promote.tpl
 
 2006-03-05 00:42  eadiaz
 
-	* public_html/akarru.lib/categories.php,
-	  public_html/akarru.lib/common.php,
-	  public_html/akarru.lib/database.php,
-	  public_html/akarru.lib/memes.php,
-	  public_html/akarru.lib/statistics.php,
-	  public_html/akarru.lib/users.php: Security fix. Possibles sql
-	  injections. Thanks to Ricardo Galli for report this.
+	* trunk/public_html/akarru.lib/categories.php,
+	  trunk/public_html/akarru.lib/common.php,
+	  trunk/public_html/akarru.lib/database.php,
+	  trunk/public_html/akarru.lib/memes.php,
+	  trunk/public_html/akarru.lib/statistics.php,
+	  trunk/public_html/akarru.lib/users.php: Security fix. Possibles
+	  sql injections. Thanks to Ricardo Galli for report this.
 
 2006-03-05 00:36  eadiaz
 
-	* public_html/akarru.gui/cat_grid.php,
-	  public_html/akarru.gui/comment_grid.php,
-	  public_html/akarru.gui/comments_list_grid.php,
-	  public_html/akarru.gui/maintenance.php,
-	  public_html/akarru.gui/meme_grid.php,
-	  public_html/akarru.gui/meme_queue_grid.php,
-	  public_html/akarru.gui/paginate.php,
-	  public_html/akarru.gui/post_form.php,
-	  public_html/akarru.gui/profile_view.php,
-	  public_html/akarru.gui/recover_pass_form.php,
-	  public_html/akarru.gui/register_form.php,
-	  public_html/akarru.gui/tag_grid.php: Some lost scripts are
+	* trunk/public_html/akarru.gui/cat_grid.php,
+	  trunk/public_html/akarru.gui/comment_grid.php,
+	  trunk/public_html/akarru.gui/comments_list_grid.php,
+	  trunk/public_html/akarru.gui/maintenance.php,
+	  trunk/public_html/akarru.gui/meme_grid.php,
+	  trunk/public_html/akarru.gui/meme_queue_grid.php,
+	  trunk/public_html/akarru.gui/paginate.php,
+	  trunk/public_html/akarru.gui/post_form.php,
+	  trunk/public_html/akarru.gui/profile_view.php,
+	  trunk/public_html/akarru.gui/recover_pass_form.php,
+	  trunk/public_html/akarru.gui/register_form.php,
+	  trunk/public_html/akarru.gui/tag_grid.php: Some lost scripts are
 	  restored.
 	  You should consider akarru.gui scripts obsoletes, will be
 	  deprecated soon.
 
 2006-03-05 00:34  eadiaz
 
-	* public_html/stats.php: Restrict stats.php to only 50 top users.
-	* public_html/search.php: Security fix, no more auto variables,
-	  all from $_GET or $_POST
+	* trunk/public_html/stats.php: Restrict stats.php to only 50 top
+	  users.
+	* trunk/public_html/search.php: Security fix, no more auto
+	  variables, all from $_GET or $_POST
 
 2006-03-05 00:31  eadiaz
 
-	* public_html/queue_feed.php: More elements of the feed.
+	* trunk/public_html/queue_feed.php: More elements of the feed.
 	  This version is faster.
-	* public_html/profile_edit.php: Security fix, no more auto
+	* trunk/public_html/profile_edit.php: Security fix, no more auto
 	  variables, all from $_GET or $_POST
 
 2006-03-05 00:30  eadiaz
 
-	* public_html/profile.php: Security fix, no more auto variables,
-	  all from $_GET or $_POST
+	* trunk/public_html/profile.php: Security fix, no more auto
+	  variables, all from $_GET or $_POST
 	  Fixes a bug on profile.php, pagination was not working.
 
 2006-03-05 00:28  eadiaz
 
-	* public_html/help.php, public_html/login.php,
-	  public_html/memes_by_tag.php, public_html/popular.php,
-	  public_html/post.php: Security fix, no more auto variables, all
-	  from $_GET or $_POST
+	* trunk/public_html/help.php, trunk/public_html/login.php,
+	  trunk/public_html/memes_by_tag.php,
+	  trunk/public_html/popular.php, trunk/public_html/post.php:
+	  Security fix, no more auto variables, all from $_GET or $_POST
 
 2006-03-05 00:26  eadiaz
 
-	* public_html/index.php: Limit pages to 50 until we have a better
-	  pagination algorithm
+	* trunk/public_html/index.php: Limit pages to 50 until we have a
+	  better pagination algorithm
 
 2006-03-05 00:24  eadiaz
 
-	* public_html/feed.php: More elements of the feed.
+	* trunk/public_html/feed.php: More elements of the feed.
 	  This version is faster also.
 
 2006-03-05 00:23  eadiaz
 
-	* public_html/comment.php: Security fix, no more auto variables,
-	  all from $_GET or $_POST
+	* trunk/public_html/comment.php: Security fix, no more auto
+	  variables, all from $_GET or $_POST
 
 2006-03-05 00:22  eadiaz
 
-	* public_html/circulation.php: Security fix, no more auto
+	* trunk/public_html/circulation.php: Security fix, no more auto
 	  variables, all from $_GET or $_POST
 
 2006-03-05 00:21  eadiaz
 
-	* public_html/cat_feed.php: More elements of the feed.
+	* trunk/public_html/cat_feed.php: More elements of the feed.
 	  This version is faster also.
 
 2006-02-27 02:31  eadiaz
 
-	* tags, ., ChangeLog, LEEME, LICENCIA, LICENSE, README,
-	  akarru.txt, create.sql, public_html, public_html/about.php,
-	  public_html/admin.php, public_html/ajax_click.php,
-	  public_html/ajax_vote.php, public_html/akarru.gui,
-	  public_html/akarru.gui/button_bar.php,
-	  public_html/akarru.gui/categories_bar.php,
-	  public_html/akarru.gui/default_grid.php,
-	  public_html/akarru.gui/folksonomy_bar.php,
-	  public_html/akarru.gui/folksonomy_grid.php,
-	  public_html/akarru.gui/info.php,
-	  public_html/akarru.gui/java_script.php,
-	  public_html/akarru.gui/locale.en,
-	  public_html/akarru.gui/locale.es,
-	  public_html/akarru.gui/locale.php,
-	  public_html/akarru.gui/login_form.php,
-	  public_html/akarru.gui/main_content.php,
-	  public_html/akarru.gui/master_page.php,
-	  public_html/akarru.gui/menubar.php,
-	  public_html/akarru.gui/profile_form.php,
-	  public_html/akarru.gui/top_banner.php, public_html/akarru.lib,
-	  public_html/akarru.lib/categories.php,
-	  public_html/akarru.lib/common.php,
-	  public_html/akarru.lib/database.php,
-	  public_html/akarru.lib/folksonomy.php,
-	  public_html/akarru.lib/form_manager.php,
-	  public_html/akarru.lib/html_manager.php,
-	  public_html/akarru.lib/mail.php,
-	  public_html/akarru.lib/memes.php,
-	  public_html/akarru.lib/statistics.php,
-	  public_html/akarru.lib/users.php, public_html/cat_feed.php,
-	  public_html/circulation.php, public_html/comment.php,
-	  public_html/config.php, public_html/feed.php,
-	  public_html/help.php, public_html/index.php, public_html/lib,
-	  public_html/lib/xmlrpc.inc, public_html/lib/xmlrpcs.inc,
-	  public_html/locale.en, public_html/locale.es,
-	  public_html/login.php, public_html/logo.gif,
-	  public_html/logout.php, public_html/memes_by_tag.php,
-	  public_html/memes_queue.php, public_html/pngfix.js,
-	  public_html/popular.php, public_html/post.php,
-	  public_html/profile.php, public_html/profile_edit.php,
-	  public_html/promote.php, public_html/promote_queue.php,
-	  public_html/queue.php, public_html/queue_feed.php,
-	  public_html/recover_pass.php, public_html/register.php,
-	  public_html/scripts, public_html/scripts/labels.js,
-	  public_html/scripts/pngfix.js, public_html/search.php,
-	  public_html/show_cat.php, public_html/show_folksonomy.php,
-	  public_html/site_circulation.php, public_html/stats.php,
-	  public_html/styles, public_html/styles/img,
-	  public_html/styles/img/header-bar_bg.png,
-	  public_html/styles/img/header-divider.png,
-	  public_html/styles/img/header-hover.png,
-	  public_html/styles/img/header-logo.png,
-	  public_html/styles/img/info.gif,
-	  public_html/styles/img/infobox-bottomleft.png,
-	  public_html/styles/img/infobox-topleft.gif,
-	  public_html/styles/img/infobox-topleft.png,
-	  public_html/styles/img/main-bg.gif,
-	  public_html/styles/img/main-bg.png,
-	  public_html/styles/img/main-bottom.gif,
-	  public_html/styles/img/main-bottom.png,
-	  public_html/styles/img/main-end.png,
-	  public_html/styles/img/main-top.gif,
-	  public_html/styles/img/main-top.png,
-	  public_html/styles/img/main_bg.png,
-	  public_html/styles/img/meme-globo.gif,
-	  public_html/styles/img/meme-globo.png,
-	  public_html/styles/img/meme-votar.gif,
-	  public_html/styles/img/meme-votar.png,
-	  public_html/styles/img/sidebar-bg.png,
-	  public_html/styles/img/tab_azul.png,
-	  public_html/styles/img/tab_cat-bg.png,
-	  public_html/styles/img/tab_cat-bot.png,
-	  public_html/styles/img/tab_cat-top.png,
-	  public_html/styles/img/tab_rojo.png,
-	  public_html/styles/img/tab_verde.png,
-	  public_html/styles/memes.css, public_html/tag_meme.php,
-	  public_html/unpopular.php, smarty, smarty/configs,
-	  smarty/configs/site.conf, smarty/templates,
-	  smarty/templates/about.tpl, smarty/templates/admin.tpl,
-	  smarty/templates/circulation.tpl, smarty/templates/comment.tpl,
-	  smarty/templates/donations_thanks.tpl,
-	  smarty/templates/folksonomy_grid.tpl,
-	  smarty/templates/form_footer.tpl,
-	  smarty/templates/form_header.tpl, smarty/templates/help.tpl,
-	  smarty/templates/inner_ads.tpl,
-	  smarty/templates/java_script.tpl, smarty/templates/login.tpl,
-	  smarty/templates/master_page.tpl,
-	  smarty/templates/memes_grid.tpl, smarty/templates/paginate.tpl,
-	  smarty/templates/post_1.tpl, smarty/templates/post_2.tpl,
-	  smarty/templates/post_3.tpl, smarty/templates/profile.tpl,
-	  smarty/templates/profile_edit.tpl, smarty/templates/promote.tpl,
-	  smarty/templates/register.tpl,
-	  smarty/templates/site_circulation.tpl,
-	  smarty/templates/stats.tpl, smarty/templates/tag_meme.tpl: Added
-	  to sourceforge svn
+	* tags, trunk, trunk/ChangeLog, trunk/LEEME, trunk/LICENCIA,
+	  trunk/LICENSE, trunk/README, trunk/akarru.txt, trunk/create.sql,
+	  trunk/public_html, trunk/public_html/about.php,
+	  trunk/public_html/admin.php, trunk/public_html/ajax_click.php,
+	  trunk/public_html/ajax_vote.php, trunk/public_html/akarru.gui,
+	  trunk/public_html/akarru.gui/button_bar.php,
+	  trunk/public_html/akarru.gui/categories_bar.php,
+	  trunk/public_html/akarru.gui/default_grid.php,
+	  trunk/public_html/akarru.gui/folksonomy_bar.php,
+	  trunk/public_html/akarru.gui/folksonomy_grid.php,
+	  trunk/public_html/akarru.gui/info.php,
+	  trunk/public_html/akarru.gui/java_script.php,
+	  trunk/public_html/akarru.gui/locale.en,
+	  trunk/public_html/akarru.gui/locale.es,
+	  trunk/public_html/akarru.gui/locale.php,
+	  trunk/public_html/akarru.gui/login_form.php,
+	  trunk/public_html/akarru.gui/main_content.php,
+	  trunk/public_html/akarru.gui/master_page.php,
+	  trunk/public_html/akarru.gui/menubar.php,
+	  trunk/public_html/akarru.gui/profile_form.php,
+	  trunk/public_html/akarru.gui/top_banner.php,
+	  trunk/public_html/akarru.lib,
+	  trunk/public_html/akarru.lib/categories.php,
+	  trunk/public_html/akarru.lib/common.php,
+	  trunk/public_html/akarru.lib/database.php,
+	  trunk/public_html/akarru.lib/folksonomy.php,
+	  trunk/public_html/akarru.lib/form_manager.php,
+	  trunk/public_html/akarru.lib/html_manager.php,
+	  trunk/public_html/akarru.lib/mail.php,
+	  trunk/public_html/akarru.lib/memes.php,
+	  trunk/public_html/akarru.lib/statistics.php,
+	  trunk/public_html/akarru.lib/users.php,
+	  trunk/public_html/cat_feed.php,
+	  trunk/public_html/circulation.php,
+	  trunk/public_html/comment.php, trunk/public_html/config.php,
+	  trunk/public_html/feed.php, trunk/public_html/help.php,
+	  trunk/public_html/index.php, trunk/public_html/lib,
+	  trunk/public_html/lib/xmlrpc.inc,
+	  trunk/public_html/lib/xmlrpcs.inc, trunk/public_html/locale.en,
+	  trunk/public_html/locale.es, trunk/public_html/login.php,
+	  trunk/public_html/logo.gif, trunk/public_html/logout.php,
+	  trunk/public_html/memes_by_tag.php,
+	  trunk/public_html/memes_queue.php, trunk/public_html/pngfix.js,
+	  trunk/public_html/popular.php, trunk/public_html/post.php,
+	  trunk/public_html/profile.php,
+	  trunk/public_html/profile_edit.php,
+	  trunk/public_html/promote.php,
+	  trunk/public_html/promote_queue.php,
+	  trunk/public_html/queue.php, trunk/public_html/queue_feed.php,
+	  trunk/public_html/recover_pass.php,
+	  trunk/public_html/register.php, trunk/public_html/scripts,
+	  trunk/public_html/scripts/labels.js,
+	  trunk/public_html/scripts/pngfix.js,
+	  trunk/public_html/search.php, trunk/public_html/show_cat.php,
+	  trunk/public_html/show_folksonomy.php,
+	  trunk/public_html/site_circulation.php,
+	  trunk/public_html/stats.php, trunk/public_html/styles,
+	  trunk/public_html/styles/img,
+	  trunk/public_html/styles/img/header-bar_bg.png,
+	  trunk/public_html/styles/img/header-divider.png,
+	  trunk/public_html/styles/img/header-hover.png,
+	  trunk/public_html/styles/img/header-logo.png,
+	  trunk/public_html/styles/img/info.gif,
+	  trunk/public_html/styles/img/infobox-bottomleft.png,
+	  trunk/public_html/styles/img/infobox-topleft.gif,
+	  trunk/public_html/styles/img/infobox-topleft.png,
+	  trunk/public_html/styles/img/main-bg.gif,
+	  trunk/public_html/styles/img/main-bg.png,
+	  trunk/public_html/styles/img/main-bottom.gif,
+	  trunk/public_html/styles/img/main-bottom.png,
+	  trunk/public_html/styles/img/main-end.png,
+	  trunk/public_html/styles/img/main-top.gif,
+	  trunk/public_html/styles/img/main-top.png,
+	  trunk/public_html/styles/img/main_bg.png,
+	  trunk/public_html/styles/img/meme-globo.gif,
+	  trunk/public_html/styles/img/meme-globo.png,
+	  trunk/public_html/styles/img/meme-votar.gif,
+	  trunk/public_html/styles/img/meme-votar.png,
+	  trunk/public_html/styles/img/sidebar-bg.png,
+	  trunk/public_html/styles/img/tab_azul.png,
+	  trunk/public_html/styles/img/tab_cat-bg.png,
+	  trunk/public_html/styles/img/tab_cat-bot.png,
+	  trunk/public_html/styles/img/tab_cat-top.png,
+	  trunk/public_html/styles/img/tab_rojo.png,
+	  trunk/public_html/styles/img/tab_verde.png,
+	  trunk/public_html/styles/memes.css,
+	  trunk/public_html/tag_meme.php, trunk/public_html/unpopular.php,
+	  trunk/smarty, trunk/smarty/configs,
+	  trunk/smarty/configs/site.conf, trunk/smarty/templates,
+	  trunk/smarty/templates/about.tpl,
+	  trunk/smarty/templates/admin.tpl,
+	  trunk/smarty/templates/circulation.tpl,
+	  trunk/smarty/templates/comment.tpl,
+	  trunk/smarty/templates/donations_thanks.tpl,
+	  trunk/smarty/templates/folksonomy_grid.tpl,
+	  trunk/smarty/templates/form_footer.tpl,
+	  trunk/smarty/templates/form_header.tpl,
+	  trunk/smarty/templates/help.tpl,
+	  trunk/smarty/templates/inner_ads.tpl,
+	  trunk/smarty/templates/java_script.tpl,
+	  trunk/smarty/templates/login.tpl,
+	  trunk/smarty/templates/master_page.tpl,
+	  trunk/smarty/templates/memes_grid.tpl,
+	  trunk/smarty/templates/paginate.tpl,
+	  trunk/smarty/templates/post_1.tpl,
+	  trunk/smarty/templates/post_2.tpl,
+	  trunk/smarty/templates/post_3.tpl,
+	  trunk/smarty/templates/profile.tpl,
+	  trunk/smarty/templates/profile_edit.tpl,
+	  trunk/smarty/templates/promote.tpl,
+	  trunk/smarty/templates/register.tpl,
+	  trunk/smarty/templates/site_circulation.tpl,
+	  trunk/smarty/templates/stats.tpl,
+	  trunk/smarty/templates/tag_meme.tpl: Added to sourceforge svn
 

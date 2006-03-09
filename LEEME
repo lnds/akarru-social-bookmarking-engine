@@ -1,3 +1,12 @@
+version 0.4.3.28
+
+Las versiones se numeran ahora usando como ultimo numero el numero de commit svn.
+
+Estamos usando svn, y el repositorio esta en https://svn.sourceforge.net/svnroot/akarru akarru
+
+Esta version incluye traducciones al ingles y frances, y ademas tiene soporte para gravatar.
+
+
 version 0.2.1.19
 
 A partir de ahora la numeracion de versiones sera de la siguiente manera:
