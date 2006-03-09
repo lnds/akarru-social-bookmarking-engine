@@ -1,3 +1,28 @@
+2006-03-09 04:16  eadiaz
+
+	* trunk/public_html/popular.php, trunk/public_html/unpopular.php:
+	  several bugs fixes
+	* trunk/public_html/memes_queue.php: $page was not initializated
+
+2006-03-09 04:15  eadiaz
+
+	* trunk/public_html/index.php: fix bug, the cantity of memes in
+	  index.php is fixed and correct now.
+
+2006-03-09 04:13  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: fix bug in promote_all
+
+2006-03-09 03:09  eadiaz
+
+	* trunk/ChangeLog, trunk/LEEME, trunk/README, trunk/smartyEng.zip,
+	  trunk/smarty_fr.zip: This release includes support for Gravatar,
+	  also two files smarty_fr.zip and smartyEng.zip add translations
+	  in french and english.
+	  Thanks to Claude Galliard for this.
+	  Still you must check some .php files, because some messages are
+	  hardcoded.
+
 2006-03-09 02:51  eadiaz
 
 	* trunk/public_html/index.php: $page variable wasn't initializated

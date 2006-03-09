@@ -1,3 +1,7 @@
+version 0.4.3.34
+
+varios bugs en el tintero
+
 version 0.4.3.28
 
 Las versiones se numeran ahora usando como ultimo numero el numero de commit svn.
