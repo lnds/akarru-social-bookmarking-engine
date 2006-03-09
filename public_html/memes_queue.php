@@ -1,5 +1,6 @@
 <?php
   include_once('akarru.lib/common.php');
+  $page = $_GET['page'];
   $smarty->assign('content_title', 'votar pendientes');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
   $smarty->assign('memes', $memes->get_new_memes($page));
