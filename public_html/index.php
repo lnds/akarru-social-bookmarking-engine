@@ -4,7 +4,7 @@
   $smarty->assign('content_title', '&uacute;ltimos memes');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 
-  $smarty->assign('memes', $memes->get_memes($page, '', $memes->records_to_page*50 ));
+  $smarty->assign('memes', $memes->get_memes($page, ''));
   if ($memes->pages > 50) {
 	  $memes->pages = 50;
   }
