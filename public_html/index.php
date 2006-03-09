@@ -1,5 +1,6 @@
 <?
   include_once('akarru.lib/common.php');
+  $page = $_GET['page'];
   $smarty->assign('content_title', '&uacute;ltimos memes');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 
