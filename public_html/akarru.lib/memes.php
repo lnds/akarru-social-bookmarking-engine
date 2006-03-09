@@ -63,7 +63,12 @@ class memes {
 		{
 			$sql.=" order by rank desc, vote_count desc "; 
 		}
-		if($page!=0){ $page--; if ($page < 0) $page = 0; $sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
+		if($page!=0)
+		{ 
+				$page--; 
+				if ($page < 0) 
+					$page = 0; 
+				$sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; }
 		else 
 		{
 			if ($limit > 0)  { $sql .= ' LIMIT '.$limit; }
@@ -182,6 +187,7 @@ class memes {
 	{
 		$data = $this->db->fetch($sql);
 		$result = array();
+		
 		foreach ($data as $meme)
 		{
 			$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16);
@@ -486,14 +492,6 @@ class memes {
 		foreach ($memes as $meme) {
 			$this->promote($meme->ID);
 		}
-
-		$sql = 'select p.ID, count(pc.ID) votes from posts p join post_coments pc on pc.post_id = p.ID group by p.ID';
-		$memes = $this->db->fetch($sql);
-		foreach ($memes as $meme) {
-			$this->promote($meme->ID);
-			$this->db->execute('update posts set comments = '.$meme->votes.' where ID = '.$meme->ID);
-		}
-
 		return;
 	}
 }
