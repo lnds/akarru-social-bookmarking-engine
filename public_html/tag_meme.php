@@ -3,7 +3,13 @@
   $smarty->assign('content_title', 'comentarios');
   $memes = new memes($bm_db, $bm_user);
   if (!empty($_POST)) {
+	  $meme_id = $_POST['meme_id'];
+	  $tags = $_POST['tags'];
 	  $memes->post_tags($meme_id, $bm_user, $tags);
+  }
+  else
+  {
+	  $meme_id = $_GET['meme_id'];
   }
   $meme = $memes->get_meme($meme_id);
   $smarty->assign('meme', $meme);
