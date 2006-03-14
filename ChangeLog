@@ -1,3 +1,22 @@
+2006-03-14 19:54  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php,
+	  trunk/smarty/templates/memes_grid.tpl: Solve Ticket #10 of trac.
+	  Now if an user already voted for a meme the vote button is
+	  hidden.
+
+2006-03-10 19:26  eadiaz
+
+	* trunk/public_html/tag_meme.php: Fix ticket #4.
+	  error: You have an error in your SQL syntax; check the manual
+	  that corresponds to your MySQL server version for the right
+	  syntax to use near 'group by
+	  p.title,p.content,p.date_posted,p.category,p.url,p.subm
+
+2006-03-09 04:21  eadiaz
+
+	* trunk/ChangeLog, trunk/LEEME: Some minor bugs fixes
+
 2006-03-09 04:16  eadiaz
 
 	* trunk/public_html/popular.php, trunk/public_html/unpopular.php:
