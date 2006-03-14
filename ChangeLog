@@ -1,3 +1,13 @@
+2006-03-14 21:13  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: Bug, wasn't checking
+	  anonymous users in memes->filter_result().
+
+2006-03-14 19:59  eadiaz
+
+	* trunk/ChangeLog, trunk/LEEME, trunk/README: Prepare release
+	  0.4.3.36
+
 2006-03-14 19:54  eadiaz
 
 	* trunk/public_html/akarru.lib/memes.php,
