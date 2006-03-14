@@ -195,6 +195,9 @@ class memes {
 			$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16);
 			$meme_id = $meme->ID;
 			$uid = $this->user_id;
+			if (empty($uid)) {
+				$uid = 0;
+			}
 			$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
 			$result[] = $meme;
 		}
