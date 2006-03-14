@@ -12,11 +12,15 @@
 	  <h3  id="vote_count_{$meme->ID}" style="text-align:center" align="center">
 	  {$meme->vote_count}
 	  </h3>
+	  {if $meme->voted <= 0}
 	  <p>{#votes_label#}</p>
+	  {/if}
 	   <div class="vote-class">
 	{if $logged_in }
+	{if $meme->voted <= 0}
 	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','{$logged_userid}')">
 	<img src="styles/img/meme-votar.png" border="0" alt="{#votes_label#}" /></a>
+	{/if}
 	{else}
 	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','0')"><img src="styles/img/meme-votar.png" border="0" alt="{#votes_label#}" /></a>
 	{/if}

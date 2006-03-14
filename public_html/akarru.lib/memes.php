@@ -43,15 +43,16 @@ class memes {
 
 	function get_memes($page=0, $sort='', $limit=0, $show_sql=0)
 	{
-		$this->memes_count = $this->db->fetch_scalar('select count(*) n from posts p where p.votes >= '.$this->promote_threshold);
+		$this->db->do_query('select SQL_CALC_FOUND_ROWS * from posts p where p.votes >= '.$this->promote_threshold); 
+		$this->memes_count = $this->db->fetch_scalar('Select FOUND_ROWS()');
 		if ($this->memes_count <= 0) {
 			return array();
 		}
 		
 		
 		$sql =  'select p.title,p.is_micro_content,p.content,p.date_posted,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,p.rank, ';
-		$sql .= 'pc.cat_title,u.username, u.email, pc.ID as cat_id,votes as vote_count, count(pcom.ID) as comment_count ';
-		$sql .= 'from posts p, post_cats pc, users u left join post_comments pcom on pcom.post_id=p.ID ';
+		$sql .= 'pc.cat_title,u.username, u.email, pc.ID as cat_id,votes as vote_count, comments as comment_count ';
+		$sql .= 'from posts p, post_cats pc, users u ';
 		$sql .= 'where pc.ID=p.category and u.ID=p.submitted_user_id and p.votes >= '.$this->promote_threshold;
 		$sql .= " group by p.title,p.content,p.date_posted,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username ";
 
@@ -61,7 +62,7 @@ class memes {
 		}
 		else
 		{
-			$sql.=" order by rank desc, vote_count desc "; 
+			$sql.=" order by rank desc, votes desc "; 
 		}
 		if($page!=0)
 		{ 
@@ -80,11 +81,10 @@ class memes {
 
 	function get_meme($id)
 	{
-		$sql =  'select p.title,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, count(pcom.ID) as comment_count from posts p, post_cats pc, users u left join post_comments pcom on pcom.post_id=p.ID where pc.ID=p.category and u.ID=p.submitted_user_id ';
+		$sql =  'select p.title,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, comments as comment_count from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and p.ID='.$id;
-		$sql .= " group by p.title,p.content,p.date_posted,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username ";
 		$result = $this->db->fetch_object($sql);
-		$result->small_gravatar = get_gravatar($bm_url, $comment->email, 16); 
+		$result->small_gravatar = get_gravatar($bm_url, $result->email, 16); 
 		return $result;
 	}
 
@@ -120,7 +120,7 @@ class memes {
 	function get_new_memes($page=0, $sort='')
 	{
 		$sql =  'select p.title,p.is_micro_content,p.content,p.date_posted,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID, ';
-		$sql .=  'pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count ';
+		$sql .=  'pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, p.comments as comment_count ';
 		$sql .= ' from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and p.votes < '.$this->promote_threshold.' ';
 		$this->memes_count = $this->db->count_rows($sql);
@@ -183,6 +183,8 @@ class memes {
 		return $this->filter_result($sql);
 	}
 
+
+	// calculate gravatar and if user voted for this meme
 	function filter_result($sql)
 	{
 		$data = $this->db->fetch($sql);
@@ -191,6 +193,9 @@ class memes {
 		foreach ($data as $meme)
 		{
 			$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16);
+			$meme_id = $meme->ID;
+			$uid = $this->user_id;
+			$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
 			$result[] = $meme;
 		}
 		return $result;
@@ -412,8 +417,8 @@ class memes {
 	function promote($meme_id, $update_promo_date=false)
 	{
 		$meme = $this->get_meme($meme_id);
-		$sql = "select votes from posts where ID = $meme_id ";
-		$nv = $this->db->fetch_scalar($sql);
+		$nv = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id ");
+		$nc = $this->db->fetch_scalar("select count(*) from post_comments where post_id = $meme_id ");
 		$now = time();
 		$hours_posted = ceil(($now - $meme->date_posted)/3600);
 		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
@@ -433,10 +438,11 @@ class memes {
 		$rank = ceil($rank*log10(10*$meme->vote_count+10));
 
 		if ($update_promo_date) {
-			$sql = "update posts set rank = $rank, date_promo = $now where ID = $meme_id";
+			$sql = "update posts set rank = $rank, date_promo = $now, votes = $nv, comments = $nc where ID = $meme_id";
+
 		}
 		else {
-			$sql = "update posts set rank = $rank where ID = $meme_id";
+			$sql = "update posts set rank = $rank, votes = $nv, comments = $nc where ID = $meme_id";
 		}
 		$this->db->execute($sql);
 
@@ -487,7 +493,7 @@ class memes {
 									 
 	function promote_all()
 	{
-		$sql = 'select p.ID from posts p join post_votes pv on pv.post_id = p.ID group by p.ID';
+		$sql = 'select ID from posts ';
 		$memes = $this->db->fetch($sql);
 		foreach ($memes as $meme) {
 			$this->promote($meme->ID);
