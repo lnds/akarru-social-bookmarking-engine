@@ -1,3 +1,25 @@
+2006-03-15 14:37  eadiaz
+
+	* trunk/public_html/index.php, trunk/public_html/locale.es:
+	  Eliminates hard coded text in index.php.
+	  Check locale.es and compare it with your own locale file.
+
+2006-03-15 14:28  eadiaz
+
+	* trunk/public_html/akarru.gui/recover_pass_form.php,
+	  trunk/public_html/recover_pass.php,
+	  trunk/smarty/configs/site.conf,
+	  trunk/smarty/templates/recover_pass.tpl: Change
+	  recover_pass.php, recover_pass_form.php was removed from the
+	  project and new templates added.
+	  Also site.conf modified with new messages supporting password
+	  recovering.
+	  Fixes bugs on email sending of passwords.
+
+2006-03-14 21:15  eadiaz
+
+	* trunk/ChangeLog: fix bug on memes.php
+
 2006-03-14 21:13  eadiaz
 
 	* trunk/public_html/akarru.lib/memes.php: Bug, wasn't checking
