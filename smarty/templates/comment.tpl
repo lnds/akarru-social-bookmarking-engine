@@ -22,6 +22,10 @@
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}
 	{if $meme->vote_count > 7}&nbsp;|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
 	</div>
+	{if $meme->micro_content}
+	<div style="padding:2px">{$meme->micro_content}</div>
+	{/if}
+	
 	  <p>
 	  	  {$meme->content|nl2br}
 	  </p>

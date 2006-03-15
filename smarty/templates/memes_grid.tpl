@@ -31,7 +31,11 @@
 	style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted} 
 	{if $meme->vote_count > 7}&nbsp;|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
+	
 	<p style="right-margin:1em">
+	{if $meme->micro_content}
+	<div style="padding:4px">{$meme->micro_content}</div>
+	{/if}
 	  	  {$meme->content|nl2br}
 	  </p>
     </div>

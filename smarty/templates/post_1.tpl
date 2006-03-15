@@ -16,6 +16,13 @@
 <tr><td><input class="view-input-class" value="{$url}" name="url" size="60" /></td></tr>
 {if $error_duplicate_url}<tr><td class="error">{#error_duplicate_url#}</td></tr>{/if}
 {if $error_url}<tr><td class="error">{#error_url#}</td></tr>{/if}
+<tr><td class="view-label-class">{#label_content_type#}</td></tr>
+<tr><td>
+	<select class="view-input-class" name="content_type">
+		<option value="0" selected="selected">url</option>
+		<option value="2">youtube</option>
+	</select>
+</td></tr>
 <tr><td><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
 </table>
 </div>

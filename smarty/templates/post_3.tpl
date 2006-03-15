@@ -21,6 +21,9 @@ el bot&oacute;n {#post_submit_label#}
 	<div class="whowhen-class">{#posted_by_label#}&nbsp;<a class="whowhen-class" 
 	style="font-size:10px" href="profile.php?user_name={$logged_username}">{$logged_username}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}</div>
+	{if $micro_content}
+	<div style="padding:2px">{$micro_content}</div>
+	{/if}
 	  <p>
 	  	  {$content_body|nl2br}
 		  <input type="hidden" name="content_body" value="{$content_body}" />
@@ -29,6 +32,7 @@ el bot&oacute;n {#post_submit_label#}
 	categor&iacute;a: {$category_name}<input type="hidden" name="category" value="{$category}" />&nbsp;|&nbsp
 	{if $meme_tags}etiquetas: {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">trackback</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}
 	<input type="hidden" name="step" value="{$step}" /> 
+	<input type="hidden" name="content_type" value="{$content_type}" />
 	</div></td>
   </tr>
   <tr><td>&nbsp;</td></tr>

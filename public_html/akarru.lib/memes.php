@@ -2,6 +2,17 @@
 include_once('lib/xmlrpc.inc');
 include_once('lib/xmlrpcs.inc');
 
+  function get_youtube($url)
+  {
+	  $matches = array();
+	  @preg_match('/v=(.*)$/', $url, $matches);
+	  if (empty($matches[1])) {
+		  return '';
+	  }
+	  $url = 'http://youtube.com/v/'.$matches[1];
+	  return '<object width="300" height="250"><param name="movie" value="'.$url.'"></param><embed src="'.$url.'" type="application/x-shockwave-flash" width="300" height="250"></embed></object>'; 
+  }
+
 class memes {
 
 	function memes($db, $user, $promo_level=7, $records_to_page=15)
@@ -81,10 +92,13 @@ class memes {
 
 	function get_meme($id)
 	{
-		$sql =  'select p.title,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, comments as comment_count from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
+		$sql =  'select p.title,p.is_micro_content,p.content,p.date_posted,p.date_promo,p.rank,p.clicks,p.category,p.url,p.submitted_user_id,p.ID,pc.cat_title,u.username, u.email, pc.ID as cat_id, p.votes as vote_count, comments as comment_count from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and p.ID='.$id;
 		$result = $this->db->fetch_object($sql);
 		$result->small_gravatar = get_gravatar($bm_url, $result->email, 16); 
+		if ($result->is_micro_content == 2) {
+			$result->micro_content = get_youtube($result->url);
+		}
 		return $result;
 	}
 
@@ -105,7 +119,7 @@ class memes {
 
 	function get_comments($meme_id)
 	{
-		$sql  = ' select c.title, c.content, c.date_posted, u.username, u.email ';
+		$sql  = ' select c.title, c.content, c.date_posted, u.username, u.email, c.post_id as ID ' ;
 		$sql .= ' from post_comments c left join users u on c.user_id = u.ID ';
 		$sql .= ' where post_id = '.$meme_id;
 		return $this->filter_result($sql);
@@ -195,10 +209,13 @@ class memes {
 			$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16);
 			$meme_id = $meme->ID;
 			$uid = $this->user_id;
-			if (empty($uid)) {
-				$uid = 0;
+			if (!empty($uid) && !empty($meme_id)) {
+				$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
 			}
-			$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
+			$mc = $meme->is_micro_content;
+			if ($mc == 2) {
+					$meme->micro_content = get_youtube($meme->url);
+			}
 			$result[] = $meme;
 		}
 		return $result;
@@ -304,8 +321,9 @@ class memes {
 		$user_id = $data['user_id'];
 		$date_posted = time();
 		$trackback = $data['meme_trackback'];
-		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,url,submitted_user_id,trackback) ';
-		$sql .= "values('$title','$content',$date_posted,$date_posted,$category,'$url',$user_id,'$trackback')";
+		$content_type = $data['content_type'];
+		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,url,submitted_user_id,trackback,is_micro_content) ';
+		$sql .= "values('$title','$content',$date_posted,$date_posted,$category,'$url',$user_id,'$trackback', $content_type)";
 		if ($this->db->execute($sql))
 		{
 			$meme_id = $this->db->insert_id;

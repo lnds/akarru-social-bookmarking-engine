@@ -17,7 +17,7 @@
 <tr><td class="view-label-class">{#trackback_label#}</td></tr>
 <tr><td><input class="view-input-class" value="{$meme_trackback}" name="meme_trackback" size="60" /></td></tr>
 {if $error_trackback}<tr><td class="error">{#error_trackback#}</td></tr>{/if}
-<tr><td><input type="hidden" name="step" value="{$step}" />
+<tr><td><input type="hidden" name="content_type" value="{$content_type}" /><input type="hidden" name="step" value="{$step}" />
 <input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
 </td></tr>
 </table>

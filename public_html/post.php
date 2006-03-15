@@ -31,6 +31,7 @@
 	 if ($_POST['step'] == 1) {
    		 $title = $_POST['title'];
 		 $url   = $_POST['url'];
+		 $smarty->assign('content_type',  $_POST['content_type']);
 		 if (empty($title)) {
 			 $smarty->assign('error_title', true);
 			 $bm_errors++;
@@ -57,6 +58,7 @@
 		 }
 	 }
 	 elseif ($_POST['step'] == 2) {
+		 $smarty->assign('content_type',  $_POST['content_type']);
 		 $title = $_POST['title'];
 		 $url   = $_POST['url'];
 		 $content_body = $_POST['content_body'];
@@ -80,6 +82,7 @@
 		 $smarty->assign('category_name', $bm_options[$category]);
 		 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 		 $smarty->assign('meme_tags', check_plain($meme_tags));
+		 $smarty->assign('micro_content', get_youtube($url));
 		 if ($bm_errors == 0) {
 			 $step = 3;
 		 }
@@ -90,6 +93,7 @@
 		 }
 	 }
 	 else if ($_POST['step'] == 3) {
+		 $smarty->assign('content_type',  $_POST['content_type']);
 		 if (!empty($_POST['do_edit'])) {
 			 $step = 2;
 			 $title = $_POST['title'];
@@ -108,6 +112,7 @@
 			 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 			 $smarty->assign('meme_tags', check_plain($meme_tags));
 			 $smarty->assign('cats', $bm_options);
+			 $smarty->assign('micro_content', get_youtube($url));
 		 }
 		 else
 		 {
