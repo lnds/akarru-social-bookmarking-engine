@@ -46,6 +46,7 @@ $bl_popular = 'lo m&aacute;s popular  ';
 $bl_popular_message = 'Estos memes son los que han recibido m&aacute;s votaci&oacute;n'; 
 $bl_unpopular = 'lo menos popular  ';
 $bl_unpopular_message = 'Estos meme son los que han recibido menos votaci&oacute;n';
+$bl_promoted_message = 'estos memes han sido promovidos recientemente a la primera p&aacute;na';
 
 $bl_post_meme = 'publicar meme';
 $bl_url_label = 'url del meme original:' ;
@@ -100,6 +101,8 @@ $be_anon_votes = 'no es posible votar en forma an&oacute;nima por este meme';
 
 // format strings
 $bf_date_posted = 'el %d/%m/%Y a las %R';
+
+// password recovering
 $bf_recover_pass = "Le informamos que usted o alguien a su nombre a solicitado la recuperacion de clave.
 Su identificacion de usuario es: %s
 Su nueva clave es: %s
