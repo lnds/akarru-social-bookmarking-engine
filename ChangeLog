@@ -1,3 +1,25 @@
+2006-03-20 00:42  eadiaz
+
+	* trunk/create.sql: Includes comments field in posts table
+
+2006-03-15 19:01  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php,
+	  trunk/public_html/post.php, trunk/smarty/configs/site.conf,
+	  trunk/smarty/templates/comment.tpl,
+	  trunk/smarty/templates/memes_grid.tpl,
+	  trunk/smarty/templates/post_1.tpl,
+	  trunk/smarty/templates/post_2.tpl,
+	  trunk/smarty/templates/post_3.tpl: Support for youtube video
+	  content.
+	  In the future we will enable more content type, we are using the
+	  is_micro_content field, 0 = url, 1=plain text (no url),
+	  2=youtube video.
+
+2006-03-15 14:41  eadiaz
+
+	* trunk/ChangeLog: new release
+
 2006-03-15 14:37  eadiaz
 
 	* trunk/public_html/index.php, trunk/public_html/locale.es:
