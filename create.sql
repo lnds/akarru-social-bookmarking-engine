@@ -82,6 +82,7 @@ CREATE TABLE `posts` (
   `rank` int(11) default '0',
   `votes` int(11) NOT NULL default '0',
   `is_micro_content` int(11) NOT NULL default '0',
+  `comments` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `idx_post_dates` (`date_posted`),
   KEY `idx_post_submiters` (`submitted_user_id`),
