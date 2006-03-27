@@ -18,7 +18,7 @@
 		  $bm_errors++;
 	  }
 	  if ($bm_errors == 0) {
-		  if ($bm_users->do_login($_POST['user'],$_POST['pass'])) {
+		  if ($bm_users->do_login($_POST['user'],$_POST['pass'],$_POST['remember'])) {
 			  $url = $_POST['from'];
 			  header("Location: $url");
 			  exit;
@@ -33,8 +33,16 @@
   }
   else
   {
-	  $from = $_GET['from'].'.php';
+	  $from = $_GET['from'].'.php?post=1';
+	  if (!empty($_GET['url'])) {
+		  $from .= '&url='.$_GET['url'];
+	  }
+	  if (!empty($_GET['title'])) {
+		  $from .= '&title='.$_GET['title'];
+	  }
+
   }
+  $smarty->assign('community', true);
   $smarty->assign('content_title', 'login');
   $smarty->assign('from', $from);
   $smarty->assign('content', 'login');
