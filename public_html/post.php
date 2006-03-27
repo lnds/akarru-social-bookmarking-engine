@@ -1,12 +1,24 @@
 <?php
   include_once('akarru.lib/common.php');
+
   $bm_cats = new categories($bm_db);
   $bm_cats = $bm_cats->fetch_all();
   $smarty->assign('bm_cats', $bm_cats);
 
   if (!$bm_users->is_logged_in()) {
 	  $bm_home = $_GET['page'];
-	  header("Location: login.php?from=post");
+	  $login_url = 'login.php?from=post';
+	  $action = '';
+	  if (!empty($_GET['title'])) {
+		  $action .= '&title='.check_plain($_GET['title']);
+	  }
+	  if (!empty($_GET['url'])) {
+		  $action .= '&url='.urlencode($_GET['url']);
+	  }
+	  if (!empty($action)) {
+		  $login_url .= '&action=ep'.$action;
+	  }
+	  header("Location: $login_url");
 	  exit();
 	  return;
   }
@@ -14,7 +26,13 @@
   if (empty($_POST) || empty($_POST['step']))
   {
 	  $step = 1;
-	  $smarty->assign('url', 'http://');
+	  if (!empty($_GET['url'])) {
+		  $smarty->assign('url', $_GET['url']);
+	  }
+	  else {
+		  $smarty->assign('url', 'http://');
+	  }
+	  $smarty->assign('title', $_GET['title']);
 	  $smarty->assign('meme_trackback', '');
 
   }
@@ -31,6 +49,9 @@
 	 if ($_POST['step'] == 1) {
    		 $title = $_POST['title'];
 		 $url   = $_POST['url'];
+		 if ($url == 'http://') {
+			 $url = '';
+		 }
 		 $smarty->assign('content_type',  $_POST['content_type']);
 		 if (empty($title)) {
 			 $smarty->assign('error_title', true);
@@ -54,7 +75,9 @@
 		 if ($bm_errors == 0) {
 			 $step = 2;
 			 $smarty->assign('cats', $bm_options);
-			 $smarty->assign('meme_trackback', find_trackback($url));
+			 $info = find_media_info($url);
+			 $smarty->assign('meme_trackback', $info[0]);
+			 $smarty->assign('favicon', $info[1]);
 		 }
 	 }
 	 elseif ($_POST['step'] == 2) {
@@ -64,6 +87,7 @@
 		 $content_body = $_POST['content_body'];
 		 $category = $_POST['category'];
 		 $meme_trackback = $_POST['meme_trackback'];
+		 $favicon = $_POST['favicon'];
 		 $meme_tags = $_POST['meme_tags'];
 
 		 $smarty->assign('title', check_plain($title));
@@ -82,6 +106,7 @@
 		 $smarty->assign('category_name', $bm_options[$category]);
 		 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 		 $smarty->assign('meme_tags', check_plain($meme_tags));
+		 $smarty->assign('favicon', $favicon);
 		 $smarty->assign('micro_content', get_youtube($url));
 		 if ($bm_errors == 0) {
 			 $step = 3;
@@ -102,6 +127,7 @@
 			 $category = $_POST['category'];
 			 $meme_trackback = $_POST['meme_trackback'];
 			 $meme_tags = $_POST['meme_tags'];
+			 $favicon = $_POST['favicon'];
 
 
 			 $smarty->assign('title', check_plain($title));
@@ -113,6 +139,7 @@
 			 $smarty->assign('meme_tags', check_plain($meme_tags));
 			 $smarty->assign('cats', $bm_options);
 			 $smarty->assign('micro_content', get_youtube($url));
+			 $smarty->assign('favicon', $favicon);
 		 }
 		 else
 		 {
