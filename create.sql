@@ -14,6 +14,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `debate`
+--
+
+DROP TABLE IF EXISTS `debate`;
+CREATE TABLE `debate` (
+  `id` int(11) NOT NULL auto_increment,
+  `user_id` int(11) default NULL,
+  `position` int(11) default NULL,
+  `post_id` int(11) default NULL,
+  `comment` text,
+  `date_posted` datetime default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `idx_debate_meme` (`post_id`),
+  KEY `idx_debate_user` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `post_cats`
 --
 
@@ -83,6 +100,10 @@ CREATE TABLE `posts` (
   `votes` int(11) NOT NULL default '0',
   `is_micro_content` int(11) NOT NULL default '0',
   `comments` int(11) NOT NULL default '0',
+  `icon` varchar(200) default NULL,
+  `debate_0` int(11) default '0',
+  `debate_neg` int(11) default '0',
+  `debate_pos` int(11) default '0',
   PRIMARY KEY  (`ID`),
   KEY `idx_post_dates` (`date_posted`),
   KEY `idx_post_submiters` (`submitted_user_id`),
@@ -145,9 +166,11 @@ CREATE TABLE `users` (
   `website` varchar(200) default NULL,
   `blog` varchar(200) default NULL,
   `fullname` varchar(200) default NULL,
+  `persistent_session` varchar(64) default NULL,
   PRIMARY KEY  (`ID`),
   KEY `idx_username` (`username`),
-  KEY `idx_user_email` (`email`)
+  KEY `idx_user_email` (`email`),
+  KEY `idx_persist_session` (`persistent_session`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
