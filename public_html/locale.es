@@ -110,4 +110,7 @@ Visite esta direcci&oacute;: %s para ingresar con su nueva clave
 Usted puede cambiar su clave modificando su perfil
 ";
 
+$bl_community = 'Comunidad';
+$bl_help = 'preguntas frecuentes';
+$bl_about = 'qui&eacute;nes somos';
 ?>
