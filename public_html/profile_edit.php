@@ -28,6 +28,8 @@
 	  else
 	  {
 		  if (!empty($_POST['pass'])) {
+			  $pass = $_POST['pass'];
+			  $confirm_pass = $_POST['confirm_pass'];
 			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) {
 				  $bm_content = 'akarru.gui/profile_form.php';
 				  $bm_error_confirm_pass = $be_pass_coincidence;
