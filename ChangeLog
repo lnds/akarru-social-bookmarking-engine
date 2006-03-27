@@ -1,3 +1,142 @@
+2006-03-27 16:27  eadiaz
+
+	* trunk/public_html/anon24.png: anon image 24x24
+
+2006-03-27 16:26  eadiaz
+
+	* trunk/public_html/unpopular.php: ??
+
+2006-03-27 16:25  eadiaz
+
+	* trunk/public_html/popular.php: ???
+
+2006-03-27 16:24  eadiaz
+
+	* trunk/public_html/post.php: adds support for external plugins,
+	  like Sociable.
+
+2006-03-27 16:20  eadiaz
+
+	* trunk/public_html/profile_edit.php: fix bug, people couldn't
+	  change passwords.
+
+2006-03-27 16:19  eadiaz
+
+	* trunk/public_html/login.php: Added support for persistent
+	  session.
+
+2006-03-27 16:17  eadiaz
+
+	* trunk/public_html/locale.es: new labels added
+	* trunk/public_html/help.php: help.php was doing unnecesary work
+
+2006-03-27 16:16  eadiaz
+
+	* trunk/public_html/config.php:
+
+2006-03-27 16:15  eadiaz
+
+	* trunk/public_html/comment.php: add debate room.
+
+2006-03-27 16:14  eadiaz
+
+	* trunk/public_html/circulation.php: closing brace added, perhaps
+	  this generated bug reported by Claude?
+
+2006-03-27 16:13  eadiaz
+
+	* trunk/public_html/ajax_click.php: added user as parameter for
+	  click method.
+
+2006-03-27 16:12  eadiaz
+
+	* trunk/public_html/about.php: eliminates hard coded text on
+	  about.php
+
+2006-03-27 16:11  eadiaz
+
+	* trunk/public_html/styles/img/main-bg.png:
+
+2006-03-27 16:10  eadiaz
+
+	* trunk/public_html/styles/memes.css: eliminates some background
+	  images.
+
+2006-03-27 16:08  eadiaz
+
+	* trunk/public_html/akarru.lib/common.php: adds support for
+	  comunity
+
+2006-03-27 16:07  eadiaz
+
+	* trunk/public_html/akarru.lib/html_manager.php: find_media_info()
+	  replaces find_trackback(), it includes a code of favicon
+	  detection.
+
+2006-03-27 15:09  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: First step for a
+	  refactoring, more simples sql query.
+	  Uses new features on database.php
+
+2006-03-27 15:08  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: Added persistent
+	  sessions, uses a secure algorithm, please check your database
+	  structure.
+
+2006-03-27 15:06  eadiaz
+
+	* trunk/smarty/templates/login.tpl,
+	  trunk/smarty/templates/password_sent.tpl: added checkbox for
+	  remember password.
+	  added password_sent.tpl
+
+2006-03-27 15:05  eadiaz
+
+	* trunk/smarty/templates/post_1.tpl,
+	  trunk/smarty/templates/post_2.tpl,
+	  trunk/smarty/templates/post_3.tpl: suport for different types of
+	  memes content.
+
+2006-03-27 15:04  eadiaz
+
+	* trunk/smarty/templates/java_script.tpl,
+	  trunk/smarty/templates/master_page.tpl,
+	  trunk/smarty/templates/memes_grid.tpl,
+	  trunk/smarty/templates/profile.tpl: New layout, support for
+	  debates, site screenshots via simpleapi.
+	  Added community, and gravatars on posts and comments
+
+2006-03-27 15:00  eadiaz
+
+	* trunk/smarty/templates/comment.tpl: added debates room (salon de
+	  debates).
+	  New layout for comments
+	* trunk/smarty/templates/about.tpl: Added space at bottom
+
+2006-03-27 14:59  eadiaz
+
+	* trunk/smarty/configs/site.conf: New labels associated with the
+	  community and debate
+
+2006-03-27 14:30  eadiaz
+
+	* trunk/create.sql: New table debate, for debate room.
+	  New fields on posts for debate acounting.
+
+2006-03-27 03:07  eadiaz
+
+	* trunk/public_html/akarru.lib/database.php: Introduce
+	  get_record_object and get_recordset methods for better
+	  performance.
+	  Fix bug related to fetch method, always return an array (empty
+	  array when no rows founds).
+
+2006-03-20 00:53  eadiaz
+
+	* trunk/ChangeLog: release to sourceforge
+
 2006-03-20 00:42  eadiaz
 
 	* trunk/create.sql: Includes comments field in posts table
