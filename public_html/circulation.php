@@ -4,6 +4,7 @@
 			header("Location: index.php");
 			exit();
 			return;
+	}
   include_once('akarru.lib/common.php');
   $smarty->assign('content_title', 'circulaci&oacute;n');
 
