@@ -32,6 +32,7 @@ el bot&oacute;n {#post_submit_label#}
 	categor&iacute;a: {$category_name}<input type="hidden" name="category" value="{$category}" />&nbsp;|&nbsp
 	{if $meme_tags}etiquetas: {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">trackback</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}
 	<input type="hidden" name="step" value="{$step}" /> 
+	<input type="hidden" name="favicon" value="{$favicon}" />
 	<input type="hidden" name="content_type" value="{$content_type}" />
 	</div></td>
   </tr>

@@ -4,8 +4,10 @@
 <tr><td>&nbsp;</td></tr>
 <tr><td class="view-label-class">{#title_label#}</td></tr>
 <tr><td class="view-data-class">{$title}<input type="hidden" name="title" value="{$title}" /></td></tr>
+{if $url}
 <tr><td class="view-label-class">{#url_label#}<input type="hidden" name="url" value="{$url}" /></td></tr>
 <tr><td class="view-data-class">{$url|wordwrap:45:"<br />\n":true}</td></tr>
+{/if}
 <tr><td class="view-label-class"><font color="red">*</font>{#content_label#}</td></tr>
 {if $error_content_body}<tr><td class="error">{#error_content_body#}</td></tr>{/if}
 <tr><td><textarea name="content_body" class="view-input-class" cols="45" rows="4">{$content_body}</textarea></td></tr>
@@ -17,7 +19,8 @@
 <tr><td class="view-label-class">{#trackback_label#}</td></tr>
 <tr><td><input class="view-input-class" value="{$meme_trackback}" name="meme_trackback" size="60" /></td></tr>
 {if $error_trackback}<tr><td class="error">{#error_trackback#}</td></tr>{/if}
-<tr><td><input type="hidden" name="content_type" value="{$content_type}" /><input type="hidden" name="step" value="{$step}" />
+<tr><td><input type="hidden" name="content_type" value="{$content_type}" />
+<input type="hidden" name="favicon" value="{$favicon}" /><input type="hidden" name="step" value="{$step}" />
 <input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
 </td></tr>
 </table>

@@ -21,6 +21,7 @@
 	<select class="view-input-class" name="content_type">
 		<option value="0" selected="selected">url</option>
 		<option value="2">youtube</option>
+		<option value="1">texto</option>
 	</select>
 </td></tr>
 <tr><td><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
