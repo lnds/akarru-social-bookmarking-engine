@@ -48,3 +48,5 @@ La votación te permite destacar las historias más valiosas, las que son destacad
 
 (c) 2006 Eduardo D&iacute;az
 
+<div style="height:1600px;_height:1600px;">&nbsp;</div>
+
