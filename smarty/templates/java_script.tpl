@@ -10,12 +10,13 @@ function update_vote_div(div_name,user_id){
 	return false;
 }
 
-function goto_url(meme_id)
+var url_to_go;
+function goto_url(meme_id,url)
 {
+	url_to_go = url;
 {/literal}
 	ajaxCall("{#ajax_service_click#}?meme_id="+meme_id);
 {literal}
-return true;
 }
 
 
@@ -54,6 +55,10 @@ function ajaxCall(file){
 
 function handleResponseNull()
 {
+	if(xmlObj.readyState == 4)
+	{
+	document.location = url_to_go;
+}
 }
 
 function handleResponse(){	
@@ -68,6 +73,13 @@ function handleResponse(){
 				div_name="vote_count_"+post_id;
 				mydiv=document.getElementById(div_name);
 				mydiv.innerHTML=parseInt(counter);
+				div_name="vote_button_"+post_id;
+				mydiv=document.getElementById(div_name);
+				mydiv.innerHTML = '';
+				div_name="vote_label_"+post_id;
+				mydiv=document.getElementById(div_name);
+				mydiv.innerHTML = '';
+				
 			}
     }
 }

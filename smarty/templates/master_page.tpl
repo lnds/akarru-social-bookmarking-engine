@@ -42,11 +42,11 @@
 					{/if}
 				</li>
 				<li>
-				<a href="stats.php">ranking</a>
 				</li>
 				<li>
-				<a href="portugues/index.php" alt="portugues">PT</a>
+				<a href="http://www.blogmemes.net/" alt="ingl&eacute;">EN</a>
 				</li>
+				
 			</ul>
 			<div id="header-banner">
 				{literal}
@@ -81,9 +81,17 @@
 			<div id="sidebar-cat">
 				<h1><span style="padding-right: 1.5em;">{#categories_label#}</span></h1>
 				<div style="padding-left:8px">
-				{html_table loop=$cats_array table_attr='border="0" align="center" width="100%" cellpadding="2" cellspacing="2"'}
+				{html_table cols="3" loop=$cats_array table_attr='border="0" align="center" width="100%" cellpadding="2" cellspacing="2"'}
 				</div>
+				
 				<div id="folk" style="padding-right: 15px;">
+{if $community}				
+{else}
+				<h2 >{#community_label#}</h2>
+				<div style="padding-left:2em">
+{html_table loop=$community_sample table_attr='border=0 cellpadding=4 align=center' cols="3"}</div>
+{/if}
+<a href="community.php">{#community_link#}</a>
 					<h2>
 					<span style="padding-right: 0.5em;"><a style="font-size:16pt;" href="show_folksonomy.php">{#folksonomy_caption#}</a></span>
 					</h2>
@@ -110,11 +118,10 @@
 <div style="background:none;background-color:white;padding-left:2em;padding-right:2em">
 </div>					
 
-{if $show_ads }
+<div style="background:none;background-color:white;padding-left:2em;padding-right:2em;height:600px"> 
 {literal}
 {/literal}
 </div>
-{/if}
 </div>
 			</div>
 		</div>
@@ -125,29 +132,8 @@
 	<div id="main-end">
 	</div>
 	<div id="bar-creditos" class="creditos">
-		<span class="creditos-texto"><a href="about.php">{#about_label#}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.lnds.net/2005/12/sugerencias_para_akarru.html#comments">{#suggestions_label#}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:admin@blogmemes.com">contacto</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="promote.php">promu&eacute;venos</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="stats.php">ranking</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://sourceforge.net/projects/akarru">usamos akarr&uacute;</a></span>
+		<span class="creditos-texto"><a href="about.php">{#about_label#}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://trac.blogmemes.com/trac_script/newticket">{#suggestions_label#}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:admin@blogmemes.com">contacto</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="promote.php">promu&eacute;venos</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="stats.php">ranking</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://trac.blogmemes.com/">usamos akarr&uacute;</a></span>
 		<span class="creditos-texto" style="float:right">
-			{literal}    
-			<!--WEBBOT bot="HTMLMarkup" startspan ALT="Site Meter" -->
-			<script type="text/javascript" language="JavaScript">var site="s18BlogMemes"</script>
-			<script type="text/javascript" language="JavaScript1.2" src="http://s18.sitemeter.com/js/counter.js?site=s18BlogMemes">
-			</script>
-			<!--- 
-			<noscript>
-			<a href="http://s18.sitemeter.com/stats.asp?site=s18BlogMemes" target="_top">
-			<img src="http://s18.sitemeter.com/meter.asp?site=s18BlogMemes" alt="Site Meter" border="0"/></a>
-			</noscript>
-			-->
-			<!-- Copyright (c)2005 Site Meter -->
-			<!--WEBBOT bot="HTMLMarkup" Endspan -->
-			{/literal}
-		</span>
-		<span class="creditos-texto" style="float:right"> 
-		<a href="http://feeds.feedburner.com/BlogMemes"><img src="http://feeds.feedburner.com/~fc/BlogMemes?bg=315d84&amp;fg=FFFFFF&amp;anim=0" height="26" width="88" style="border:0" alt="" /></a>
-		</span>
-		<span class="creditos-texto" style="float:right">
-		<a href="http://www.bitacoras.com/top500/"><img src="http://www.bitacoras.com/top500/top.php?url=http://www.blogmemes.com/" border="0" title="Top500 de Bitacoras.com" /></a>
-		
 		</span>
 	</div>
 </body>

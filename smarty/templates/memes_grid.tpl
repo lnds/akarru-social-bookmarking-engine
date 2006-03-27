@@ -10,12 +10,12 @@
   <td colspan="2">
     <div class="votos" >
 	  <h3  id="vote_count_{$meme->ID}" style="text-align:center" align="center">
-	  {$meme->vote_count}
+	  {$meme->votes}
 	  </h3>
 	  {if $meme->voted <= 0}
-	  <p>{#votes_label#}</p>
+	  <p id="vote_label_{$meme->ID}">{#votes_label#}</p>
 	  {/if}
-	   <div class="vote-class">
+	   <div class="vote-class" id="vote_button_{$meme->ID}">
 	{if $logged_in }
 	{if $meme->voted <= 0}
 	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','{$logged_userid}')">
@@ -26,13 +26,21 @@
 	{/if}
 	</div>
     </div>
-    <div class="meme-content"><br/><a href="{$meme->url}" onclick="goto_url({$meme->ID})">{$meme->title}</a>
-	<div class="whowhen-class">&nbsp;{#posted_by_label#}&nbsp;<img src="{$meme->small_gravatar}" />&nbsp;<a class="whowhen-class" 
-	style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
-	&nbsp;{$meme->date_posted|date_format:$bf_date_posted} 
-	{if $meme->vote_count > 7}&nbsp;|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
-	
+    <div class="meme-content"><br/>
+    <a href="{$meme->url}" onclick="goto_url({$meme->ID},'{$meme->url}')">{$meme->title}</a>
+	<div class="whowhen-class">
+	&nbsp;{#cat_label#}: <a style="font-size:10px" href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>
+	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}  
+	&nbsp;{#posted_by_label#}&nbsp;
+	<a href="profile.php?user_name={$meme->username}"><img src="{$meme->small_gravatar}" border="0"/></a><br/>
+	<a style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
+	</div>
 	<p style="right-margin:1em">
+	{if $meme->page_image}
+	<a href="{$meme->url}">	
+	<img border="0" style="float:right;border:none" src="{$meme->page_image}" alt="snapshot" />
+	</a>
+	{/if}
 	{if $meme->micro_content}
 	<div style="padding:4px">{$meme->micro_content}</div>
 	{/if}
@@ -41,14 +49,22 @@
     </div>
   </td>
   </tr>
-  <tr><td colspan="2">&nbsp;&nbsp;<div style="padding-left:2em" class="meme-footer-class"><a href="comment.php?meme_id={$meme->ID}">{#comments_label#} {$meme->comment_count}</a> | <a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | <a href="{$meme->url}"  onclick="goto_url({$meme->ID})">{#url_label#}</a> | {#cat_label#} : <a href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>&nbsp;{if $meme->vote_count >= 7}|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
+  <tr><td colspan="2"><div style="padding-left:1em" class="meme-footer-class">{#comments_label#} <a href="comment.php?meme_id={$meme->ID}#debate">{$meme->comments}</a> | {#debate_label#}: <a href="comment.php?meme_id={$meme->ID}#debate">{$meme->debate_pos}/{$meme->debate_0}/{$meme->debate_neg}</a> | <a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | {#url_label#}&nbsp;<a href="{$meme->url}" onclick="goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:32:"..."}</a>&nbsp;</div>
   </td></tr>
 </table>
-
-<div class="infoboxFooter"><p>&nbsp;</p></div>
+<hr />
 </div>
-<br/>
 {/foreach}
 {include file="paginate.tpl"}
 <div>
+<script type="text/javascript" src="http://embed.technorati.com/embed/kru95iwk92.js"></script>
+<div>
+<form Method="POST" action="http://www.feedblitz.com/f/f.fbz?AddNewUserDirect">
+Recibe BlogMemes por Email<br><input name="EMAIL" maxlength="255" type="text" size="30" value=""><br>
+<input name="FEEDID" type="hidden" value="30874">
+<input type="submit" value="Subscribeme">
+<br>Powered by <a href="http://www.feedblitz.com">FeedBlitz</a></form> 
+				</div>
+
 </div>
+
