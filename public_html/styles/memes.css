@@ -227,7 +227,7 @@ padding-left:1em;float:left;margin-top:2em;margin-right:1em;margin-bottom:1em;
 }
 
 .meme-bg {
- 	background: url(img/infobox-topleft.gif) top left no-repeat;
+ 	background: none;
 	left-padding:1em;
 }
 
@@ -300,14 +300,9 @@ padding-left:1em;float:left;margin-top:2em;margin-right:1em;margin-bottom:1em;
 	font-size: 11pt;
 }
 
-#whowhen {
-	font-size: 9px;
-	color: #207741;
-	font-weight: bold;
-
-}
-
 .whowhen-class {
+	text-align:right;
+	padding-right:1em;
 	font-size: 9px;
 	color: #207741;
 	font-weight: bold;
