@@ -30,8 +30,8 @@ function sanitize($value)
 	*/
 	function connect()
 	{
-		$this->db=mysql_connect($this->db_host,$this->db_user,$this->db_pass);
-		mysql_select_db($this->db_name,$this->db);
+		$this->db= @mysql_connect($this->db_host,$this->db_user,$this->db_pass);
+		@mysql_select_db($this->db_name,$this->db);
 		return $this->db;
 	}
 
@@ -44,6 +44,16 @@ function sanitize($value)
 		return $this->rows;
 	}
 
+
+	function get_recordset($sql)
+	{
+		return $this->do_query($sql);
+	}
+
+	function get_record_object($rs)
+	{
+		return @mysql_fetch_object($rs);
+	}
 	// use this for select
 	// rows is the number of rows selected
 	// return an array of objects
@@ -51,13 +61,14 @@ function sanitize($value)
 	{
 		$query = $this->do_query($sql);
 		$this->rows = mysql_num_rows($query);
-//		echo "rows = ".$this->rows;
+		$returned = array();
 		while($row=@mysql_fetch_object($query))
 		{
 			$returned[] = $row;
 		}
 		return $returned;
 	}
+
 
 	function fetch_scalar($sql)
 	{
@@ -78,9 +89,10 @@ function sanitize($value)
 	function do_query($sql)
 	{
 
-		$query = mysql_query($sql) or die("error: ".mysql_error());
+		$query = @mysql_query($sql) or die("error: ".mysql_error());
 		return $query;
 	}
+
 
 	function count_rows($sql)
 	{
