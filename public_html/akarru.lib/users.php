@@ -8,7 +8,7 @@ class users {
 	{
 		$this->db = $db;
 		$psession = $_COOKIE["bm_login_cookie"];
-		if (empty($psession)) 
+		if (!isset($psession))
 			$this->user = $_SESSION['user_data'];
 		else
 		{
@@ -17,27 +17,31 @@ class users {
 		}
 	}
 
-	function is_logged_in(){
+	function is_logged_in()
+	{
 		$psession = $_COOKIE["bm_login_cookie"];
-		if (empty($psession)) 
-			$this->user = $_SESSION['user_data'];
+		$pers_user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
+		if ($pers_user->ID > 0)
+		{
+			$this->user = $pers_user;
+		}
 		else
 		{
-			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
-			if ($this->user == FALSE) 
-				unset($this->user);
+			$this->user = $_SESSION['user_data'];
 		}
 		return isset($this->user);
 	}
 
-	function logoff(){
+	function logoff()
+	{
 		$psession = $_COOKIE["bm_login_cookie"];
 		$this->db->execute("update users set persistent_session = null where persistent_session = '$psession'");
+		unset($this->user);
 		@session_destroy();
 		@session_unset();
 		$sessionid=session_name();
 		setcookie ($sessionid, "", time()-3600);
-		setcookie ("bm_login_cookie", time()-3600);
+		setcookie ("bm_login_cookie", '', time()-3600, '/', false);
 		return true;
 	}
 
@@ -78,12 +82,11 @@ class users {
 		$md_pass = md5($pass);
 		$now = time();
 		$this->db->execute("insert into users(username,email,password,join_date) values('$user','$email','$md_pass', $now)");
-		$this->db->execute("insert into blogmemes_portugues.users(username,email,password,join_date) values('$user','$email','$md_pass', $now)");
 		return $this->do_login($user, $pass);
 	}
 
 
-	function do_login($user_name, $pass, $remember=false)
+	function do_login($user_name, $pass, $remember)
 	{
 		$user_name = sanitize(strtolower($user_name));
 
@@ -91,7 +94,7 @@ class users {
 		if ($user->password == md5($pass)) 
 		{
 			$_SESSION['user_data'] = $user;
-			if ($remember)
+			if (!empty($remember))
 			{
 				$psession = md5($user->user_name . '-' . time());
 				$uid = $user->ID;
@@ -107,13 +110,6 @@ class users {
 	function update_profile($data)
 	{
 		$sql  = ' update users set ';
-		$sql .= ' email = '.sanitize($data['email']).',';
-		$sql .= ' fullname= '.sanitize($data['fullname']).',';
-		$sql .= ' website = '.sanitize($data['website']).',';
-		$sql .= ' blog = '.sanitize($data['blog']).' ';
-		$sql .= ' where ID = '.sanitize($data['user_id']);
-		$this->db->execute($sql);
-		$sql  = ' update blogmemes_portugues.users set ';
 		$sql .= ' email = '.sanitize($data['email']).',';
 		$sql .= ' fullname= '.sanitize($data['fullname']).',';
 		$sql .= ' website = '.sanitize($data['website']).',';
@@ -170,10 +166,7 @@ class users {
 			return false;
 		}
 		$sql = 'update users set password = \''.md5($new_pass).'\' where ID = '.$user_id;
- 	$this->db->execute($sql);
-	$sql = 'update blogmemes_portugues.users set password = \''.md5($new_pass).'\' where ID = '.$user_id;
-$this->db->execute($sql);
-
+		$this->db->execute($sql);
 		return true;
 	}
 
