@@ -1,3 +1,12 @@
+2006-03-29 22:44  eadiaz
+
+	* trunk/public_html/community.php: community.php wasn't in
+	  previous distribution.
+
+2006-03-27 16:47  eadiaz
+
+	* trunk/ChangeLog: new release
+
 2006-03-27 16:27  eadiaz
 
 	* trunk/public_html/anon24.png: anon image 24x24
