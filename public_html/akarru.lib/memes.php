@@ -446,8 +446,8 @@ class memes {
 	{
 		$meme = $this->get_meme($meme_id);
 
-		$nv = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id ");
-		$nc = $this->db->fetch_scalar("select count(*) from post_comments where post_id = $meme_id ");
+		$nv = $meme->votes;
+		$nc = $meme->comments;
 		$now = time();
 		$hours_posted = ceil(($now - $meme->date_posted)/3600);
 		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
