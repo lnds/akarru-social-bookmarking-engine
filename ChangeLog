@@ -1,3 +1,35 @@
+2006-04-03 02:29  eadiaz
+
+	* trunk/public_html/edit_meme.php,
+	  trunk/smarty/templates/edit_post.tpl: Memes can be edited by
+	  users now.
+
+2006-04-03 02:16  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: Allows editing of memes.
+
+2006-04-03 02:12  eadiaz
+
+	* trunk/public_html/styles/img/meme-votar.png:
+	* trunk/smarty/templates/memes_grid.tpl: fixed
+
+2006-04-03 02:09  eadiaz
+
+	* trunk/smarty/templates/community_grid.tpl: This file was missing.
+
+2006-03-29 23:52  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: Faster promote code.
+
+2006-03-29 23:49  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: Fix bug #19, when
+	  checkbox was unchecked doesn't allow login.
+
+2006-03-29 22:45  eadiaz
+
+	* trunk/ChangeLog: new release for SF.
+
 2006-03-29 22:44  eadiaz
 
 	* trunk/public_html/community.php: community.php wasn't in
