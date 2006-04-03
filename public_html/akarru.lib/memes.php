@@ -16,9 +16,17 @@ class memes {
 	function get_voters($meme_id)
 	{
 		$meme_id = sanitize($meme_id);
-		$sql = "select u.username, u.email from users u left join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
-		return $this->filter_result($sql);
+		$sql = "select u.username, u.email from users u join post_votes pv on pv.user_id = u.ID where pv.post_id = $meme_id ";
+		$result = array();
+		$rs = $this->db->get_recordset($sql);
+		while ($user = $this->db->get_record_object($rs)) {
+			$user->gravatar = get_gravatar($bm_url, $user->email, 40);
+			$result[] = '<a href="profile.php?user_name='.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
+				.'<br/><a style="font-size:10px" href="profile.php?user_name='.$user->username.'">'.substr($user->username, 0, 10).'</a>';
+		}
+		return $result;
 	}
+
 
 	function search_memes($term){
 		$sql="select p.*,pc.cat_title,u.username,u.email, u.ID as user_id, pc.ID as cat_id from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ";
@@ -54,7 +62,7 @@ class memes {
 		}
 		
 		
-		$sql =  'select p.*, pc.cat_title, u.username, u.email, u.ID as user_id ';
+		$sql =  'select p.*, pc.ID as cat_id, pc.cat_title, u.username, u.email, u.ID as user_id ';
 		$sql .= 'from posts p, post_cats pc, users u ';
 		$sql .= 'where pc.ID=p.category and u.ID=p.submitted_user_id and p.votes >= '.$this->promote_threshold;
 
@@ -79,20 +87,22 @@ class memes {
 
 	function get_meme($id)
 	{
-		$sql =  'select p.*, pc.cat_title, u.username, u.email, u.ID as user_id ';
+		$sql =  'select p.*, pc.cat_title, pc.ID as cat_id, u.username, u.email, u.ID as user_id ';
 		$sql .= 'from posts p, post_cats pc, users u ';
 		$sql .= "where p.ID = $id and pc.ID=p.category and u.ID=p.submitted_user_id ";
-		$result = $this->db->fetch_object($sql);
-		$result->small_gravatar = get_gravatar($bm_url, $result->email, 16); 
-		if ($result->is_micro_content == 2) {
-			$result->micro_content = get_youtube($result->url);
+		$meme = $this->db->fetch_object($sql);
+		$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16); 
+		if ($meme->is_micro_content == 2) {
+			$meme->micro_content = get_youtube($meme->url);
 		}
 		$uid = $this->user_id;
 		if ($uid > 0) 
-			$result->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $id and user_id = $uid ");
-		if ($result->is_micro_content == 0 && ceil(($result->votes+$result->debate_pos)/2)+$meme->debate_0 + $meme->debate->neg >= 2*$this->promote_threshold) 
-			$result->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
-		return $result;
+			$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $id and user_id = $uid ");
+		if ($meme->is_micro_content == 0)
+			$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
+		$meme->prior_meme = $this->db->fetch_object("select ID, title from posts where ID < $id order by ID desc limit 1");
+		$meme->next_meme = $this->db->fetch_object("select ID, title from posts where ID > $id order by ID desc limit 1");
+		return $meme;
 	}
 
 	function add_comment($meme_id, $comment)
@@ -108,9 +118,6 @@ class memes {
 		$sql .= "values('$comment', $date, $user_id, $meme_id)";
 		$this->db->execute($sql);
 		$this->promote($meme_id, true);
-		$this->ping_technorati($meme_id);
-		$this->ping_feedburner($meme_id);
-		$this->ping_bitacoras($meme_id);
 
 	}
 
@@ -135,7 +142,7 @@ class memes {
 		if ($this->memes_count <= 0) {
 			return array();
 		}
-		$sql =  'select p.*, pc.cat_title, u.username, u.email, u.ID as user_id ';
+		$sql =  'select p.*, pc.cat_title, pc.ID as cat_id, u.username, u.email, u.ID as user_id ';
 		$sql .= 'from posts p, post_cats pc, users u ';
 		$sql .= 'where pc.ID=p.category and u.ID=p.submitted_user_id and p.votes < '.$this->promote_threshold;
 		$this->pages = ceil($this->memes_count / $this->records_to_page);
@@ -161,7 +168,7 @@ class memes {
 
 	function get_memes_by_user($user_id, $page=0, $sort='')
 	{
-		$sql =  'select p.*,pc.cat_title,u.username,pc.ID as cat_id, u.email, u.ID as user_id from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
+		$sql =  'select p.*,pc.ID as cat_id, pc.cat_title,u.username,pc.ID as cat_id, u.email, u.ID as user_id from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and u.ID = '.$user_id.' and votes >= '.$this->promote_threshold.' ';
 		$this->memes_count = $this->db->count_rows($sql);
 		$this->pages = ceil($this->memes_count / $this->records_to_page);
@@ -180,7 +187,7 @@ class memes {
 
 	function get_memes_by_category($cat_id, $page=0, $sort='', $limit=0)
 	{
-		$sql =  'select p.*,pc.cat_title,u.username,u.ID as user_id, u.email, pc.ID as cat_id from posts p, post_cats pc, users u  where pc.ID=p.category and u.ID=p.submitted_user_id ';
+		$sql =  'select p.*, pc.ID as cat_id, pc.cat_title,u.username,u.ID as user_id, u.email, pc.ID as cat_id from posts p, post_cats pc, users u  where pc.ID=p.category and u.ID=p.submitted_user_id ';
 		$sql .= ' and pc.ID = '.$cat_id. ' and p.votes >= '.$this->promote_threshold.' ';
 		$this->memes_count = $this->db->count_rows($sql);
 		$this->pages = ceil($this->memes_count / $this->records_to_page);
@@ -213,13 +220,10 @@ class memes {
 				$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
 			}
 			$mc = $meme->is_micro_content;
-			if ($mc == 2) {
-					$meme->micro_content = get_youtube($meme->url);
-			}
-			else {
-				if ((ceil(($meme->votes+$meme->debate_pos)/2) + $meme->debate_0 + $meme->debate->neg) >= 2*$this->promote_threshold)
-					$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
-			}
+			if ($mc == 2) 
+				$meme->micro_content = get_youtube($meme->url);
+			else if (!empty($meme->url))
+				$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
 			$meme->content = replace_urls($meme->content);
 			$result[] = $meme;
 			$counter++;
@@ -284,7 +288,7 @@ class memes {
 		$this->db->execute($sql);
 		$this->db->execute("update posts set votes = votes + 1 where ID = $meme_id");
 		$this->promote($meme_id, $promote);
-		$this->debate($meme_id, $user_id, 1);
+		$this->debate($meme_id, $user_id, 0);
 	}
 
 	function check_post_url($url)
@@ -328,9 +332,10 @@ class memes {
 		$date_posted = time();
 		$trackback = $data['meme_trackback'];
 		$content_type = $data['content_type'];
+		$allows_debates = $data['debates'] == 1 ? 1 : 0;
 		$icon = $data['favicon'];
-		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,url,submitted_user_id,trackback,is_micro_content,icon) ';
-		$sql .= "values('$title','$content',$date_posted,$date_posted,$category,'$url',$user_id,'$trackback', $content_type,'$icon')";
+		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,url,submitted_user_id,trackback,is_micro_content,icon, allows_debates) ';
+		$sql .= "values('$title','$content',$date_posted,$date_posted,$category,'$url',$user_id,'$trackback', $content_type,'$icon', $allows_debates)";
 		if ($this->db->execute($sql))
 		{
 			$meme_id = $this->db->insert_id;
@@ -342,37 +347,32 @@ class memes {
 				$this->send_trackback($data);
 			}
 			$this->vote($meme_id, $user_id, true);
-			$this->ping_technorati($meme_id);
 			$this->ping_feedburner($meme_id);
-			$this->ping_bitacoras($meme_id);
-			$this->ping_blogalaxia($meme_id);
 		}
 
 	}
 
-	function ping_blogalaxia($meme_id)
-	{
-		$blogMemes = new xmlrpc_client("/ping.php?blogID=23565", "www.blogalaxia.com", 80);
-		$msg = new xmlrpcmsg("weblogUpdates.ping", 
-				array(new xmlrpcval("Nuevos Blog Memes"), 
-					  new xmlrpcval("http://www.blogmemes.com/memes_queue.php")
-					 )
-			);
-		$doPing = $blogMemes->send($msg);
-		return ($doPing && $doPing->faultCode() == 0);
-		
-	}
 
-	function ping_technorati($meme_id) 
+
+	function update_meme($data)
 	{
-		$blogMemes = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
-		$msg = new xmlrpcmsg("weblogUpdates.ping", 
-				array(new xmlrpcval("Blog Memes"), 
-					  new xmlrpcval("http://www.blogmemes.com/")
-					 )
-			);
-		$doPing = $blogMemes->send($msg);
-		return ($doPing && $doPing->faultCode() == 0);
+		$title = check_plain($data['title']);
+		$content = check_plain($data['content_body']);
+		$category = $data['category'];
+		$url = $data['url'];
+		$user_id = $data['user_id'];
+		$date_posted = time();
+		$content_type = $data['content_type'];
+		$meme_id = $data['meme_id'];
+		$allows_debates = isset($data['debates']) ? 1 : 0;
+		$sql  = "update posts set title='$title',content='$content',category=$category,url='$url',is_micro_content=$content_type,allows_debates=$allows_debates where ID = $meme_id";
+		if ($this->db->execute($sql))
+		{
+			$tags = $data['meme_tags'];
+			$this->post_tags($meme_id, $user_id, $tags);
+			$this->ping_feedburner($meme_id);
+		}
+		return true;
 	}
 
 
@@ -384,14 +384,6 @@ class memes {
 		return ($doPing && $doPing->faultCode() == 0);
 	}
 
-
-	function ping_bitacoras($meme_id) 
-	{
-		$blogMemes = new xmlrpc_client("", "ping.bitacoras.com", 80);
-		$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval("http://www.blogmemes.com/")));
-		$doPing = $blogMemes->send($msg);
-		return ($doPing && $doPing->faultCode() == 0);
-	}
 
 	function post_tags($meme_id, $user_id, $tags)
 	{
@@ -446,33 +438,24 @@ class memes {
 	{
 		$meme = $this->get_meme($meme_id);
 
-		$nv = $meme->votes;
-		$nc = $meme->comments;
+		$nv = $meme->votes + 0;
+		$nc = $meme->comments + 0;
 		$now = time();
 		$hours_posted = ceil(($now - $meme->date_posted)/3600);
 		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
-		if ($hours_promoted < 0) {
+		if ($hours_promoted < 0) 
 			$hours_promoted = 1;
-		}
-		if ($hour_posted < 0) {
+		if ($hour_posted < 0) 
 			$hours_posted = 1;
-		}
-		$delta = ($hours_posted - $hours_promoted);
-		if ($delta < 0) {
-			$delta = -$delta;
-		}
-		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+$hours_promoted+10);
+		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
 		$rank *=  1/(1+log10(10+$hours_posted*100));
 		$rank *=  10/(1+log10(10+$hours_promoted));
-		$rank = ceil($rank*log10(10*$meme->votes+10));
+		$rank = ceil($rank*log10(100*$meme->votes+10));
 
-		if ($update_promo_date) {
+		if ($update_promo_date)
 			$sql = "update posts set rank = $rank, date_promo = $now, votes = $nv, comments = $nc where ID = $meme_id";
-
-		}
-		else {
+		else 
 			$sql = "update posts set rank = $rank, votes = $nv, comments = $nc where ID = $meme_id";
-		}
 		$this->db->execute($sql);
 
 	}
