@@ -101,7 +101,7 @@ class memes {
 		if ($meme->is_micro_content == 0)
 			$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
 		$meme->prior_meme = $this->db->fetch_object("select ID, title from posts where ID < $id order by ID desc limit 1");
-		$meme->next_meme = $this->db->fetch_object("select ID, title from posts where ID > $id order by ID desc limit 1");
+		$meme->next_meme = $this->db->fetch_object("select ID, title from posts where ID > $id order by ID asc limit 1");
 		return $meme;
 	}
 
@@ -117,7 +117,7 @@ class memes {
 		$sql  = 'insert into post_comments(content,date_posted,user_id,post_id) ';
 		$sql .= "values('$comment', $date, $user_id, $meme_id)";
 		$this->db->execute($sql);
-		$this->promote($meme_id, true);
+		$this->promote($meme_id, true, 1, 0);
 
 	}
 
@@ -287,7 +287,7 @@ class memes {
 		$sql="insert into post_votes (post_id,user_id,date_voted, ip_address) values ($meme_id,$user_id,'$time', '$ip')";
 		$this->db->execute($sql);
 		$this->db->execute("update posts set votes = votes + 1 where ID = $meme_id");
-		$this->promote($meme_id, $promote);
+		$this->promote($meme_id, $promote, 0, 0);
 		$this->debate($meme_id, $user_id, 0);
 	}
 
@@ -428,18 +428,18 @@ class memes {
 				}
 			}
 		}
-		$this->promote($meme_id, true);
+		$this->promote($meme_id, true, 0, 0);
 
 	}
 
 
 	// the promotion algorithm moves memes to the front of the queue
-	function promote($meme_id, $update_promo_date=false)
+	function promote($meme_id, $update_promo_date=false, $add_comments = 0, $add_votes = 0)
 	{
 		$meme = $this->get_meme($meme_id);
 
-		$nv = $meme->votes + 0;
-		$nc = $meme->comments + 0;
+		$nv = $meme->votes + $add_votes;
+		$nc = $meme->comments + $add_comments;
 		$now = time();
 		$hours_posted = ceil(($now - $meme->date_posted)/3600);
 		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
@@ -453,9 +453,15 @@ class memes {
 		$rank = ceil($rank*log10(100*$meme->votes+10));
 
 		if ($update_promo_date)
-			$sql = "update posts set rank = $rank, date_promo = $now, votes = $nv, comments = $nc where ID = $meme_id";
+			$sql = "update posts set rank = $rank, date_promo = $now";
 		else 
-			$sql = "update posts set rank = $rank, votes = $nv, comments = $nc where ID = $meme_id";
+			$sql = "update posts set rank = $rank";
+		if ($add_votes)
+			$sql .= ", votes = $nv";
+		if ($add_comments)
+			$sql .= ", comments = $nc ";
+		$sql .= " where ID = $meme_id";
+
 		$this->db->execute($sql);
 
 	}
@@ -463,7 +469,7 @@ class memes {
 	function click($meme_id, $user_id)
 	{
 		$this->db->execute("update posts set clicks = clicks+1 where ID = $meme_id");
-		$this->promote($meme_id, true);
+		$this->promote($meme_id, true, 0, 0);
 		$this->debate($meme_id, $user_id, 0, true);
 	}
 
@@ -510,6 +516,10 @@ class memes {
 		$sql = 'select ID from posts ';
 		$rs = $this->db->get_recordset($sql);
 		while ($meme = $this->db->get_record_object($rs)) {
+
+			$nv = $this->db->fetch_scalar("select count(*) from post_votes where post_id = ".$meme->ID);
+			$nc = $this->db->fetch_scalar("select count(*) from post_comments where post_id = ".$meme->ID);
+			$this->db->execute("update posts set comments = $nc, votes = $nv where ID = ".$meme->ID);
 			$this->promote($meme->ID);
 			if (connection_aborted()) {
 				break;
