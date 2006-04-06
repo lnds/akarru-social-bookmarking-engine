@@ -52,7 +52,7 @@
 	  if ($bm_errors == 0) 
 	  {
 		  if (empty($_GET['from'])) {
-			  $url = $bm_url;
+			  $url = "profile.php?user_name=$user";
 		  }
 		  else
 		  {
