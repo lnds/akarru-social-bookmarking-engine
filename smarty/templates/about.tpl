@@ -1,28 +1,34 @@
-<em>Un Meme es una unidad de transmisión cultural</em>
+<em>Un Meme es una unidad de transmisión cultural</em><br/>
 Richard Dawkins - en el Gen Egoista
 
 <h2>Bienvenido a Blog Memes</h2>
 
 <p>
 Este proyecto es un esfuerzo para brindarle a la comunidad de 
-habla hispana un sitio con las prestaciones del famoso sitio Digg.com. 
-Este sitio parti&oacute; usando una versi&oacute;n de diggclone, actualmente estamos usando una engine propia: akarru, 
-un proyecto opensource que puedes <a href="http://sourceforge.net/projects/akarru">obtener en sourceforge</a>.
+habla hispana un mecanismo para promover y compartir enlaces, historias, videos, y otras unidades de transmisi&oacute;n cultural.
+</p>
+<p>
+Este sitio se encuentra soportado tecnol&oacute;gicamente a trav&eacute;s del proyecto opensource <a href="http://sourceforge.net/projects/akarru">akarr&uacute;</a>.
 <br />
-A diferencia de digg.com, este sitio es más general y orientado a la cultura hispano americana.
+A diferencia de otros sitios, blogmemes tiene una cobertura m&aacute;s general y orientada a la cultura, y no est&aacute; anichado
+en el &aacute;mbito de las tecnolog&iacute;.
+<br/>
+Damos preferencia al contenido en español, aunque Blogmemes.com pertenece a una <a href="http://www.blogmemes.info/">red m&aacute;s amplia</a> de sitios en distintas
+lenguas.
 </p>
 <p>
 Aquí puedes:
 </p>
 <ul>
     <li>registrarte como un nuevo usuario</li>
-    <li>publicar una nota en una de nuestras categorías</li>
-    <li>votar por las historias más interesantes (debes ingresar al sistema)</li>
-    <li>colocar comentarios sobre las historias</li>
+    <li>publicar un meme en una de nuestras categorías</li>
+    <li>promover los memes que te parezcan más interesantes (debes ingresar al sistema)</li>
+    <li>colocar comentarios sobre los memes</li>
+    <li>debatir sobre memes, cuando estos lo permiten</li>
 </ul>
 
 <p>
-La votación te permite destacar las historias más valiosas, las que son destacadas en la página inicial. 
+La promoci&oacute;n te permite destacar los memes m&aacute;s valiosos, los que son destacados en la p&aacute;gina inicial. 
 </p>
 
 </p><h2>Colaboradores</h2>
@@ -41,7 +47,7 @@ La votación te permite destacar las historias más valiosas, las que son destacad
 
 		<h3>Diseño</h3>
 <ul>
-<li> <a href="http://hackand.blogspot.com/">Radu Dutzan</a>: diseño gráfico, css y nueva imagen (por salir)</li>
+<li> <a href="http://hackand.blogspot.com/">Radu Dutzan</a>: diseño gráfico(por salir)</li>
 <li>
 		<a href="http://www.huasonic.com/">Huasonic</a>: creador del logo</li>
 </ul>		
