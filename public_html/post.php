@@ -47,6 +47,7 @@
 	 $bm_errors = 0;
 	 $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 	 if ($_POST['step'] == 1) {
+		 $smarty->assign('debates', $_POST['debates']);
    		 $title = $_POST['title'];
 		 $url   = $_POST['url'];
 		 if ($url == 'http://') {
@@ -78,6 +79,7 @@
 			 $info = find_media_info($url);
 			 $smarty->assign('meme_trackback', $info[0]);
 			 $smarty->assign('favicon', $info[1]);
+			 $smarty->assign('debates', isset($_POST['debates']));
 		 }
 	 }
 	 elseif ($_POST['step'] == 2) {
@@ -108,6 +110,7 @@
 		 $smarty->assign('meme_tags', check_plain($meme_tags));
 		 $smarty->assign('favicon', $favicon);
 		 $smarty->assign('micro_content', get_youtube($url));
+		 $smarty->assign('debates', $_POST['debates']);
 		 if ($bm_errors == 0) {
 			 $step = 3;
 		 }
@@ -119,6 +122,7 @@
 	 }
 	 else if ($_POST['step'] == 3) {
 		 $smarty->assign('content_type',  $_POST['content_type']);
+		 $smarty->assign('debates', $_POST['debates']);
 		 if (!empty($_POST['do_edit'])) {
 			 $step = 2;
 			 $title = $_POST['title'];
@@ -145,7 +149,7 @@
 		 {
 			 $_POST['user_id'] = $bm_users->get_user_id();
 			 $memes->add_meme($_POST);
-			 header("Location: memes_queue.php");
+			 header("Location: show_cat.php?cat_id=".$_POST['category']);
 			 return exit;
 		 }
 	 }
