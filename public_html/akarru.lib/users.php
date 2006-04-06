@@ -79,10 +79,9 @@ class users {
 		}
 		$user = htmlspecialchars($user);
 		$email = htmlspecialchars($email);
-		$md_pass = md5($pass);
 		$now = time();
-		$this->db->execute("insert into users(username,email,password,join_date) values('$user','$email','$md_pass', $now)");
-		return $this->do_login($user, $pass);
+		$this->db->execute("insert into users(username,email,strong_pass,join_date) values('$user','$email',aes_encrypt(md5('$pass'), md5($now)), $now)");
+		return $this->do_login($user, $pass, false);
 	}
 
 
@@ -90,8 +89,12 @@ class users {
 	{
 		$user_name = sanitize(strtolower($user_name));
 
-		$user = $this->db->fetch_object("select ID, username, password, email,join_date,admin,website,blog,fullname from users where lower(username)=$user_name");
-		if ($user->password == md5($pass)) 
+		$user = $this->db->fetch_object("select ID, join_date from users where lower(username)=$user_name");
+		if (empty($user->ID)) 
+			return false;
+
+		$user = $this->db->fetch_object("select * from users where lower(username)=$user_name and aes_decrypt(strong_pass, md5($user->join_date)) = md5('$pass')");
+		if (!empty($user->ID))
 		{
 			$_SESSION['user_data'] = $user;
 			if (!empty($remember))
@@ -165,22 +168,19 @@ class users {
 		if ($new_pass != $confirm_pass) {
 			return false;
 		}
-		$sql = 'update users set password = \''.md5($new_pass).'\' where ID = '.$user_id;
+		$sql = "update users set strong_pass = aes_encrypt(md5('$new_pass'), md5(join_date)) where ID = $user_id";
 		$this->db->execute($sql);
 		return true;
 	}
 
 	function gen_password($email, $subject, $body, $login_url)
 	{
-		srand(time());
 		$sql = " select * from users where email = '$email' limit 1";
 		$user = $this->db->fetch_object($sql);
 		if ($user) {
 			$pass = substr(base64_encode(md5($user->password.$user->email.$user->id.time())), 0, 8);
-			$sql = 'update users set password = \''.md5($pass).'\'  where ID = '.$user->ID;
+			$sql = "update users set strong_pass = aes_encrypt(md5('$pass'), md5(join_date)) where ID = $user->ID";
 			$this->db->execute($sql);
-			$sql = 'update blogmemes_portugues.users set password = \''.md5($new_pass).'\' where ID = '.$user->ID;
-		$this->db->execute($sql);
 			mail($email, $subject, sprintf($body, $user->username, $pass, $login_url));
 		}
 		return $pass;
@@ -188,14 +188,12 @@ class users {
 
 	function check_email_exists($email)
 	{
-		$sql = 'select count(*) from users where email = \''.$email.'\'';
-		return $this->db->fetch_scalar($sql);
+		return $this->db->fetch_scalar("select count(*) from users where email = '$email'");
 	}
 
 	function check_user_exists($username)
 	{
-		$sql = 'select count(*) from users where username = \''.$username.'\'';
-		return $this->db->fetch_scalar($sql);
+		return $this->db->fetch_scalar("select count(*) from users where username = '$username'");
 	}
 
 	function get_random_profile_links($n)
@@ -219,7 +217,7 @@ class users {
 			$users = $this->db->fetch("select username, email from users u order by rand() limit $n");
 		}
 		else {
-			$users = $this->db->fetch("select u.username, u.email, count(p.ID) count_posts from users u left join posts p on p.submitted_user_id = u.ID group by u.username, u.email order by count_posts desc");
+			$users = $this->db->fetch("select u.username, u.email from users u order by u.ID asc");
 		}
 		foreach ($users as $user)
 		{
