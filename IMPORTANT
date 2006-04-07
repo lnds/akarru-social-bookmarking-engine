@@ -1,0 +1,51 @@
+IMPORTANT INFORMATION
+
+This document is in english and spanish.
+Este documento está en ingles y español, por favor lee mas abajo si no entiendes inglés
+
+UPGRADING DATABASE FOR BETTER SECURITY
+
+With release 0.4.4.100 we have changed the password storage.
+
+A new configuration parameter is in config.php
+
+define('AES_KEY', '<put your secure key here>');/// AES site key for password storage
+
+this parameter is used in users.php for registration and login.
+
+With this, we abandon the MD5 passwords, and we store them in a more secure mode using AES.
+
+If you have a working database and want to upgrade to release 0.4.4.100 you must execute this
+script in mysql:
+
+
+alter table users add strong_pass blob;
+update users set strong_pass = aes_encrypt(password, md5(join_date || YOUR_AES_KEY));
+
+after a while you can drop password from the table.
+
+Remember to do a backup of your database!!.
+
+
+
+INFORMACION IMPORTANTE
+
+Con la version 0.4.4.100 hemos cambiado la manera de almacenar las claves.
+Se agrga un nuenvo parametro en config.phjp
+
+define ('AES_KEY', '<coloca una clave apropiada>'); 
+
+este parametro es usado en el script users.php para el registro y el ingreso al sistema.
+
+Con este cambio abandonamos el formato MD5 para almacenamiento de claves, y usamos encriptacion AES, que es mas segura.
+
+Si tienes una base de datos en produccion y quieres ser compatible con la version 0.4.4.100 debes ejecutar este escript
+en la base de datos mysql:
+
+alter table users add strong_pass blob;
+update users set strong_pass = aes_encrypt(password, md5(join_date || YOUR_AES_KEY));
+
+despues de un tiempo puedes eliminar el campo password.
+
+Recueda respaldar tu base de datos antes de hacer estas cosas.
+
