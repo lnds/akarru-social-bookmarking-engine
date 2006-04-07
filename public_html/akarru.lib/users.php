@@ -81,7 +81,7 @@ class users {
 		$user = htmlspecialchars($user);
 		$email = htmlspecialchars($email);
 		$now = time();
-		$key = this->aes_key;
+		$key = $this->aes_key;
 		$this->db->execute("insert into users(username,email,strong_pass,join_date) values('$user','$email',aes_encrypt(md5('$pass'), md5($now)), $now)");
 		return $this->do_login($user, $pass, false);
 	}
