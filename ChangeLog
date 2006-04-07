@@ -1,3 +1,89 @@
+2006-04-07 20:29  eadiaz
+
+	* trunk/public_html/akarru.lib/common.php:
+
+2006-04-07 20:27  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: bug on line 84, this
+	  instead of $this.
+
+2006-04-07 20:23  eadiaz
+
+	* trunk/create.sql: Support for AES.
+	  In Next release we will drop password field, please read the
+	  IMPORTANT document.
+
+2006-04-07 20:20  eadiaz
+
+	* trunk/IMPORTANT: Important notes for release 0.4.4.100 and
+	  superior
+
+2006-04-07 20:19  eadiaz
+
+	* trunk/public_html/config.php: New parameter for AES support.
+
+2006-04-07 20:18  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: This is a better use of
+	  aes, because we added an external key.
+
+2006-04-07 18:06  eadiaz
+
+	* trunk/public_html/akarru.lib/app_vars.php,
+	  trunk/public_html/akarru.lib/common.php: Note the use of
+	  application variables to store categories, this improves
+	  performance in 37%!
+
+2006-04-06 18:13  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: Cambio a aes
+
+2006-04-06 18:11  eadiaz
+
+	* trunk/smarty/templates/comment.tpl:
+
+2006-04-06 17:16  eadiaz
+
+	* trunk/smarty/templates/help.tpl: help includes more questions
+	  about privacy protection and debates
+
+2006-04-06 17:14  eadiaz
+
+	* trunk/smarty/templates/comment.tpl: Look that we are using a
+	  common file: meme_layout in comment.tpl, tag_meme and other to
+	  simplify changes on layout.
+
+2006-04-06 17:11  eadiaz
+
+	* trunk/smarty/templates/about.tpl: Modification on about, no
+	  mention to others systems.
+
+2006-04-06 17:09  eadiaz
+
+	* trunk/smarty/templates/meme_layout.tpl,
+	  trunk/smarty/templates/tag_meme.tpl: Fixed display issues on
+	  tag_meme.
+
+2006-04-06 16:56  eadiaz
+
+	* trunk/public_html/register.php: After registration user is sent
+	  to profile.
+
+2006-04-06 16:55  eadiaz
+
+	* trunk/public_html/post.php: Support of debates.
+	  After post the user is redirected to the category of the meme.
+
+2006-04-06 16:54  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: faster promote function
+	  implementation.
+	  fix bug in calc of next meme.
+
+2006-04-03 02:32  eadiaz
+
+	* trunk/ChangeLog: new release
+
 2006-04-03 02:29  eadiaz
 
 	* trunk/public_html/edit_meme.php,
