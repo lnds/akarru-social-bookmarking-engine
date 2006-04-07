@@ -4,8 +4,9 @@ include_once('akarru.lib/statistics.php');
 
 class users {
 
-	function users($db)
+	function users($db, $aes_key=AES_KEY)
 	{
+		$this->aes_key = $aes_key;
 		$this->db = $db;
 		$psession = $_COOKIE["bm_login_cookie"];
 		if (!isset($psession))
@@ -80,6 +81,7 @@ class users {
 		$user = htmlspecialchars($user);
 		$email = htmlspecialchars($email);
 		$now = time();
+		$key = this->aes_key;
 		$this->db->execute("insert into users(username,email,strong_pass,join_date) values('$user','$email',aes_encrypt(md5('$pass'), md5($now)), $now)");
 		return $this->do_login($user, $pass, false);
 	}
@@ -168,7 +170,7 @@ class users {
 		if ($new_pass != $confirm_pass) {
 			return false;
 		}
-		$sql = "update users set strong_pass = aes_encrypt(md5('$new_pass'), md5(join_date)) where ID = $user_id";
+		$sql = "update users set strong_pass = aes_encrypt(md5('$new_pass'), md5(join_date || '$key')) where ID = $user_id";
 		$this->db->execute($sql);
 		return true;
 	}
@@ -177,9 +179,11 @@ class users {
 	{
 		$sql = " select * from users where email = '$email' limit 1";
 		$user = $this->db->fetch_object($sql);
-		if ($user) {
+		if ($user) 
+		{
 			$pass = substr(base64_encode(md5($user->password.$user->email.$user->id.time())), 0, 8);
-			$sql = "update users set strong_pass = aes_encrypt(md5('$pass'), md5(join_date)) where ID = $user->ID";
+			$key = $this->aes_key;
+			$sql = "update users set strong_pass = aes_encrypt(md5('$pass'), md5(join_date || '$key')) where ID = $user->ID";
 			$this->db->execute($sql);
 			mail($email, $subject, sprintf($body, $user->username, $pass, $login_url));
 		}
