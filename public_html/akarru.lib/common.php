@@ -11,11 +11,11 @@ class BM_Smarty extends Smarty {
 	function BM_Smarty()
 	{
 		$this->Smarty();
-		$this->template_dir = '/home/ediaz/domains/blogmemes.com/smarty/templates';
-		$this->compile_dir = '/home/ediaz/domains/blogmemes.com/smarty/templates_c';
-		$this->config_dir = '/home/ediaz/domains/blogmemes.com/smarty/configs';
-		$this->cache_dir = '/home/ediaz/domains/blogmemes.com/smarty/cache';
-		$this->plugins_dir[] = '/home/ediaz/domains/blogmemes.com/smarty/plugins';
+		$this->template_dir = '';
+		$this->compile_dir = '';
+		$this->config_dir = '';
+		$this->cache_dir = '';
+		$this->plugins_dir[] = '';
 		$this->caching = false;
 		application_start();
 
