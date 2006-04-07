@@ -5,7 +5,9 @@ define('DATABASE_USER', '');
 define('DATABASE_PASS', "");
 define('DATABASE_HOST', "");
 define('DATABASE_NAME', "");
-
+define('PROMO_LEVEL', '7');
+define('RECORDS_TO_PAGE', '15');
+define('AES_KEY', '');   /// AES site key for password storage
 
 $bm_promo_level = 7;
 $bm_main_feeds = '';
