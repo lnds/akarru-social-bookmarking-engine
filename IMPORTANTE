@@ -1,0 +1,41 @@
+INFORMACION IMPORTANTE
+
+RELEASE 0.4.4.120
+
+La version 0.4.4.100 no manejaba adecuadamente los cambios relacionados con la seguriad AES. Ese problema ha sido corregido. Sugerimos que use sus respaldo para la nueva generacion de claves.
+
+Usted puede regenerar las claves siguiendo estos pasos:
+
+update users set password = aes_decode(strong_pass, md5(join_date));
+
+luego, usando su nueva clave de encriptacion global debe:
+
+update users set strong_pass = aes_encode(pass, md5(join_date)||'your secret key'));
+
+Lea las notas del 0.4.4.100 y visite el sitio trac para mas detalles.
+
+http://trac.blogmemes.com/
+
+
+INFORMACION IMPORTANTE RELEASE 0.4.4.100
+
+
+Con la version 0.4.4.100 hemos cambiado la manera de almacenar las claves.
+Se agrga un nuenvo parametro en config.phjp
+
+define ('AES_KEY', '<coloca una clave apropiada>'); 
+
+este parametro es usado en el script users.php para el registro y el ingreso al sistema.
+
+Con este cambio abandonamos el formato MD5 para almacenamiento de claves, y usamos encriptacion AES, que es mas segura.
+
+Si tienes una base de datos en produccion y quieres ser compatible con la version 0.4.4.100 debes ejecutar este escript
+en la base de datos mysql:
+
+alter table users add strong_pass blob;
+update users set strong_pass = aes_encrypt(password, md5(join_date || YOUR_AES_KEY));
+
+despues de un tiempo puedes eliminar el campo password.
+
+Recueda respaldar tu base de datos antes de hacer estas cosas.
+
