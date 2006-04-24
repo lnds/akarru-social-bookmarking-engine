@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES latin1 */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -94,7 +94,7 @@ CREATE TABLE `posts` (
   `ID` int(11) NOT NULL auto_increment,
   `trackback` varchar(200) default NULL,
   `date_promo` int(11) default NULL,
-  `lang` char(2) default 'es',
+  `lang` varchar(2) default 'es',
   `clicks` int(11) default '0',
   `rank` int(11) default '0',
   `votes` int(11) NOT NULL default '0',
@@ -105,6 +105,7 @@ CREATE TABLE `posts` (
   `debate_neg` int(11) default '0',
   `debate_pos` int(11) default '0',
   `allows_debates` int(11) NOT NULL default '0',
+  `promoted` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `idx_post_dates` (`date_posted`),
   KEY `idx_post_submiters` (`submitted_user_id`),
@@ -113,7 +114,8 @@ CREATE TABLE `posts` (
   KEY `idx_promo` (`date_promo`),
   KEY `post_lang` (`lang`),
   KEY `idx_post_rank` (`rank`),
-  KEY `idx_post_votes` (`votes`)
+  KEY `idx_post_votes` (`votes`),
+  KEY `idx_prooted` (`promoted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
