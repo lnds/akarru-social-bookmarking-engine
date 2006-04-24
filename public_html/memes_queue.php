@@ -1,6 +1,5 @@
 <?php
   include_once('akarru.lib/common.php');
-  $page = $_GET['page'];
   $smarty->assign('content_title', 'votar pendientes');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
   $smarty->assign('memes', $memes->get_new_memes($page));
@@ -11,6 +10,8 @@
   $smarty->assign('show_ads', true);
   $smarty->assign('content', 'memes_grid');
   $smarty->assign('show_ads', true);
-  $smarty->display('master_page.tpl');
+  $smart_id = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
+  $smarty->assign('pag_id', 'new');
+  $smarty->display('master_page.tpl', $smart_id);
 ?>
 
