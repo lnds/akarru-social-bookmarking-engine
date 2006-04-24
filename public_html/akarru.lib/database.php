@@ -2,13 +2,11 @@
 
 function sanitize($value)
 {
-   if (get_magic_quotes_gpc()) {
+   if (get_magic_quotes_gpc()) 
        $value = stripslashes($value);
-   }
    // Quote if not integer
-   if (!is_numeric($value)) {
+   if (!is_numeric($value)) 
        $value = "'" . mysql_real_escape_string($value) . "'";
-   }
    return $value;
 }
 
@@ -54,8 +52,9 @@ function sanitize($value)
 	{
 		return @mysql_fetch_object($rs);
 	}
+
 	// use this for select
-	// rows is the number of rows selected
+	// $this->rows is the number of  selected
 	// return an array of objects
 	function fetch($sql)
 	{
@@ -89,7 +88,7 @@ function sanitize($value)
 	function do_query($sql)
 	{
 
-		$query = @mysql_query($sql) or die("error: ".mysql_error());
+		$query = @mysql_query($sql, $this->db) or die("error: ".mysql_error());
 		return $query;
 	}
 
