@@ -1,3 +1,115 @@
+2006-04-24 17:36  eadiaz
+
+	* trunk/create.sql: Now uses a promoted flag, this make queries
+	  more faster.
+
+2006-04-24 17:10  eadiaz
+
+	* trunk/public_html/memes_by_tag.php: References to akarru.gui
+	  deleted
+
+2006-04-24 17:07  eadiaz
+
+	* trunk/smarty/configs/site.conf,
+	  trunk/smarty/templates/about.tpl,
+	  trunk/smarty/templates/master_page.tpl,
+	  trunk/smarty/templates/meme_layout.tpl,
+	  trunk/smarty/templates/memes_grid.tpl,
+	  trunk/smarty/templates/post_1.tpl,
+	  trunk/smarty/templates/post_2.tpl,
+	  trunk/smarty/templates/post_3.tpl,
+	  trunk/smarty/templates/profile.tpl,
+	  trunk/smarty/templates/profile_edit.tpl,
+	  trunk/smarty/templates/promote.tpl: Many changes for a more
+	  faster display of pages.
+	  Better organization of debates.
+
+2006-04-24 16:59  eadiaz
+
+	* trunk/public_html/tag_meme.php: BUG FIX: tags where lost.
+
+2006-04-24 16:58  eadiaz
+
+	* trunk/public_html/show_cat.php: add default feeds for categories
+	  when a feed url is not present on database.
+
+2006-04-24 16:57  eadiaz
+
+	* trunk/public_html/search.php: hard coded title removed.
+
+2006-04-24 16:56  eadiaz
+
+	* trunk/public_html/profile_edit.php: At last, profile edit
+	  doesn't uses akarru.gui.
+	  Now this page is full smarty compatible.
+
+2006-04-24 16:55  eadiaz
+
+	* trunk/public_html/memes_queue.php:
+
+2006-04-24 16:54  eadiaz
+
+	* trunk/public_html/index.php: BUG FIX: paging wasn't working
+	  properly
+
+2006-04-24 16:52  eadiaz
+
+	* trunk/public_html/edit_meme.php: BUG FIX, now check user before
+	  allow modifications.
+	  Also admin user can edit any meme.
+
+2006-04-24 16:50  eadiaz
+
+	* trunk/public_html/comment.php: When debates allowed we weren't
+	  showing the promotors of the meme, now this info is added.
+	  Debates now influence in the promotion algorithm.
+
+2006-04-24 16:49  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php: Gravatar md5 hash is
+	  stored directly in database now.
+	  More easy to read implementations of fucntions.
+	  Influence and popularity are disabled in this release, they are
+	  causing an slow display of the profile page.
+	  Fixed bug on AES encryption, when passwords are stored, a global
+	  key is required now.
+
+2006-04-24 16:46  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php: Gravatar md5 hash is
+	  stored directly in database now.
+	  A more efficient query was implemented.
+	  When an user click this does not change the promotion_date, this
+	  was causing distortion on promote mechanism
+	  Promote algorithm enhanced, we had distortion when a meme had
+	  more votes.
+	  Also the debate count as promotion votes now.
+
+2006-04-24 16:44  eadiaz
+
+	* trunk/public_html/akarru.lib/html_manager.php: Gravatar md5 hash
+	  is stored directly in database now.
+
+2006-04-24 16:43  eadiaz
+
+	* trunk/public_html/akarru.lib/database.php: Better
+	  implementations of query functions.
+
+2006-04-24 16:40  eadiaz
+
+	* trunk/public_html/akarru.lib/common.php: Add default feeds for
+	  categories.
+
+2006-04-24 16:39  eadiaz
+
+	* trunk/public_html/ajax_vote.php: Restore the anonymous votes.
+	* trunk/public_html/styles/memes.css: Minor fixes on CSS files.
+	  Better look for IE 6.0
+
+2006-04-07 20:31  eadiaz
+
+	* trunk/ChangeLog: Release 0.4.4.100
+
 2006-04-07 20:29  eadiaz
 
 	* trunk/public_html/akarru.lib/common.php:

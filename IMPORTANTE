@@ -2,6 +2,16 @@ INFORMACION IMPORTANTE
 
 RELEASE 0.4.4.120
 
+EL CAMPO PROMOTED
+
+Ahora la tabla posts, tiene un campo nuevo: 'promoted', que se pone en 1 cuando un meme debe ser promovido desde la cola de mensajes nuevos.
+para asegurar la compatibilidad, usted debe ejecutar esta sentencia de modo que no se pierdan los memes ya promovidos:
+
+update posts set promoted  =  1 where votes >= 7;
+
+donde el valor 7 es el usado en blogmemes, pero puede variar en su implementacion particular.
+
+ERROR EN AES
 La version 0.4.4.100 no manejaba adecuadamente los cambios relacionados con la seguriad AES. Ese problema ha sido corregido. Sugerimos que use sus respaldo para la nueva generacion de claves.
 
 Usted puede regenerar las claves siguiendo estos pasos:

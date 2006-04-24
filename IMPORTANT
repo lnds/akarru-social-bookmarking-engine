@@ -2,6 +2,19 @@ IMPORTANT INFORMATION
 
 RELEASE 0.4.4.120
 
+NEW PROMOTED FLAGE
+
+The posts table now uses a new field 'promoted' to indicate that a meme is promoted out from the new memes queue.
+
+For compatibility you must execute the following query:
+
+update posts set promoted =  1 where votes >= 7;
+
+
+where 7 is the standard promote threshold. You can change this value according your own implementation.
+
+PROBLEMS WITH AES
+
 The last release didn't handle the AES security in proper way.
 The problem was fixed, we suggest to use your backups for a new password generation.
 
