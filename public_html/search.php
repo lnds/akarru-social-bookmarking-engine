@@ -1,7 +1,7 @@
 <?
   include_once('akarru.lib/common.php');
   $page = $_GET['page'];
-  $smarty->assign('content_title', 'busqueda');
+  $smarty->assign('content_title', $bl_search);
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
   if (empty($_POST)) {
 	  $search = $_GET['search'];
