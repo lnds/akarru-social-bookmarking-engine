@@ -69,7 +69,7 @@ else
 	$bm_cats = $bm_cats->fetch_all();
 	$smarty->assign('bm_cats', $bm_cats);
 	foreach ($bm_cats as $cat) {
-		$cats[] = '<a href="show_cat.php?cat_id='.$cat->ID.'" alt="'.$cat->cat_title.'">'.$cat->cat_title.'</a>';
+		$cats[] = '<a href="show_cat.php?cat_id='.$cat->ID.'" >'.$cat->cat_title.'</a>';
 	}
 	$_APP['cats'] = $cats;
 }
