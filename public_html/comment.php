@@ -30,8 +30,21 @@
   $smarty->assign('content', 'comment');
   $smarty->assign('comments', $comments);         
   $smarty->assign('page', $page);
-  $smarty->assign('friends', $memes->get_friends($meme_id));
-  $smarty->assign('foes', $memes->get_foes($meme_id));
-  $smarty->assign('neutrals', $memes->get_neutrals($meme_id));
+  if ($meme->allows_debates) 
+  {
+	  $smarty->assign('friends', $memes->get_friends($meme_id));
+	  $smarty->assign('foes', $memes->get_foes($meme_id));
+
+	  $sponsors =  $memes->get_voters($meme_id);
+	  $smarty->assign('sponsors', $sponsors);
+	  $neutrals = $memes->get_neutrals($meme_id);
+	  $neutrals = array_diff($neutrals, $sponsors);
+	  $neutrals[] = '<img border="0" src="/anon40.png" alt="anonimo" /><br /><a href="register.php">'.$meme->clicks.'&nbsp;'.$bl_anonymous.'</a>'; 
+	  $smarty->assign('neutrals', $neutrals);
+  }
+  else
+  {
+	  $smarty->assign('voters', $memes->get_voters($meme_id));
+  }
   $smarty->display('master_page.tpl');
 ?>
