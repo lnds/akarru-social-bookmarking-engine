@@ -1,6 +1,5 @@
 <?php
   include_once('akarru.lib/common.php');
-  $bm_content = 'akarru.gui/tag_grid.php';
   $tag_id = $_GET['tag_id'];
   $page   = $_GET['page'];
   $bm_no_folkbar = true;
