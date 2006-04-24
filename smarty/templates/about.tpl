@@ -42,10 +42,20 @@ La promoci&oacute;n te permite destacar los memes m&aacute;s valiosos, los que s
 <li>
 		<a href="http://www.darksideprogramming.org">Jose Parinas</a>: PHP.</li>
 <li>
-		<a href="http://www.nerdpride.org/blog/">Shezzo</a>: rutinas de ping</li>
+		<a href="http://www.nerdpride.org/blog/">Shezzo</a>: PHP</li>
+<li>		<a href="http://www.thefinaldestiny.com/">D3ne</a>: QA</li>
 </ul>
 
-		<h3>Diseño</h3>
+<h3>Diseño Conceptual</h3>
+<ul>
+<li>
+		<a href="http://www.lnds.net">Eduardo Diaz</a>: BlogMemes original</li>
+<li>
+		<a href="http://www.opensia.info/Blog/">Claude Gaillard</a>: BlogMemes Network</li>
+</ul>
+
+
+		<h3>Diseño  Grafico</h3>
 <ul>
 <li> <a href="http://hackand.blogspot.com/">Radu Dutzan</a>: diseño gráfico(por salir)</li>
 <li>

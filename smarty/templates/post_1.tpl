@@ -24,6 +24,7 @@
 		<option value="1">texto</option>
 	</select>
 </td></tr>
+<tr><td class="view-label-class" valign="middle">{#label_allows_debates#}&nbsp;<input class="view-input-class" type="checkbox" value="1" name="debates" /></td></tr>
 <tr><td><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
 </table>
 </div>
@@ -33,4 +34,4 @@
 <div class="infoboxFooter"><p>&nbsp;</p></div>
 </div>
 </form>
-<div style="height:400px">&nbsp;</div>
+<div style="height:1400px;_height:1400px">&nbsp;</div>

@@ -20,11 +20,11 @@
 <tr><td><input class="view-input-class" value="{$meme_trackback}" name="meme_trackback" size="60" /></td></tr>
 {if $error_trackback}<tr><td class="error">{#error_trackback#}</td></tr>{/if}
 <tr><td><input type="hidden" name="content_type" value="{$content_type}" />
-<input type="hidden" name="favicon" value="{$favicon}" /><input type="hidden" name="step" value="{$step}" />
+<input type="hidden" name="debates" value="{$debates}" /><input type="hidden" name="favicon" value="{$favicon}" /><input type="hidden" name="step" value="{$step}" />
 <input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
 </td></tr>
 </table>
 </div>
 {include file="form_footer.tpl"}
-<div style="height:400px">&nbsp;</div>
+<div style="height:1400px;_height:1400px">&nbsp;</div>
 

@@ -71,7 +71,7 @@
   </td>
   </tr>
   <tr><td colspan="2">&nbsp;&nbsp;<div style="padding-left:2em" class="meme-footer-class">
-  <a href="comment.php?meme_id={$meme->ID}">{#comments_label#} {$meme->comments}</a> | <a href="comment.php?meme_id={$meme->ID}#debate">{#debate_label#}: {$meme->debate_pos}/{$meme->debate_0}/{$meme->debate_neg}</a> | <a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | <a href="{$meme->url}"  onclick="goto_url({$meme->ID},'{$meme->url}')">{#url_label#}</a> | {#cat_label#} : <a href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>&nbsp;{if $meme->vote_count >= 7}|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
+  <a href="comment.php?meme_id={$meme->ID}">{#comments_label#} {$meme->comments}</a> | <a href="comment.php?meme_id={$meme->ID}#debate">{#debate_label#}: {$meme->debate_pos}/{$meme->debate_0}+{$meme->clicks}/{$meme->debate_neg}</a> | <a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | <a href="{$meme->url}"  onclick="goto_url({$meme->ID},'{$meme->url}')">{#url_label#}</a> | {#cat_label#} : <a href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>&nbsp;{if $meme->vote_count >= 7}|&nbsp <a href="circulation.php?meme_id={$meme->ID}">circulaci&oacute;n</a>{/if}</div>
   </td></tr>
 </table>
 <hr />

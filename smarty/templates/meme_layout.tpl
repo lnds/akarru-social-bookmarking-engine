@@ -6,6 +6,7 @@
   &lt;&nbsp;<a href="comment.php?meme_id={$meme->prior_meme->ID}">{$meme->prior_meme->title}</a>
   {/if}
   </div>
+  </td>
   <td>&nbsp;&nbsp;</td>
   <td>
   <div style="padding-right:1em" class="meme-footer-class"> 
@@ -40,7 +41,7 @@
 	&nbsp;{#cat_label#}: <a style="font-size:10px" href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}  
 	&nbsp;{#posted_by_label#}&nbsp;
-	<a href="profile.php?user_name={$meme->username}"><img src="{$meme->small_gravatar}" border="0"/></a><br/>
+	<a href="profile.php?user_name={$meme->username}"><img src="{$meme->small_gravatar}" alt="{$meme->username}" border="0"/></a><br/>
 	<a style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
 	</div>
 	<p style="right-margin:1em">
@@ -50,7 +51,7 @@
 	</a>
 	{/if}
 	{if $meme->micro_content}
-	<div style="padding:4px">{$meme->micro_content}</div>
+	<span style="padding:4px">{$meme->micro_content}</span>
 	{/if}
 	  	  {$meme->content|nl2br}
 		  <br/>

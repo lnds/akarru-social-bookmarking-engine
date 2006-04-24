@@ -30,8 +30,9 @@ el bot&oacute;n {#post_submit_label#}
 	  </p>
 	<div class="meme-footer-class">
 	categor&iacute;a: {$category_name}<input type="hidden" name="category" value="{$category}" />&nbsp;|&nbsp
-	{if $meme_tags}etiquetas: {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">trackback</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}
+	{if $meme_tags}etiquetas: {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">trackback</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}{if $debates}|&nbsp;<b>permite debates</b>{/if}
 	<input type="hidden" name="step" value="{$step}" /> 
+	<input type="hidden" name="debates" value="{$debates}" />
 	<input type="hidden" name="favicon" value="{$favicon}" />
 	<input type="hidden" name="content_type" value="{$content_type}" />
 	</div></td>
@@ -46,3 +47,5 @@ el bot&oacute;n {#post_submit_label#}
 </table>
 </hr>
 </form>
+<div style="height:1400px;_height:1400px">&nbsp;</div>
+
