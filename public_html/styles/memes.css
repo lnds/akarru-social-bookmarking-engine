@@ -26,6 +26,8 @@ body {
 	position: relative;
 	margin-right: 1%;
 	padding-right: 3px;
+	max-width: 1000px;
+	
 }
 
 #header a {
@@ -123,7 +125,7 @@ body {
 
 #header-banner {
 	height: 90px;
-	width: 728;
+	width: 728px;
 	top: 80px;
 	left: 225px;
 	position: absolute;
@@ -133,7 +135,7 @@ body {
 /* composicion del cuerpo y contenido */
 
 #main-wrapper {
-	background: url(img/main-bg.png) top left repeat-y;	
+	background: url(img/main-bg.gif) top left repeat-y;	
 	position: relative;
 	margin: 0 auto;
 	width: 722px;
