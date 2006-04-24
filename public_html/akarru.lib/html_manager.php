@@ -142,10 +142,10 @@ function ping_technorati()
 	return ($doPing && $doPing->faultCode() == 0);
 }
 
-function get_gravatar($base_url, $email, $size)
+function get_gravatar($base_url, $gravatar_id, $size)
 {
-	$default = 'http://www.blogmemes.com/anon'.$size.'.png';
-	return "http://www.gravatar.com/avatar.php?gravatar_id=".md5($email)."&amp;default=".urlencode($default)."&amp;size=".$size.'&amp;rating=R';
+	$default = "http://www.blogmemes.com/anon${size}.png";
+	return "http://www.gravatar.com/avatar.php?gravatar_id=$gravatar_id&amp;default=".urlencode($default)."&amp;size=$size.&amp;rating=R";
 }
 
 function get_youtube($url)
@@ -175,4 +175,5 @@ function replace_urls($text)
        $text
        );
 }
+
 ?>
