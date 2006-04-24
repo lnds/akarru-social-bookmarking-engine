@@ -11,7 +11,14 @@
   include_once('akarru.lib/common.php');
   $smarty->assign('content_title', 'editar');
   $memes = new memes($bm_db, $bm_user);
-  if (!empty($_POST)) {
+  $meme = $memes->get_meme($meme_id);
+  if ($meme->submitted_user_id != $bm_user && $bm_user != 1) {
+	  header("Location: comment.php?meme_id=$meme_id");
+	  exit();
+	  return;
+  }
+  if (!empty($_POST)) 
+  {
 	  $_POST['user_id'] = $bm_users->get_user_id();
 	  $memes->update_meme($_POST);
 	  header("Location: comment.php?meme_id=$meme_id");
