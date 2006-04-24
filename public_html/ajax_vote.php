@@ -10,7 +10,7 @@ if(isset($_GET['meme_id'])){
 	if ($_GET['user_id'] == 1) { $bm_memes->promote($_GET['meme_id' ]); }
 
 	if (empty($_GET['user_id']) || $_GET['user_id'] == 0) {
-			echo '<error>ya no se permiten votos anonimos. Registrate para votar.</error>';
+			$bm_memes->vote_anon($_GET['meme_id']);
 	}
 	else if(!$bm_memes->check_votes_user($_GET['meme_id'],$_GET['user_id'])){
 		$bm_memes->vote($_GET['meme_id'],$_GET['user_id']);
