@@ -5,49 +5,41 @@
 	  exit();
 	  return;
   }
-  $user_id = $_GET['user_id'];
-  if ($bm_users->get_user_id() != $user_id) {
-	  header("Location: login.php");
-	  exit();
-	  return;
-  }
-  $bm_content = 'akarru.gui/profile_form.php';
 
-  if (empty($_POST['do_edit'])) {
-	  $_POST['user_id'] = $bm_users->get_user_id();
-	  $_POST['email'] = $bm_users->user->email;
-	  $_POST['website'] = $bm_users->user->website;
-	  $_POST['blog'] = $bm_users->user->blog;
-	  $_POST['fullname'] = $bm_users->user->fullname;
+  if (empty($_POST))
+  {
+	  $smarty->assign('user_id', $bm_users->get_user_id());
+	  $smarty->assign('email', $bm_users->user->email);
+	  $smarty->assign('website', $bm_users->user->website);
+	  $smarty->assign('blog', $bm_users->user->blog);
+	  $smarty->assign('fullname', $bm_users->user->fullname);
   }
   else
   {
 	  if (empty($_POST['email'])) {
-		  $bm_error_mail = $be_email_required;
+		  $smarty->assign('error_email', 1);
 	  }
 	  else
 	  {
 		  if (!empty($_POST['pass'])) {
 			  $pass = $_POST['pass'];
 			  $confirm_pass = $_POST['confirm_pass'];
-			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) {
-				  $bm_content = 'akarru.gui/profile_form.php';
-				  $bm_error_confirm_pass = $be_pass_coincidence;
-			  }
+			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) 
+				  $smarty->assign('error_pass', true);
 		  }
-
-		  if ($bm_users->update_profile($_POST)) {
+		  else if ($bm_users->update_profile($_POST)) {
 			  $user_name = $bm_users->get_user_name();
 			  header("Location: profile.php?user_name=$user_name");
 			  exit();
 			  return;
 		  }
 		  else {
-			  $bm_form_error = $be_cant_update_profile;
+			  $smarty->assign('error_profile', true);
 		  }
 		 
 	  }
   }
-  $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();
-  include_once('akarru.gui/master_page.php');
+  $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();  
+  $smarty->assign('content', 'profile_edit');
+  $smarty->display('master_page.tpl');
 ?>
