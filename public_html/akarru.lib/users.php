@@ -21,15 +21,17 @@ class users {
 	function is_logged_in()
 	{
 		$psession = $_COOKIE["bm_login_cookie"];
-		$pers_user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
-		if ($pers_user->ID > 0)
-			$this->user = $pers_user;
+		if (isset($psession)) {
+			$pers_user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
+			if ($pers_user->ID > 0)
+				$this->user = $pers_user;
+		}
 		else
 			$this->user = $_SESSION['user_data'];
-		return isset($this->user);
+		return !empty($this->user);
 	}
 
-	function logoff()
+	function logoff($domain=DOMAIN)
 	{
 		$psession = $_COOKIE["bm_login_cookie"];
 		$this->db->execute("update users set persistent_session = null where persistent_session = '$psession'");
@@ -38,7 +40,7 @@ class users {
 		@session_unset();
 		$sessionid=session_name();
 		setcookie ($sessionid, "", time()-3600);
-		setcookie ("bm_login_cookie", '', time()-3600, '/', false);
+		setcookie ("bm_login_cookie", '', time()-3600, '/', $domain);
 		return true;
 	}
 
@@ -56,7 +58,7 @@ class users {
 
 	function get_user_name()
 	{
-		return $this->user->username;
+		return isset($this->user) ? $this->user->username : '';
 	}
 
 	function register_user($user, $email, $pass)
@@ -77,7 +79,7 @@ class users {
 	}
 
 
-	function do_login($user_name, $pass, $remember)
+	function do_login($user_name, $pass, $remember, $domain=DOMAIN)
 	{
 		$user_name = sanitize(strtolower($user_name));
 		$user = $this->db->fetch_object("select ID, join_date from users where lower(username)=$user_name");
@@ -93,7 +95,7 @@ class users {
 			$psession = md5($user->user_name . '-' . time());
 			$uid = $user->ID;
 			$this->db->execute("update users set persistent_session = '$psession' where ID = $uid");
-			setcookie("bm_login_cookie", $psession, time()+86400*30, '/', false);
+			setcookie("bm_login_cookie", $psession, time()+24*60*60*30, '/', $domain);
 		}
 		$this->user = $user;
 		return true;
