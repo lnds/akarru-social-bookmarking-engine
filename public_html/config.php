@@ -10,7 +10,7 @@ define('RECORDS_TO_PAGE', '15');
 define('DOMAIN', 'blogmemes.com'); // domain for cookies
 define('AES_KEY', '');   /// AES site key for password storage
 
-$bm_promo_level = 7;
+$bm_promo_level = 5;
 $bm_main_feeds = '';
 $bm_queue_feeds = '';
 $bm_url_feeds = '';
