@@ -10,7 +10,7 @@
 <table border="0" cellspacing="2"cellpadding="2">
 <tr>
 <td align="right">#</td>
-<td>usuario</td>
+<td colspan="2">usuario</td>
 <td>memes</td>
 <td>votos</td>
 <td>coments.</td>
@@ -24,7 +24,7 @@
     <td align="right">{$poster->memes}</td>
     <td align="right">{$poster->votes}</td>
     <td align="right">{$poster->comments}</td>
-    <td align="right">{$poster->rank|string_format:"%4.2f"}</td>
+    <td align="right">{$poster->influence|string_format:"%4.2f"}</td>
     <td align="right">{$poster->popularity|string_format:"%4.2f"}</td>
     </tr>
 {/foreach}

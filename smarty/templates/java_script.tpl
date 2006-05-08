@@ -55,10 +55,6 @@ function ajaxCall(file){
 
 function handleResponseNull()
 {
-	if(xmlObj.readyState == 4)
-	{
-	document.location = url_to_go;
-}
 }
 
 function handleResponse(){	
