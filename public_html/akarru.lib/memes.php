@@ -4,7 +4,7 @@ include_once('lib/xmlrpcs.inc');
 
 class memes {
 
-	function memes($db, $user, $promo_level=7, $records_to_page=15)
+	function memes($db, $user, $promo_level=5, $records_to_page=15)
 	{
 		$this->db = $db;
 		$this->user_id = $user;
@@ -49,23 +49,33 @@ class memes {
 		return $this->db->fetch_scalar("select tag from tags where ID = $tag_id");
 	}
 
-	function count_memes()
+	function count_memes($promoted=1, $conditions='')
 	{
-		$this->db->do_query('select SQL_CALC_FOUND_ROWS * from posts p where p.promoted = 1'); 
+		if (empty($conditions)) 
+			$this->db->do_query("select SQL_CALC_FOUND_ROWS * from posts p where p.promoted = $promoted"); 
+		else
+			$this->db->do_query("select SQL_CALC_FOUND_ROWS * from posts p where $conditions ");
+
 		return $this->db->fetch_scalar('Select FOUND_ROWS()');
 
 	}
 
-	function get_memes($page=0, $sort='')
+	function get_memes($page=0, $sort='', $promoted=1, $conditions='')
 	{
-		$memes_count = $this->count_memes();
+		$memes_count = $this->count_memes($promoted, $conditions);
 		if ($memes_count <= 0) {
 			return array();
 		}
 		
 		$sql  = ' select p.*, pc.ID as cat_id, pc.cat_title, u.username, u.gravatar, u.ID as user_id ';
 		$sql .= ' from posts p join users u on u.id = p.submitted_user_id  join post_cats pc on pc.id = p.category ';
-		$sql .= ' where p.promoted = 1 ';
+		if (empty($conditions)) {
+			$sql .= " where p.promoted = $promoted ";
+		}
+		else
+		{
+			$sql .= " where $conditions ";
+		}
 
 		$this->pages = ceil($memes_count / $this->records_to_page);
 		if (!empty($sort)) 
@@ -95,13 +105,14 @@ class memes {
 		$sql .= "where p.ID = $id ";
 		$meme = $this->db->fetch_object($sql);
 		$meme->small_gravatar = get_gravatar($bm_url, $meme->email, 16); 
-		if ($meme->is_micro_content == 2) 
-			$meme->micro_content = get_youtube($meme->url);
 		$uid = $this->user_id;
 		if ($uid > 0) 
 			$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $id and user_id = $uid ");
-		if ($meme->is_micro_content == 0)
+		if ($meme->is_micro_content == 0 && !empty($meme->url))
 			$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
+		else if ($meme->is_micro_content == 2) 
+			$meme->micro_content = get_youtube($meme->url);
+
 		$meme->prior_meme = $this->db->fetch_object("select ID, title from posts where ID < $id order by ID desc limit 1");
 		$meme->next_meme = $this->db->fetch_object("select ID, title from posts where ID > $id order by ID asc limit 1");
 		return $meme;
@@ -141,39 +152,14 @@ class memes {
 
 	function get_new_memes($page=0, $sort='')
 	{
-		$this->db->do_query('select SQL_CALC_FOUND_ROWS * from posts p where p.votes < '.$this->promote_threshold); 
-		$this->memes_count = $this->db->fetch_scalar('Select FOUND_ROWS()');
-		if ($this->memes_count <= 0) {
-			return array();
-		}
-		$sql =  'select p.*, pc.cat_title, pc.ID as cat_id, u.username, u.gravatar, u.ID as user_id ';
-		$sql .= 'from posts p, post_cats pc, users u ';
-		$sql .= 'where pc.ID=p.category and u.ID=p.submitted_user_id and p.votes < '.$this->promote_threshold;
-		$this->pages = ceil($this->memes_count / $this->records_to_page);
-		if (!empty($sort)) {
-			$sql .= " $sort ";
-		}
-		else
-		{
-			$sql.=" order by p.date_posted desc "; 
-		}
-		if($page!=0){ 
-			$page--; 
-			if ($page < 0) 
-				$page = 0; 
-			$sql.=" LIMIT ".($page*$this->records_to_page)."," . $this->records_to_page; 
-		}
-		else 
-		{ 
-			$sql .= ' LIMIT '.$this->records_to_page; 
-		}
-		return $this->filter_result($sql);
+		return $this->get_memes($page, $sort, 0);
 	}
 
 	function get_memes_by_user($user_id, $page=0, $sort='')
 	{
-		$sql =  'select p.*,pc.ID as cat_id, pc.cat_title,u.username,pc.ID as cat_id, u.gravatar, u.ID as user_id from posts p, post_cats pc, users u where pc.ID=p.category and u.ID=p.submitted_user_id ';
-		$sql .= ' and u.ID = '.$user_id.' and votes >= '.$this->promote_threshold.' ';
+		$sql  = ' select p.*, pc.ID as cat_id, pc.cat_title, u.username, u.gravatar, u.ID as user_id ';
+		$sql .= ' from posts p join users u on u.id = p.submitted_user_id  join post_cats pc on pc.id = p.category ';
+		$sql .= " where u.ID = $user_id ";
 		$this->memes_count = $this->db->count_rows($sql);
 		$this->pages = ceil($this->memes_count / $this->records_to_page);
 		if (!empty($sort)) {
@@ -224,10 +210,16 @@ class memes {
 				$meme->voted = $this->db->fetch_scalar("select count(*) from post_votes where post_id = $meme_id and user_id = $uid ");
 			}
 			$mc = $meme->is_micro_content;
-			if ($mc == 2) 
-				$meme->micro_content = get_youtube($meme->url);
-			else if (!empty($meme->url))
-				$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
+			if (empty($meme->url)) {
+				$meme->url = "comment.php?meme_id=$meme->ID";
+			}
+			else
+			{
+				if ($mc == 2) 
+					$meme->micro_content = get_youtube($meme->url);
+				else 
+					$meme->page_image = 'http://img.simpleapi.net/small/'.$meme->url;
+			}
 			$meme->content = replace_urls($meme->content);
 			$result[] = $meme;
 			$counter++;
@@ -333,7 +325,7 @@ class memes {
 		$url = check_plain($data['url']);
 		$user_id = $data['user_id'];
 		$date_posted = time();
-		$trackback = $data['meme_trackback'];
+		$trackback = check_plain($data['meme_trackback']);
 		$content_type = $data['content_type'];
 		$allows_debates = $data['debates'] == 1 ? 1 : 0;
 		$sql  = 'insert into posts(title,content,date_posted,date_promo,category,url,submitted_user_id,trackback,is_micro_content, allows_debates) ';
@@ -454,7 +446,7 @@ class memes {
 			$hours_posted = 1;
 		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
 		$rank *=  1/(1+log10(10+$hours_posted*1000));
- 	$rank *=  10/(1+log10(10+$hours_promoted));
+ 	$rank *=  2/(1+log10(10+$hours_promoted));
 //		$rank = ceil($rank*log10(100*$meme->votes+10));
 
 		if ($update_promo_date)

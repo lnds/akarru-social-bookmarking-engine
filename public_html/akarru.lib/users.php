@@ -8,11 +8,10 @@ class users {
 	{
 		$this->aes_key = $aes_key;
 		$this->db = $db;
-		$psession = $_COOKIE["bm_login_cookie"];
-		if (!isset($psession))
-			$this->user = $_SESSION['user_data'];
-		else
-		{
+		//if (!isset($psession))
+		$this->user = $_SESSION['user_data'];
+		if (empty($this->user)) {
+			$psession = $_COOKIE["bm_login_cookie"];
 			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
 			$_SESSION['user_data'] = $this->user;
 		}
@@ -20,14 +19,7 @@ class users {
 
 	function is_logged_in()
 	{
-		$psession = $_COOKIE["bm_login_cookie"];
-		if (isset($psession)) {
-			$pers_user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
-			if ($pers_user->ID > 0)
-				$this->user = $pers_user;
-		}
-		else
-			$this->user = $_SESSION['user_data'];
+		$this->user = $_SESSION['user_data'];
 		return !empty($this->user);
 	}
 
@@ -41,7 +33,7 @@ class users {
 		$sessionid=session_name();
 		setcookie ($sessionid, "", time()-3600);
 		setcookie ("bm_login_cookie", '', time()-3600, '/', $domain);
-		return true;
+		return 1;
 	}
 
 
@@ -98,7 +90,7 @@ class users {
 			setcookie("bm_login_cookie", $psession, time()+24*60*60*30, '/', $domain);
 		}
 		$this->user = $user;
-		return true;
+		return 1;
 	}
 
 	function update_profile($data)
