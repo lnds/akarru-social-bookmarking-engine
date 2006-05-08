@@ -1,3 +1,47 @@
+2006-05-08 14:07  eadiaz
+
+	* trunk/public_html/akarru.gui: akarru.gui deleted from the
+	  repository.
+
+2006-05-08 14:06  eadiaz
+
+	* trunk/public_html/config.php,
+	  trunk/public_html/memes_by_tag.php,
+	  trunk/public_html/show_folksonomy.php: display bugs on
+	  memes_by_tag.php and show_folksonomy.php.
+	  config.php includes the DOMAIN constant, used for cookies.
+
+2006-05-08 14:04  eadiaz
+
+	* trunk/public_html/akarru.lib/memes.php,
+	  trunk/public_html/akarru.lib/statistics.php,
+	  trunk/public_html/akarru.lib/users.php: Fix bugs on persistent
+	  session cookies.
+	  You must set your DOMAIN in config.php
+	  More simple queries for memes on memes.php.
+
+2006-05-08 14:02  eadiaz
+
+	* trunk/smarty/templates/java_script.tpl,
+	  trunk/smarty/templates/stats.tpl: Changes in stats display
+	  javascript on onclick for url is disabled now.
+
+2006-05-06 16:38  eadiaz
+
+	* trunk/public_html/akarru.lib/users.php,
+	  trunk/public_html/config.php: Fix bugs on persistent session
+	  cookies.
+	  You must set your DOMAIN in config.php
+
+2006-04-24 18:01  eadiaz
+
+	* trunk/ChangeLog, trunk/IMPORTANT, trunk/IMPORTANTE: Instructions
+	  about promoted flag
+
+2006-04-24 17:51  eadiaz
+
+	* trunk/IMPORTANT, trunk/IMPORTANTE: Important instructions added
+
 2006-04-24 17:36  eadiaz
 
 	* trunk/create.sql: Now uses a promoted flag, this make queries
