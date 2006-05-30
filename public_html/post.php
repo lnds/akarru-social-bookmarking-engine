@@ -2,7 +2,7 @@
   include_once('akarru.lib/common.php');
 
   $bm_cats = new categories($bm_db);
-  $bm_cats = $bm_cats->fetch_all();
+  $bm_cats = $bm_cats->fetch_all_enabled();
   $smarty->assign('bm_cats', $bm_cats);
 
   if (!$bm_users->is_logged_in()) {
