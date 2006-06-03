@@ -7,7 +7,7 @@
   }
   
   $categories = new categories($bm_db);
-  $bm_cats = $categories->fetch_all();
+  $bm_cats = $categories->fetch_all_enabled();
   $smarty->assign('bm_cats', $bm_cats);
   
   if (!empty($_GET))
