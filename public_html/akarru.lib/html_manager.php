@@ -136,15 +136,17 @@ function find_media_info($url)
 
 function ping_technorati() 
 {
+    global $bm_url;
 	$blogMemes = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
-	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval("http://www.blogmemes.com/")));
+	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval($bm_url)));
 	$doPing = $blogMemes->send($msg);
 	return ($doPing && $doPing->faultCode() == 0);
 }
 
 function get_gravatar($base_url, $gravatar_id, $size)
 {
-	$default = "http://www.blogmemes.com/anon${size}.png";
+    global $bm_url;
+	$default = $bm_url . "anon${size}.png";
 	return "http://www.gravatar.com/avatar.php?gravatar_id=$gravatar_id&amp;default=".urlencode($default)."&amp;size=$size.&amp;rating=R";
 }
 
