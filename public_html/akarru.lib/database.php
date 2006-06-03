@@ -29,6 +29,9 @@ function sanitize($value)
 	function connect()
 	{
 		$this->db= @mysql_connect($this->db_host,$this->db_user,$this->db_pass);
+		// If your database is in utf-8 un-comment these two lines
+		//mysql_query("SET CHARACTER SET utf8", $this->db);
+        //mysql_query("SET NAMES 'utf8'", $this->db); 
 		@mysql_select_db($this->db_name,$this->db);
 		return $this->db;
 	}
