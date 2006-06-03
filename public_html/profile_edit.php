@@ -23,9 +23,24 @@
 	  {
 		  if (!empty($_POST['pass'])) {
 			  $pass = $_POST['pass'];
+              $user_id = (int) $_POST['user_id'];
 			  $confirm_pass = $_POST['confirm_pass'];
 			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) 
+              {
 				  $smarty->assign('error_pass', true);
+                  $smarty->assign('user_id', $bm_users->get_user_id());
+                  $smarty->assign('email', $bm_users->user->email);
+                  $smarty->assign('website', $bm_users->user->website);
+                  $smarty->assign('blog', $bm_users->user->blog);
+                  $smarty->assign('fullname', $bm_users->user->fullname);
+              }
+              else
+              {
+                  $user_name = $bm_users->get_user_name();
+                  header("Location: profile.php?user_name=$user_name");
+                  exit();
+                  return;
+              }
 		  }
 		  else if ($bm_users->update_profile($_POST)) {
 			  $user_name = $bm_users->get_user_name();
@@ -35,6 +50,11 @@
 		  }
 		  else {
 			  $smarty->assign('error_profile', true);
+              $smarty->assign('user_id', $bm_users->get_user_id());
+              $smarty->assign('email', $bm_users->user->email);
+              $smarty->assign('website', $bm_users->user->website);
+              $smarty->assign('blog', $bm_users->user->blog);
+              $smarty->assign('fullname', $bm_users->user->fullname);
 		  }
 		 
 	  }
