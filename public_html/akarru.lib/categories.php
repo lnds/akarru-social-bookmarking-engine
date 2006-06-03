@@ -36,6 +36,13 @@ class categories {
 		return $this->db->fetch_scalar($sql);
 	}
     
+    function get_category_description($cat_id)
+    {
+		$cat_id = sanitize($cat_id);
+		$sql="select pc.cat_desc as category_description from post_cats pc where pc.ID = $cat_id";
+		return $this->db->fetch_scalar($sql);
+	}
+    
     function delete_category($cat_id)
     {
         if ($this->check_category_id_exists($cat_id)) 
@@ -87,12 +94,12 @@ class categories {
     
     function update_category($cat_id, $cat_name, $cat_description="")
     {
-        if ($this->check_category_exists($cat_id)) 
+        if ($this->check_category_id_exists($cat_id)) 
 		{
             $cat_id = sanitize($cat_id);
             $cat_name = sanitize($cat_name);
             $cat_description = sanitize($cat_description);
-            $sql="update post_cats set SET cat_title = $cat_name, cat_desc = $cat_description WHERE ID = $cat_id";
+            $sql="UPDATE post_cats SET cat_title = $cat_name, cat_desc = $cat_description WHERE ID = $cat_id";
             return $this->db->execute($sql);
         }
         else
@@ -101,10 +108,18 @@ class categories {
         }
     }
     
-    function check_category_exists($cat_name)
+    function check_category_exists($cat_name, $exclude_cat_id="")
 	{
         $cat_name = sanitize($cat_name);
-		return $this->db->fetch_scalar("select count(*) from post_cats where cat_title = '$cat_name'");
+        if (empty($exclude_cat_id))
+        {
+            return $this->db->fetch_scalar("select 1 from post_cats where cat_title = $cat_name");
+        }
+        else
+        {
+            $exclude_cat_id = sanitize($exclude_cat_id);
+            return $this->db->fetch_scalar("select 1 from post_cats where cat_title = $cat_name AND ID <> $exclude_cat_id");
+        }
 	}
     
     function check_category_id_exists($cat_id)
