@@ -76,7 +76,8 @@ class memes {
 		{
 			$sql .= " where $conditions ";
 		}
-
+        $sql .= 'and p.disabled = FALSE';
+        
 		$this->pages = ceil($memes_count / $this->records_to_page);
 		if (!empty($sort)) 
 		{
@@ -117,7 +118,22 @@ class memes {
 		$meme->next_meme = $this->db->fetch_object("select ID, title from posts where ID > $id order by ID asc limit 1");
 		return $meme;
 	}
-
+    
+    function disable_meme($meme_id)
+    {
+        $meme_id = sanitize($meme_id);
+        $sql  = "update posts set disabled=TRUE where ID = $meme_id";
+		return ($this->db->execute($sql));
+    }
+    
+    function enable_meme($meme_id)
+    {
+        $meme_id = sanitize($meme_id);
+        $sql  = "update posts set disabled=FALSE where ID = $meme_id";
+		return ($this->db->execute($sql));
+    }
+    
+    
 	function add_comment($meme_id, $comment)
 	{
 		$comment = trim($comment);
@@ -465,6 +481,8 @@ class memes {
 
 		$this->db->execute($sql);
 
+        // The cache for the different gadgets might need to be refreshed
+        processCache($meme_id);
 	}
 
 	function click($meme_id, $user_id)
@@ -475,10 +493,12 @@ class memes {
 	}
 
     function send_trackback($data) {
-
+        // This is to include a "Liked what you just read here ? Vote for it on Blogmemes !"
+        // kind of message at the beginning of the excerpt of the trackback
+        global  $bl_vote_for_it_message_in_trackback;
 
         $title = urlencode($data['title']);
-        $excerpt = urlencode($data['content_body']);
+        $excerpt = urlencode($bl_vote_for_it_message_in_trackback . $data['content_body']);
         $blog_name = urlencode('blogmemes.com');
         $tb_url = $data['meme_trackback'];
         $url = urlencode($this->get_permalink($data['meme_id']));
@@ -503,12 +523,13 @@ class memes {
 	}
 
     function get_permalink($id) {
-		return "http://www.blogmemes.com/comment.php?meme_id=$id";
+        global $bm_url;
+		return $bm_url . "comment.php?meme_id=$id";
 	}
 
 	function get_category($cat_id)
 	{
-		return $this->db->fetch_object("select cat_title, feed from post_cats where ID = $cat_id");
+		return $this->db->fetch_object("select cat_title, feed from post_cats where ID = $cat_id and disabled = false");
 	}
 
 									 
