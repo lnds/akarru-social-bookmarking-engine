@@ -3,7 +3,10 @@ include_once("akarru.lib/app_vars.php");
 
 session_start();
 
+// comment if your Blogmemes needs UTF-8
 mb_http_output("ISO-8859-1");
+// un comment if your Blogmemes needs UTF-8
+//mb_http_output("utf-8");
 require('Smarty/Smarty.class.php');
 
 class BM_Smarty extends Smarty {
@@ -38,6 +41,7 @@ include_once('akarru.lib/categories.php');
 include_once('akarru.lib/folksonomy.php');
 include_once('akarru.lib/memes.php');
 include_once('akarru.lib/form_manager.php');
+include_once('akarru.lib/cache_manager.php');
 include_once('locale.es');
 
 $bm_db = new database();
