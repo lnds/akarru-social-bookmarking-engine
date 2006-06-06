@@ -65,7 +65,12 @@
     </div>
      </td></tr>
   <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class"> 
-  {if $logged_userid == $meme->submitted_user_id || $logged_userid == 1}<a href="edit_meme.php?meme_id={$meme->ID}">modificar</a>&nbsp;|&nbsp;{/if}{#comments_label#} <a href="comment.php?meme_id={$meme->ID}">{$meme->comments}</a>&nbsp;|&nbsp;<a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="{$meme->url}" onclick="goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:30:"..."}</a>&nbsp;</div> 
+  {if $logged_userid == $meme->submitted_user_id || $logged_userid == 1}<a href="edit_meme.php?meme_id={$meme->ID}">modificar</a>&nbsp;|&nbsp;{/if}{#comments_label#} <a href="comment.php?meme_id={$meme->ID}">{$meme->comments}</a>&nbsp;|&nbsp;<a href="tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="{$meme->url}" onclick="goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:30:"..."}</a>&nbsp;
+  {if $logged_userid == 1}
+  {include file="meme_stats.tpl"}
+  {/if}
+  {include file="social_tools.tpl"}
+  </div>
   </td></tr>
 </table>
 </div>
