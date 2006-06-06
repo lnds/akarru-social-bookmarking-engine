@@ -460,7 +460,7 @@ class memes {
 			$hours_promoted = 1;
 		if ($hour_posted < 0) 
 			$hours_posted = 1;
-		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
+		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$memes->social_clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
 		$rank *=  1/(1+log10(10+$hours_posted*1000));
  	$rank *=  2/(1+log10(10+$hours_promoted));
 //		$rank = ceil($rank*log10(100*$meme->votes+10));
@@ -488,6 +488,16 @@ class memes {
 	function click($meme_id, $user_id)
 	{
 		$this->db->execute("update posts set clicks = clicks+1 where ID = $meme_id");
+		$this->promote($meme_id, false, 0, 0);
+		$this->debate($meme_id, $user_id, 0, true);
+	}
+    
+    // To count the click on the social tools: bookmarks and send a link
+    // For bookmarks, we can not be sure that the link was really saved
+    // For the send a link we are sure that the link was sent
+    function social_click($meme_id, $user_id)
+	{
+		$this->db->execute("update posts set social_clicks = social_clicks+1 where ID = $meme_id");
 		$this->promote($meme_id, false, 0, 0);
 		$this->debate($meme_id, $user_id, 0, true);
 	}
