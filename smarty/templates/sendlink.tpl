@@ -1,8 +1,6 @@
 <form method="post" action="{$smarty.server.PHP_SELF}">
-<div class="infobox">
+<div>
 <h3>{#sendlink_title#}</h3>
-<div class="infoboxBody">
-<br/>
 <p>
 {#email_criteria#}
 </p>
@@ -29,8 +27,6 @@
 <tr><td><input type="hidden" name="meme_id" value="{$meme_id}" /><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#send_email_label#}" name="do_post" /></td></tr>
 </table>
 </div>
-</div>
-<div class="infoboxFooter"><p>&nbsp;</p></div>
 </div>
 </form>
 <div style="height:1400px;_height:1400px">&nbsp;</div>
