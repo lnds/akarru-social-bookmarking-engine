@@ -1,0 +1,1 @@
+<br />Rank: {$meme->rank}&nbsp;|&nbsp;Clicks:{$meme->clicks}&nbsp;|&nbsp;Social clicks: {$meme->social_clicks}
