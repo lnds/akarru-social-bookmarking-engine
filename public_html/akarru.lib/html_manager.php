@@ -42,7 +42,8 @@ function filter_bad_protocol($url)
 
 function check_url($url)
 {
-	$url = filter_bad_protocol($url);
+	// This was messing up everything. I am not sure what was the purpose of this.
+    //$url = filter_bad_protocol($url);
 	$furl = @fopen($url, "r");
 	if (!$furl) {
 		return false;
