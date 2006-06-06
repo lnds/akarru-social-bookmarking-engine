@@ -1,5 +1,77 @@
 <?php
   include_once('akarru.lib/common.php');
+  
+  // Put your email address in $dest and change ??? to .net .com .fr .jp .ru in the sender email address...
+  function mailDetails($user, $meme_url, $meme_title, $meme_text)
+  {
+    // Configure these
+      $fromemail="no-reply@blogmemes.???";   // Sender's adress
+     $dest="";  // Receiver address
+     
+     
+    $ip = "[" . $_SERVER["REMOTE_ADDR"] . "] - resolved=[" . gethostbyaddr($_SERVER["REMOTE_ADDR"]) . "]";
+    $from = "[" . $_SERVER['HTTP_REFERER'] . "]";
+    $what = "what=[" . $_SERVER['HTTP_USER_AGENT'] . "]";        
+    $posteddate = date('l dS \of F Y h:i:s A');
+     
+     $subject="Meme entitled '" . $meme_title . "' has been posted by '" . $user . "'";  // Email subject.
+               
+    $message ="Posted on " . $posteddate  . "\nIP: " . $ip . "\nFrom: " . $from ."\nUser_agent: " . $what . "\n";
+    $message.="By '" .  $user . "',\n URL: " . $meme_url . "\n\n";
+    $message.="\n\nMeme text=\n";
+    $message.="\n\n------ Begin -----\n";
+    $message.= $meme_text;
+    $message.="\n\n------ End -----\n";
+    
+    // Fonction Mail
+    mail($dest,$subject,$message, "From : $fromemail");
+  }
+
+// Following functions are to decode urlencoded strings.
+// Needed for Blogmemes that would have non ASCII characters in the URL, title and so on
+    function code2utf($num){
+  if($num<128)return chr($num);
+  if($num<2048)return chr(($num>>6)+192).chr(($num&63)+128);
+  if($num<65536)return chr(($num>>12)+224).chr((($num>>6)&63)+128).chr(($num&63)+128);
+  if($num<2097152)return chr(($num>>18)+240).chr((($num>>12)&63)+128).chr((($num>>6)&63)+128) .chr(($num&63)+128);
+  return '';
+}
+  function unescape($source, $iconv_to = 'UTF-8') {
+   $decodedStr = '';
+   $pos = 0;
+   $len = strlen ($source);
+   while ($pos < $len) {
+       $charAt = substr ($source, $pos, 1);
+       if ($charAt == '%') {
+           $pos++;
+           $charAt = substr ($source, $pos, 1);
+           if ($charAt == 'u') {
+               // we got a unicode character
+               $pos++;
+               $unicodeHexVal = substr ($source, $pos, 4);
+               $unicode = hexdec ($unicodeHexVal);
+               $decodedStr .= code2utf($unicode);
+               $pos += 4;
+           }
+           else {
+               // we have an escaped ascii character
+               $hexVal = substr ($source, $pos, 2);
+               $decodedStr .= chr (hexdec ($hexVal));
+               $pos += 2;
+           }
+       }
+       else {
+           $decodedStr .= $charAt;
+           $pos++;
+       }
+   }
+
+   if ($iconv_to != "UTF-8") {
+       $decodedStr = iconv("UTF-8", $iconv_to, $decodedStr);
+   }
+  
+   return $decodedStr;
+}
 
   $bm_cats = new categories($bm_db);
   $bm_cats = $bm_cats->fetch_all_enabled();
@@ -32,13 +104,16 @@
 	  else {
 		  $smarty->assign('url', 'http://');
 	  }
+      
+      $_GET['title'] = unescape($_GET['title']);
+      
 	  $smarty->assign('title', $_GET['title']);
 	  $smarty->assign('meme_trackback', '');
 
   }
   else
   {
-	  $bm_options = array('0'=>'-- seleccione --');
+	  $bm_options = array('0'=>$content_title_post_seleccione);
 	  foreach ($bm_cats as $cat)
 	  {
 		  $bm_options[$cat->ID] = $cat->cat_title;
@@ -66,11 +141,11 @@
 			 $smarty->assign('url', check_plain($url));
 			 if (!check_url($url)) {
 				 $smarty->assign('error_url', true);
-				 $bm_error++;
+				 $bm_errors++;
 			 }
 			 if ($memes->check_url_exists_in_db(check_plain($url))) {
 				 $smarty->assign('error_duplicate_url', true);
-				 $bm_error++;
+				 $bm_errors++;
 			 }
 		 }
 		 if ($bm_errors == 0) {
@@ -81,6 +156,10 @@
 			 $smarty->assign('favicon', $info[1]);
 			 $smarty->assign('debates', isset($_POST['debates']));
 		 }
+         else
+         {
+             $step = 1;
+         }
 	 }
 	 elseif ($_POST['step'] == 2) {
 		 $smarty->assign('content_type',  $_POST['content_type']);
@@ -149,12 +228,16 @@
 		 {
 			 $_POST['user_id'] = $bm_users->get_user_id();
 			 $memes->add_meme($_POST);
+             $title = $_POST['title'];
+			 $url   = $_POST['url'];
+			 $content_body = $_POST['content_body'];
+			 mailDetails($bm_users->get_user_name(), $url, $title, $content_body);
 			 header("Location: show_cat.php?cat_id=".$_POST['category']);
 			 return exit;
 		 }
 	 }
   }
-  $bm_title = 'publicar meme, paso '.$step.' de 3';
+  $bm_title = $content_title_post.$step.$content_title_post2;
   $bm_content = "post_$step";
   $smarty->assign('content_title', $bm_title);
   $smarty->assign('content', $bm_content);
