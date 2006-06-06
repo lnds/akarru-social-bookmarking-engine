@@ -13,12 +13,25 @@ function update_vote_div(div_name,user_id){
 var url_to_go;
 function goto_url(meme_id,url)
 {
-	url_to_go = url;
-{/literal}
-	ajaxCall("{#ajax_service_click#}?meme_id="+meme_id);
-{literal}
+	if(document.images)
+  {
+    (new Image()).src="click.php?meme_id=" + meme_id;
+    return true;
+  }
+  //url_to_go = url;
+//{/literal}
+//	ajaxCall("{#ajax_service_click#}?meme_id="+meme_id);
+//{literal}
 }
 
+function social_click(meme_id)
+{
+	if(document.images)
+  {
+    (new Image()).src="social_click.php?meme_id=" + meme_id;
+    return true;
+  }    
+}
 
 function createRequestObject() {
 	var ro;
