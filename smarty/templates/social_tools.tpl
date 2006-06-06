@@ -1,0 +1,4 @@
+<br />
+{#bookmarks_services#}：<a href="http://del.icio.us/post?title={$meme->title|urlencode}&url=http://{$smarty.server.SERVER_NAME|urlencode}/comment.php?meme_id={$meme->ID|urlencode}" onmousedown ="return social_click({$meme->ID})" title="Del.icio.us"><img src="/sbs/delicious.png" alt="del.icio.us"  height="16" width="16" style="border:0px" /></a>&nbsp;
+<a href="http://reddit.com/submit?title={$meme->title|urlencode}&url=http://{$smarty.server.SERVER_NAME|urlencode}/comment.php?meme_id={$meme->ID|urlencode}" onmousedown ="return social_click({$meme->ID})" title="Reddit"><img src="/sbs/reddit.png" alt="reddit"  height="16" width="16" style="border:0px" /></a>
+&nbsp;|&nbsp;{#sendlink_service#}:<a href="sendlink.php?meme_id={$meme->ID}"  title="{#sendlink_service_title#}" ><img src="/sbs/email.png" alt="email"  height="16" width="16" style="border:0px" /></a>
