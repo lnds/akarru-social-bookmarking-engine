@@ -21,7 +21,7 @@ function ValidMessage($message)
 { 
   if (empty($message)) return true;
   
-  return strstr($message, "http://") === FALSE;
+  return stristr($message, "http://") === FALSE;
 }
 
   $meme_id = $_GET['meme_id'];
