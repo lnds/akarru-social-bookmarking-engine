@@ -41,6 +41,7 @@ CREATE TABLE `post_cats` (
   `ID` int(11) NOT NULL auto_increment,
   `lang` char(2) default 'es',
   `feed` text,
+  `disabled` tinyint(1) default '0',
   PRIMARY KEY  (`ID`),
   KEY `idx_cat_title` (`cat_title`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -96,6 +97,7 @@ CREATE TABLE `posts` (
   `date_promo` int(11) default NULL,
   `lang` varchar(2) default 'es',
   `clicks` int(11) default '0',
+  `social_clicks` int(11) default '0',
   `rank` int(11) default '0',
   `votes` int(11) NOT NULL default '0',
   `is_micro_content` int(11) NOT NULL default '0',
