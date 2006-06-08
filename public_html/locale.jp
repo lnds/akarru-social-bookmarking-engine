@@ -1,0 +1,152 @@
+<?
+
+// labeles
+$bl_site_caption = 'ブログ・ミームズ';
+$bl_sub_title = '皆のニュース';
+$bl_promote = 'ミームに投票する'; // promote blogMemes (vote).
+$bl_publish = 'ミームを投稿する'; // publish a blogMemes
+$bl_popular = '一番人気';  // popular blogMemes
+$bl_unpopular = '人気のない'; // less popular blogMemes
+$bl_categories = 'カテゴリー';
+$bl_folksonomy = 'folksonomy';
+$bl_folksonomy_bar_text = '一番人気のあるタグはこちらです。';
+$bl_folksonomy_bar_link = '全てのタグ';
+$bl_votes = '投票';
+$bl_posted_by = '投稿者';
+$bl_comments = 'コメント';
+$bl_tag_meme = 'タグ';
+$bl_url_meme = 'リンク';
+$bl_cat_meme = 'カテゴリー';
+$bl_pages = 'ページ';
+$bl_search = '検索';
+$bl_profile_of = 'ユーザーのプロフィール';
+$bl_login = 'ログイン';
+$bl_login_submit = 'ログイン';
+$bl_logoff = 'ログアウト';
+$bl_register = '登録する';
+$bl_about = 'ブログ・ミームズについて';
+$bl_suggestions = '提案';
+$bl_last_memes = '第一面';
+$bl_folksonomy_explain = '利用者が次のタグを付けました。<br/>
+	文字が大きければ大きいほど同じタグを持つミームが多いです。
+';
+$bl_login_instructions = "登録する";
+$bl_user = 'ニックネーム：';
+$bl_password = 'パスワード：';
+$bl_confirm_password = 'パスワードの確認：';
+$bl_recover_pass = 'パスワードまたはニックネームを忘れましたか？';
+$bl_recover_pass_instructions = '';
+$bl_email = 'Eメール:';
+$bl_recover_submit = '情報を送る';
+$bl_register_instructions = '';
+$bl_register_submit = "登録する";
+
+$bl_about = 'ブログ・ミームズについて';
+
+$bl_popular = '人気のミーム';
+$bl_popular_message = '一番人気のあるミーム';
+$bl_unpopular = '人気があまりないミーム';
+$bl_unpopular_message = 'こちらのミームが数回に投票されました';
+$bl_promoted_message = '最近、第一面に昇進されたミームです';
+
+$bl_post_meme = 'ミームを投稿する';
+$bl_url_label = '元のURL:' ;
+$bl_url_submit = '進む';
+$bl_post_meme_title_label = 'タイトル：';
+$bl_post_meme_content_label = '要約';
+$bl_post_meme_categories_label = 'カテゴリー';
+$bl_post_meme_trackback = 'トラックバック';
+$bl_vote_for_it_message_in_trackback = '今読んだ記事が気に入ったらブログミームズで投票して下さい！
+
+';
+$bl_post_meme_tags = 'タグ (コンマであけて下さい)';
+$bl_post_step_1 = '良く読んでください';
+
+$bl_post_step_1_instructions = '
+<ul>
+  <li><b>投稿されるコンテンツは良質ですか？</b> 投稿されるコンテンツは面白いと適切ですか？信頼できますか？</li>
+  <li><b>日本語で書いてありますか？</b> 外国語のコンテンツを投稿してもいいですが要約で言語を明確にして下さい</li>
+  <li><b>要約は出来るだけ：</b> 簡潔で魅力的な文書でお願いいたします。</li>
+  
+</ul>
+';
+$bl_profile = 'ユーザーのプロフィール　';
+$bl_profile_personal_info_title = '個人情報';
+$bl_profile_fullname = '姓名: ';
+$bl_profile_username = 'ニックネーム：';
+$bl_profile_blog = 'ブログ：';
+$bl_profile_website = 'HP：';
+$bl_profile_email = 'Eメール：';
+$bl_profile_stats_title = '統計';
+$bl_profile_memes = '投稿されたミームの数：';
+$bl_profile_promoted_memes = '第一面になったミームの数：';
+$bl_profile_votes = '投票数：';
+$bl_profile_comments = 'コメント： ';
+$bl_profile_votes_for = '好評の投票：';
+$bl_profile_edit_submit = 'プロフィールを編集する';
+
+$bl_password_sent= 'パスワードがEメールで送信されました' ;
+$bl_recover = 'パスワードを最発行する';
+
+$bl_profile_edit = 'プロフィールの編集';
+$bl_profile_edit_instructions = 'パスワード箇所に記入せずにプロフィールを編集してください。パスワードを変えたい場合は新しいパスワードを記入して下さい。';
+$bl_fullname = '姓名: ';
+$bl_website = 'HP：';
+$bl_blog = 'ブログ：';
+$bl_profile_sumit = 'プロフィールを編集する';
+// error strings
+$be_already_voted = 'あなたが既に投票したようです';
+$be_url_already_posted = 'こちらURLは既に投稿されたようです';
+$be_bad_url = "このURLは無効です。サーバーが返事しませんでした。";
+$be_pass_coincidence = 'パスワードが合わないです。';
+$be_cant_update_profile = 'このプロフィールの編集は出来ません'; 
+$be_email_required = 'Eメールが必要です。';
+$be_anon_votes = 'このミームに匿名で投票することは出来ません';
+
+// format strings
+$bf_date_posted = '%Y/%m/%d  %R';
+
+$bl_promoted_message = '';
+
+
+
+
+$bf_recover_pass = "パスワードの再発行の依頼がありました。
+ニックネームは： %s
+パスワードは： %s
+パスワードの更新はこちらで行えます： %s
+プロフィールを編集すれば新しいパスワードを付けることが出来ます。
+";
+// K. BAHEUX 翻訳　完成 //
+
+$content_title_index = "第一面のミーム";
+$bm_message_index = "最近、第一面に昇進されたミームです";
+$content_title_popular = "一番人気のあるミーム";
+$content_title_unpopular = "人気があまりないミーム";
+$content_title_stats = "統計";
+$content_title_help = "よくある質問";
+$content_title_register = "新メンバーの登録";
+$content_title_login = "ログイン";
+$content_title_meme_queue = "スタンバイ中のミーム";
+$bm_message_meme_queue = "<em>第一面に<strong>昇進</strong>したいミームに<strong>投票</strong>して下さい</em>";
+$content_title_memes_by_tags = "キーワード / タグ：";
+$content_title_post = "ミームを投稿する：ステップ";
+$content_title_post2 = " /3";
+$content_title_post_seleccione = "-- 選択 --";
+$content_title_comment = "コメント";
+$must_registar = "申し訳ありませんが投票するのに登録が必要となっております。是非、この機会でご登録お願い申し上げます。登録は簡単と無料です。";
+$content_title_admin = "管理";
+$content_title_disable_meme = "ミームを未表示にする";
+$content_title_circulation = "伝達";
+$content_title_logout = "ログアウト";
+$content_title_promote = "ミームを昇進する";
+$content_title_search = "検索";
+$content_title_folksonomy = "フォークソノミー";
+$content_title_tag_meme = "タグ";
+$content_title_search = "検索の条件：";
+$bl_community = "コミュニティ";
+$bl_help = "ヘルプ";
+$bl_about = "ブログ・ミームズについて"; 
+
+$bl_automatic_message_email = "ブログミームズのユーザー%USER%が下記の記事をあなたに送りました。\n\n%MEME_URL%\n\n「%TITLE%」\n\n%TEXT%\n\n送信された時、この記事に%VOTES%票がありました。\n読みたければリンクをクリックして下さい。";
+?>
