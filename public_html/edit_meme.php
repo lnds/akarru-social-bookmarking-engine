@@ -1,9 +1,9 @@
 <?php
-  $meme_id = $_GET['meme_id'];
-  if (empty($meme_id)) {
-	  $meme_id = $_POST['meme_id'];
+  $meme_id = intval($_GET['meme_id']);
+  if ($meme_id == 0) {
+	  $meme_id = intval($_POST['meme_id']);
   }
-  if (empty($meme_id)) {
+  if ($meme_id == 0) {
 	  header("Location: index.php");
 	  exit();
 	  return;
