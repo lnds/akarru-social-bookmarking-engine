@@ -20,13 +20,16 @@
 
   function infl($pa, $pb)
   {
-	  return $pb->rank - $pa->rank;
+	  if ($pb->influece == $pa->influence)
+		  return 0;
+	  return $pb->influence > $pa->influence ? 1 : -1;
   }
-
 
   function pop($pa, $pb)
   {
-	  return $pb->popularity - $pa->popularity;
+	  if ($pb->popularity == $pa->popularity)
+		  return 0;
+	  return $pb->popularity > $pa->popularity ? 1 : -1;
   }
 
   $smarty->assign('content_title', 'estad&iacute;sticas');
@@ -38,6 +41,8 @@
   $smarty->assign('memes', $stats->count_memes());
   $smarty->assign('votes', $stats->count_votes());
   $posters = $stats->top_posters(50); 
+
+  $sort=$_GET['sort'];
   if (!empty($sort)) {
 	  usort($posters, $sort);
   }
