@@ -3,7 +3,7 @@ header("Content-Type: text/xml");
 include_once('akarru.lib/common.php');
 $bm_memes = new memes($bm_db, $bm_user);
 $memes = $bm_memes->get_new_memes($page, ' order by date_posted desc ', $page == 0? 200 : 0);
-print '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>';
+print '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>';
 ?>
 <rss version="2.0">
 <channel>
