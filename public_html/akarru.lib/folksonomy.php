@@ -14,22 +14,21 @@ class folksonomy {
 		return $this->db->fetch_scalar($sql);
 	}
 
-	function fetch_all($n=0)
+	function count_pages($page_size=250)
 	{
-		if ($n <= 0) {
-            $n = $this->count();
-		}
-		if ($n <= 0) {
-			$n = 1;
-		}
-		$sql = 'select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id order by memes desc limit '.$n;
+		return ceil($this->count()/$page_size);
+	}
+	function fetch_all($page, $page_size=250)
+	{
+		$p = ($page-1) * $page_size;
+		$sql = "select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id order by memes desc limit $p, $page_size";
 		$tags = $this->db->fetch($sql);
+		$n = $this->count();
 		foreach ($tags as $tag)
 		{
 			$tag->font_size = ceil(($tag->memes/$n)*40)+8;
 			$result[] = $tag;
 		}
-		shuffle($result);
 		return $result;
 	}
 
