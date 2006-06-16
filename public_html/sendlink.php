@@ -1,21 +1,9 @@
 <?php
+require("lib/class.phpmailer.php");
 include_once('akarru.lib/common.php');
 
-$copyto = "adminjp@blogmemes.jp";
+$copyto = "admin@blogmemes.com";
 
-function ValidEmail($addr){
-	if(substr_count($addr,"@")!=1)
-		return false;
-	list($local, $domain) = explode("@", $addr);
-	
-	$pattern_local = '^([0-9a-z]*([-|_]?[0-9a-z]+)*)(([-|_]?)\.([-|_]?)[0-9a-z]*([-|_]?[0-9a-z]+)+)*([-|_]?)$';
-	$pattern_domain = '^([0-9a-z]+([-]?[0-9a-z]+)*)(([-]?)\.([-]?)[0-9a-z]*([-]?[0-9a-z]+)+)*\.[a-z]{2,4}$';
-
-	$match_local = eregi($pattern_local, $local);
-	$match_domain = eregi($pattern_domain, $domain);
-	
-	return ($match_local && $match_domain && gethostbyname($domain));
-}
 
 function ValidMessage($message)
 { 
@@ -24,35 +12,36 @@ function ValidMessage($message)
   return stristr($message, "http://") === FALSE;
 }
 
-  $meme_id = $_GET['meme_id'];
-  if (empty($meme_id)) {
-	  $meme_id = $_POST['meme_id'];
+  $meme_id = intval($_GET['meme_id']);
+  if ($meme_id==0) {
+	  $meme_id = intval($_POST['meme_id']);
   }
-  if (empty($meme_id)) {
+  if ($meme_id == 0) {
 	  header("Location: index.php");
 	  exit();
 	  return;
   }
     
   $memes = new memes($bm_db, $bm_user);
-  $meme = $memes->get_meme($meme_id);
+  $meme = $memes->get_meme($meme_id, 1);
   $smarty->assign('meme', $meme);
   $smarty->assign('meme_id', $meme_id);
   $smarty->assign('permalink', $memes->get_permalink($meme_id));
   $smarty->assign('username', $bm_users->get_user_name());
 
+  $step = intval($_POST['step']);
     
-  if (empty($_POST) || empty($_POST['step']))
+  if (empty($_POST) || $step == 0)
   {
       $step = 1;
-      $smarty->assign('email_subject', $bl_site_caption . " - " . $bl_sub_title . ":" . $meme->title);
+      $smarty->assign('email_subject', $bl_site_caption . " - " . $bl_sub_title . ": " . $meme->title);
 	  $smarty->assign('sender_email', $bm_users->user->email);
       $smarty->assign('sender_name', $bm_users->get_user_name());
 	  $smarty->assign('receiver_email', '');
       $smarty->assign('receiver_name', '');
 	  $smarty->assign('message_body', '');
   }
-  else if ($_POST['step'] == 1)
+  else if ($step == 1)
   {
         $to_email=$_POST['receiver_email'];
         $to_name=$_POST['receiver_name'];
@@ -74,7 +63,7 @@ function ValidMessage($message)
             $smarty->assign('error_receiver_email', 1);
             $errors++;
         }
-        elseif (!ValidEmail($to_email))
+        elseif (!is_valid_email($to_email))
         {
             $smarty->assign('error_receiver_email', 1);
             $errors++;
@@ -85,7 +74,7 @@ function ValidMessage($message)
             $smarty->assign('error_sender_email', 1);
             $errors++;
         }
-        elseif (!ValidEmail($from_email))
+        elseif (!is_valid_email($from_email))
         {
             $smarty->assign('error_sender_email', 1);
             $errors++;
@@ -107,16 +96,28 @@ function ValidMessage($message)
             $automatic_message = str_replace("%TEXT%", $meme->content, $automatic_message);
             $automatic_message = str_replace("%VOTES%", $meme->votes, $automatic_message);
             $body .= "\n\n---\n" . $automatic_message;
-            
-            if (@mail("$to_name <$to_email>",$title, $body, "From: $from_name <$from_email>\n\n"))
+			$headers  = "From: $from_name <$from_email>\r\n";
+            $headers .= 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			ini_set(sendmail_from,'admin@blogmemes.com'); 
+
+			$mail = new PHPMailer();
+			$mail->IsSMTP();
+            $mail->SMTPAuth = true;     // turn on SMTP authentication
+			$mail->Username = "admin";  // SMTP username
+			$mail->Password = "dolmen456";
+			$mail->From = $from_email;
+			$mail->FromName = $from_name;
+			$mail->AddAddress($to_email, $to_name);
+			$mail->AddReplyTo($from_email, $from_name);
+			$mail->AddBCC($copyto, "Sendlink Blogmemes");
+			$mail->IsHTML(true);
+			$mail->Subject = $title;
+			$mail->Body = $body;
+
+            if ($mail->Send())
             {
-                if(!empty($copyto))
-                {
-				     @mail($copyto,"Sendlink Blogmemes",$automatic_message,"From: no-reply@".$_SERVER['HTTP_HOST']);
-                }
-                
                 $step = 2;
-                
                 header("Location: sendlink_ok.php?meme_id=" . $meme_id);
 			    return exit;
             }
