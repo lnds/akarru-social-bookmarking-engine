@@ -1,9 +1,9 @@
 <?php
-  $meme_id = $_GET['meme_id'];
-  if (empty($meme_id)) {
-	  $meme_id = $_POST['meme_id'];
+  $meme_id = intval($_GET['meme_id']);
+  if ($meme_id == 0) {
+	  $meme_id = intval($_POST['meme_id']);
   }
-  if (empty($meme_id)) {
+  if ($meme_id == 0) {
 	  header("Location: index.php");
 	  exit();
 	  return;
@@ -17,19 +17,28 @@
 		  $memes->debate($meme_id, $bm_user, $_POST['position'], false);
 
 	  }
-	  header("Location: comment.php?meme_id=$meme_id");
+	  header("Location: /meme/$meme_id");
 	  exit();
 	  return;
   }
   $memes->debate($meme_id, $bm_user, 0, true);
-  $meme = $memes->get_meme($meme_id);
+  $meme = $memes->get_meme($meme_id, intval($_GET['share']));
   $comments = $memes->get_comments($meme_id);
+  $smarty->assign('page_title', 'blogmemes - '.$meme->title);
   $smarty->assign('meme', $meme);
   $smarty->assign('meme_id', $meme_id);
   $smarty->assign('community', true);
   $smarty->assign('content', 'comment');
   $smarty->assign('comments', $comments);         
   $smarty->assign('page', $page);
+
+  $memes_tags = array();
+  $tags = $memes->get_tags($meme_id,12);
+  foreach ($tags as $tag)
+  {
+	  $memes_tags[] = '&nbsp;<a href="/tag/'.$tag->tag.'">'.$tag->tag.'</a>&nbsp;&nbsp;';
+  }
+  $smarty->assign('tags_of_meme', $memes_tags);
   if ($meme->allows_debates) 
   {
 	  $smarty->assign('friends', $memes->get_friends($meme_id));
