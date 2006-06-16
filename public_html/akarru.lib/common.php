@@ -46,23 +46,28 @@ include_once('locale.es');
 
 $bm_db = new database();
 $bm_users = new users($bm_db);
-$bm_user = $bm_users->get_user_id();
+if ($bm_users->is_logged_in())
+{
+	$bm_user = $bm_users->user->ID;
+	$bm_user_name = $bm_users->user->username;
+	$bm_is_logged_in = 1;
+}
 
 $bm_tags = new folksonomy($bm_db);
 
 $smarty->assign('community_sample', $bm_users->get_random_profile_links(9));
-$smarty->assign('tags', $bm_tags->fetch_top(12));
+$smarty->assign('tags', $bm_tags->fetch_top(21));
 $smarty->assign('bf_date_posted', 'publicado el %d/%m/%Y a las %R');
-$smarty->assign('logged_in', $bm_users->is_logged_in());
-$smarty->assign('logged_userid', $bm_users->get_user_id());
-$smarty->assign('logged_username', $bm_users->get_user_name());
+$smarty->assign('logged_in', $bm_is_logged_in);
+$smarty->assign('logged_userid', $bm_user);
+$smarty->assign('logged_username', $bm_user_name);
 
-$page = $_GET['page'];
-if (empty($page)) 
-	$page = 1;
+$bm_page = intval($_GET['page']);
+if (empty($bm_page)) 
+	$bm_page = 1;
 
 $smarty->assign('time', time());
-$smarty->assign('page', $page);
+$smarty->assign('page', $bm_page);
 
 if (isset($_APP['cats'])) {
   $cats = $_APP['cats'];
