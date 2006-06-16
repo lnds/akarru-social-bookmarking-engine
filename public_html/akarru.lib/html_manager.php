@@ -3,6 +3,22 @@
 include_once('lib/xmlrpc.inc');
 include_once('lib/xmlrpcs.inc');
 
+
+function is_valid_email($addr)
+{
+	if(substr_count($addr,"@")!=1)
+		return false;
+	list($local, $domain) = explode("@", $addr);
+	
+	$pattern_local = '^([0-9a-z]*([-|_]?[0-9a-z]+)*)(([-|_]?)\.([-|_]?)[0-9a-z]*([-|_]?[0-9a-z]+)+)*([-|_]?)$';
+	$pattern_domain = '^([0-9a-z]+([-]?[0-9a-z]+)*)(([-]?)\.([-]?)[0-9a-z]*([-]?[0-9a-z]+)+)*\.[a-z]{2,4}$';
+
+	$match_local = eregi($pattern_local, $local);
+	$match_domain = eregi($pattern_domain, $domain);
+	
+	return ($match_local && $match_domain && gethostbyname($domain));
+}
+
 // encode special chars 
 function check_plain($text)
 {
@@ -37,19 +53,18 @@ function filter_bad_protocol($url)
       }
     }
   } while ($before != $url);
-  return check_plain($url); 
+  return true;//check_plain($url); 
 }
 
 function check_url($url)
 {
-	// This was messing up everything. I am not sure what was the purpose of this.
-    //$url = filter_bad_protocol($url);
+	//$url = filter_bad_protocol($url);
 	$furl = @fopen($url, "r");
 	if (!$furl) {
-		return false;
+		return 0;
 	}
 	@fclose($furl);
-	return true;
+	return 1;
 }
 
 function request_uri() {
@@ -139,16 +154,39 @@ function ping_technorati()
 {
     global $bm_url;
 	$blogMemes = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
-	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval($bm_url)));
+	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval("http://www.blogmemes.com/")));
 	$doPing = $blogMemes->send($msg);
 	return ($doPing && $doPing->faultCode() == 0);
 }
 
-function get_gravatar($base_url, $gravatar_id, $size)
+function get_gravatar($gravatar_id, $size)
 {
-    global $bm_url;
+	global $bm_url;
 	$default = $bm_url . "anon${size}.png";
 	return "http://www.gravatar.com/avatar.php?gravatar_id=$gravatar_id&amp;default=".urlencode($default)."&amp;size=$size.&amp;rating=R";
+}
+
+
+function get_myvideoes($url)
+{
+	$matches = array();
+	@preg_match('/watch\/(.*)$/', $url, $matches);
+	if (empty($matches[1])) {
+		return '';
+	}
+	$url = 'http://www.myvideo.es/movie/'.$matches[1];
+    return '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="300" height="250"><param name="movie" value="'.$url.'" /><embed src="'.$url.'" width="300" height="250" type="application/x-shockwave-flash" /></object>';
+}
+
+function get_googlevideo($url)
+{
+	$matches = array();
+	@preg_match('/docid=(.*)$/', $url, $matches);
+	if (empty($matches[1])) {
+		return get_myvideoes($url);
+	}
+	$url = 'http://video.google.com/googleplayer.swf?docId='.$matches[1];
+	return '<embed style="width:300px; height:250px;" type="application/x-shockwave-flash" src="'.$url.'" allowScriptAccess="sameDomain" > </embed>';
 }
 
 function get_youtube($url)
@@ -156,7 +194,7 @@ function get_youtube($url)
         $matches = array();
         @preg_match('/v=(.*)$/', $url, $matches);
         if (empty($matches[1])) {
-                return '';
+                return get_googlevideo($url);
         }
         $url = 'http://youtube.com/v/'.$matches[1];
         return '<object width="300" height="250"><param name="movie" value="'.$url.'"></param><embed src="'.$url.'" type="application/x-shockwave-flash" width="300" height="250"></embed></object>';
