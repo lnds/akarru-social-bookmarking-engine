@@ -4,9 +4,7 @@ include_once("akarru.lib/app_vars.php");
 session_start();
 
 // comment if your Blogmemes needs UTF-8
-mb_http_output("ISO-8859-1");
-// un comment if your Blogmemes needs UTF-8
-//mb_http_output("utf-8");
+mb_http_output("utf-8");
 require('Smarty/Smarty.class.php');
 
 class BM_Smarty extends Smarty {
@@ -78,7 +76,7 @@ else
 	$bm_cats = $bm_cats->fetch_all();
 	$smarty->assign('bm_cats', $bm_cats);
 	foreach ($bm_cats as $cat) {
-		$cats[] = '<a href="show_cat.php?cat_id='.$cat->ID.'" >'.$cat->cat_title.'</a>';
+		$cats[] = '<a href="/cat/'.$cat->cat_title.'" >'.$cat->cat_title.'</a>';
 	}
 	$_APP['cats'] = $cats;
 }
