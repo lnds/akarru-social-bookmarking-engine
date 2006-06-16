@@ -30,8 +30,8 @@ function sanitize($value)
 	{
 		$this->db= @mysql_connect($this->db_host,$this->db_user,$this->db_pass);
 		// If your database is in utf-8 un-comment these two lines
-		//mysql_query("SET CHARACTER SET utf8", $this->db);
-        //mysql_query("SET NAMES 'utf8'", $this->db); 
+        mysql_query("SET CHARACTER SET utf8", $this->db); 
+		mysql_query("SET NAMES 'utf8'", $this->db);
 		@mysql_select_db($this->db_name,$this->db);
 		return $this->db;
 	}
@@ -91,7 +91,7 @@ function sanitize($value)
 	function do_query($sql)
 	{
 
-		$query = @mysql_query($sql, $this->db) or die("error: ".mysql_error());
+		$query = @mysql_query($sql, $this->db) or die("error: ".mysql_error()." sql = ".$sql);
 		return $query;
 	}
 
