@@ -8,7 +8,6 @@ class users {
 	{
 		$this->aes_key = $aes_key;
 		$this->db = $db;
-		//if (!isset($psession))
 		$this->user = $_SESSION['user_data'];
 		if (empty($this->user)) {
 			$psession = $_COOKIE["bm_login_cookie"];
@@ -36,6 +35,10 @@ class users {
 		return 1;
 	}
 
+	function count_users()
+	{
+		return $this->db->fetch_scalar('select count(*) from users');
+	}
 
 	function get_user_id()
 	{
@@ -53,6 +56,18 @@ class users {
 		return isset($this->user) ? $this->user->username : '';
 	}
 
+
+	function get_user_email()
+	{
+		return isset($this->user) ? $this->user->email : '';
+	}
+
+	function get_user_gravatar()
+	{
+		return isset($this->user) ? $this->user->gravatar : '';
+	}
+
+
 	function register_user($user, $email, $pass)
 	{
 		if ($this->check_user_exists($user)) 
@@ -62,7 +77,14 @@ class users {
 			return FALSE;
 		
 		$user = htmlspecialchars($user);
+		if (empty($user)) {
+			return FALSE;
+		}
 		$email = htmlspecialchars($email);
+		if (empty($email)) {
+			return FALSE;
+		}
+
 		$now = time();
 		$key = $this->aes_key;
 		$this->db->execute("insert into users(username,email,strong_pass,join_date,gravatar) values('$user','$email', aes_encrypt(md5('$pass'), md5($now || '$key')), $now, md5('$email'))");
@@ -127,7 +149,7 @@ class users {
 		$sql .= " where u.id = $user_id ";
 		$profile = $this->db->fetch_object($sql);
 		$stats = new statistics($this->db);
-	   // $infl  = $stats->calc_influence($profile->id);
+		$infl  = $stats->calc_influence($profile->id);
 		$profile->memes = $infl->memes;
 		$profile->votes = $infl->votes;
 		$profile->comments = $infl->comments;
@@ -139,8 +161,8 @@ class users {
 		$profile->promoted_memes = $memes->memes_count;
 
 		// gravatar
-		$profile->small_gravatar = get_gravatar($bm_url, $profile->gravatar, 40);
-		$profile->gravatar = get_gravatar($bm_url, $profile->gravatar, 80);
+		$profile->small_gravatar = get_gravatar($profile->gravatar, 40);
+		$profile->gravatar = get_gravatar($profile->gravatar, 80);
 
 
 		return $profile;
@@ -160,7 +182,7 @@ class users {
 		$user = $this->db->fetch_object("select * from users where email = '$email' limit 1");
 		if ($user) 
 		{
-			$pass = substr(base64_encode(md5($user->password.$user->email.$user->id.time())), 0, 8);
+			$pass = mb_substr(base64_encode(md5($user->password.$user->email.$user->id.time())), 0, 8);
 			$key = $this->aes_key;
 			$sql = "update users set strong_pass = aes_encrypt(md5('$pass'), md5(join_date || '$key')) where ID = $user->ID";
 			$this->db->execute($sql);
@@ -185,27 +207,30 @@ class users {
 		$users = $this->db->fetch("select username, gravatar from users order by rand() limit $n");
 		foreach ($users as $user)
 		{
-			$user->gravatar = get_gravatar($bm_url, $user->gravatar, 40);
-			$result[] = '<a href="profile.php?user_name='.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
-				.'<br/><a style="font-size:10px" href="profile.php?user_name='.$user->username.'">'.
-				substr($user->username,0,10).'</a>';
+			$user->gravatar = get_gravatar($user->gravatar, 40);
+			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
+				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.
+				mb_substr($user->username,0,10).'</a>';
 		}
 		return $result;
 	}
 
-	function get_profile_links($n)
+	function get_profile_links($n,$page=0,$page_size=240)
 	{
 		$result = array();
-		if ($n > 0) 
-			$users = $this->db->fetch("select username, gravatar from users u order by rand() limit $n");
-		else 
-			$users = $this->db->fetch("select u.username, u.gravatar from users u order by u.ID asc");
+		if ($n > 0) {
+			$users = $this->db->fetch("select username, gravatar from users u order rand() limit $n");
+
+		}
+		else {
+		$users = $this->db->fetch("select username, gravatar from users u order by ID asc limit ".(($page-1)*$page_size).', '.$page_size);
+		}
 		foreach ($users as $user)
 		{
-			$user->gravatar = get_gravatar($bm_url, $user->gravatar, 40);
-			$result[] = '<a href="profile.php?user_name='.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
-				.'<br/><a style="font-size:10px" href="profile.php?user_name='.$user->username.'">'.
-				substr($user->username,0,10).'</a>';
+			$user->gravatar = get_gravatar($user->gravatar, 40);
+			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
+				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.
+			   mb_substr($user->username,0,10).'</a>';
 		}
 		return $result;
 	}
