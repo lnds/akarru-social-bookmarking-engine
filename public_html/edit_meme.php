@@ -41,6 +41,16 @@
   $meme = $memes->get_meme($meme_id);
   $comments = $memes->get_comments($meme_id);
   $smarty->assign('meme', $meme);
+  // Kenji : fix to get the tags and type of content
+  $tags = $memes->get_tags($meme_id);
+  $memes_tags = "";
+  foreach ($tags as $tag)
+  {
+	  $memes_tags .= $tag->tag . ',';
+  }
+  $smarty->assign('meme_tags', $memes_tags);
+  $smarty->assign('meme_type', $meme->is_micro_content);
+  // end fix Kenji
   $smarty->assign('content', 'edit_post');
   $smarty->display('master_page.tpl');
 ?>
