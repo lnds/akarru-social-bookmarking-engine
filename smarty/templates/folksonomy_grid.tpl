@@ -5,9 +5,10 @@
 	<tr>
 		<td>
 {foreach from=$all_tags item=tag}		
-<a style="font-size:{$tag->font_size}pt;text-decoration:none" href="memes_by_tag.php?tag_id={$tag->tag_id}">{$tag->tag}</a>&nbsp; 
+<a style="font-size:{$tag->font_size}pt;text-decoration:none" href="/tag/{$tag->tag}">{$tag->tag}</a>&nbsp; 
 {/foreach}
 </td>
 </tr>
 </table>
+{include file='paginate.tpl'}
 
