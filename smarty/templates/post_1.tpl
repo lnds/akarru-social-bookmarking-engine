@@ -18,14 +18,14 @@
 {if $error_url}<tr><td class="error">{#error_url#}</td></tr>{/if}
 <tr><td class="view-label-class">{#label_content_type#}</td></tr>
 <tr><td>
-	<select class="view-input-class" name="content_type">
-		<option value="0" selected="selected">url</option>
-		<option value="2">youtube</option>
-		<option value="1">texto</option>
-	</select>
+<input type="radio" value="0" id="content_type" name="content_type" checked="true">url</input>
+<input type="radio" value="2" id="content_type" name="content_type">video</input>
+<input type="radio" value="1" id="content_type" name="content_type">texto</input>
 </td></tr>
 <tr><td class="view-label-class" valign="middle">{#label_allows_debates#}&nbsp;<input class="view-input-class" type="checkbox" value="1" name="debates" /></td></tr>
 <tr><td><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
+<tr><td><br/><font size="x-small">(Si envias video este debe ser un link a un video <a href="http://www.youtube.com">youtube</a>, <a href="http://video.google.com">google video</a>, o <a href="http://www.myvideo.es">MyVideo.es</a>)</a></td></tr>
+
 </table>
 </div>
 <div style="height:250px">

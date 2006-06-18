@@ -19,8 +19,13 @@ el bot&oacute;n {#post_submit_label#}
   
     <td class="meme-content"><a href="{$url}"  alt="{$url}"  target="_blank" >{$title}<input type="hidden" name="url" value="{$url}" /><input type="hidden" name="title" value="{$title}" /></a>
 	<div class="whowhen-class">{#posted_by_label#}&nbsp;<a class="whowhen-class" 
-	style="font-size:10px" href="profile.php?user_name={$logged_username}">{$logged_username}</a>
+	style="font-size:10px" href="/user/{$logged_username}"><img src="{$gravatar}" border="0"alt="{$logged_username}"/><br/>{$logged_username}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}</div>
+	{if $page_image}
+	<a href="{$meme->url}" target="_new">	
+	<img border="0" style="float:right;border:none" src="{$page_image}" alt="snapshot" />
+	</a>
+	{/if}
 	{if $micro_content}
 	<div style="padding:2px">{$micro_content}</div>
 	{/if}
