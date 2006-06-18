@@ -1,10 +1,14 @@
+{if $logged_in}
 {include file="meme_layout.tpl"}
+{else}
+{include file="meme_layout_anon.tpl"}
+{/if}
 {foreach from=$comments item=comment}
 <div class="infobox" id="debate_form">
 <div>
 <div class="whowhen-class">
 {$comment->date_posted|date_format:$bf_date_posted} 
-&nbsp;{#comment_sender#}<a href="profile.php?user_name={$comment->username}">{$comment->username}</a>&nbsp;<img src="{$comment->small_gravatar}" />&nbsp; 
+&nbsp;{#comment_sender#}<a href="/user/{$comment->username}">{$comment->username}</a>&nbsp;<img src="{$comment->small_gravatar}" />&nbsp; 
 </div>
 <div style="padding:1em">{$comment->content|nl2br}</div>
 </div>
@@ -42,7 +46,7 @@
 {else}
 <strong>{#comment_no_login_label#}</strong>
 <br />
-<a href="login.php?from=comment">{#comment_login#}</a> | <a href="register.php?from=comment">{#comment_register#}</a>
+<a href="/login.php?from=comment">{#comment_login#}</a> | <a href="/register.php?from=comment">{#comment_register#}</a>
 {/if}
 {if $meme->allows_debates}
 <hr />
@@ -51,9 +55,15 @@
 <table width="430" border="0" cellspacing="2" cellpadding="2" style="border: 1px solid green"> 
 <tr><td colspan="3" align="center"><h2>{#debate_area_label#}</h2></td></tr>
 <tr><td colspan="3" style="border-bottom: 1px solid green">{#debate_help#}</td></tr>
-<tr><td style="border-right: 1px solid green"><h2>{#friends_label#}</h2></td>
+<tr><td style="border-right: 1px solid green">
+<h2>{#friends_label#}</h2>
+{#friends_description#}
+</td>
 <td>&nbsp;</td>
-<td style="border-left: 1px solid green" ><h2>{#foes_label#}</h2></td></tr>
+<td style="border-left: 1px solid green" >
+<h2>{#foes_label#}</h2>
+{#foes_description#}
+</td></tr>
 <tr>
 <td align="left" valign="top" style="border-right: 1px solid green">
 {html_table loop=$friends table_attr='id="pos" border="0" cellpadding="4" align="center"' cols="3"}</td>
@@ -62,7 +72,17 @@
 {html_table loop=$foes table_attr='id="neg" border="0" cellpadding="4" align="center"' cols="3"}</td>
 </tr>
 <tr>
-<td colspan="3" align="center" style="border-top: 1px solid green"><h2>{#neutrals_label#}</h2></td>
+<td colspan="3" align="center" style="border-top: 1px solid green"><h2>{#sponsors_label#}</h2>
+{#sponsors_description#}
+</td>
+</tr>
+<td colspan="3">
+{html_table cols="7" table_attr='id="neutral" border="0" cellpadding="2" align="center"' loop=$sponsors}
+</td>
+<tr>
+<td colspan="3" align="center" style="border-top: 1px solid green"><h2>{#neutrals_label#}</h2>
+{#neutrals_description#}
+</td>
 </tr>
 <tr>
 <td colspan="3">
