@@ -2,6 +2,7 @@
 
 // labels
 $bl_site_caption = 'Blog Memes';
+$bl_sub_title='promocion de enlaces';
 $bl_promote = 'promover memes'; // promote memes (vote).
 $bl_publish = 'publicar un meme'; // publish a meme
 $bl_popular = 'lo <b>m&aacute;s</b> popular';  // popular memes
@@ -113,4 +114,13 @@ Usted puede cambiar su clave modificando su perfil
 $bl_community = 'Comunidad';
 $bl_help = 'preguntas frecuentes';
 $bl_about = 'qui&eacute;nes somos';
+$bl_anonymous = 'an&oacute;nimos';
+$bl_search = 'b&uacute;squeda';
+$bl_search_criteria = 'criterio de b&uacute;squeda: ';
+
+$bl_content_title_sendlink = 'Enviar Meme por Correo Electronico';
+
+$bl_automatic_message_email='Este enlace se encuentra <a href="http://www.blogmemes.com/">BlogMemes</a><br/><h1><a href="%MEME_URL%">%TITLE%</a></h1><p>%TEXT%</p>Votos: %VOTES% | Enviado por: <a href="http://www.blogmemes.com/profile.php?username=%USER%">%USER%</a>'
+
+
 ?>
