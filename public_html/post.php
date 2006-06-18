@@ -78,7 +78,7 @@
   $smarty->assign('bm_cats', $bm_cats);
 
   if (!$bm_users->is_logged_in()) {
-	  $bm_home = $_GET['page'];
+	  $bm_home = $bm_page;
 	  $login_url = 'login.php?from=post';
 	  $action = '';
 	  if (!empty($_GET['title'])) {
@@ -95,11 +95,14 @@
 	  return;
   }
 
-  if (empty($_POST) || empty($_POST['step']))
+  $step = intval($_POST['step']);
+  if (empty($_POST) || $step == 0)
   {
 	  $step = 1;
-	  if (!empty($_GET['url'])) {
-		  $smarty->assign('url', $_GET['url']);
+	  $url = $_GET['url'];
+	  if (!empty($url))
+	  {
+		  $smarty->assign('url', $url);
 	  }
 	  else {
 		  $smarty->assign('url', 'http://');
@@ -120,6 +123,7 @@
 	  }
 
 	 $bm_errors = 0;
+	 $step = $_POST['step'];
 	 $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 	 if ($_POST['step'] == 1) {
 		 $smarty->assign('debates', $_POST['debates']);
@@ -128,7 +132,8 @@
 		 if ($url == 'http://') {
 			 $url = '';
 		 }
-		 $smarty->assign('content_type',  $_POST['content_type']);
+		 $content_type = $_POST['content_type'];
+		 $smarty->assign('content_type',  $content_type);
 		 if (empty($title)) {
 			 $smarty->assign('error_title', true);
 			 $bm_errors++;
@@ -139,7 +144,8 @@
 		 }
 		 if (!empty($url)) {
 			 $smarty->assign('url', check_plain($url));
-			 if (!check_url($url)) {
+			 if (check_url($url) == 0) {
+				 echo "bad url = $url";
 				 $smarty->assign('error_url', true);
 				 $bm_errors++;
 			 }
@@ -188,7 +194,11 @@
 		 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 		 $smarty->assign('meme_tags', check_plain($meme_tags));
 		 $smarty->assign('favicon', $favicon);
-		 $smarty->assign('micro_content', get_youtube($url));
+		 $smarty->assign('gravatar', get_gravatar($bm_url, $bm_users->get_user_email(), 16)); 
+		 $video = get_youtube($url);
+		 $smarty->assign('micro_content', $video);
+		 if (empty($video))
+			 $smarty->assign('page_image', 'http://img.simpleapi.net/small/'.$url);
 		 $smarty->assign('debates', $_POST['debates']);
 		 if ($bm_errors == 0) {
 			 $step = 3;
@@ -221,13 +231,18 @@
 			 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 			 $smarty->assign('meme_tags', check_plain($meme_tags));
 			 $smarty->assign('cats', $bm_options);
-			 $smarty->assign('micro_content', get_youtube($url));
+			 $smarty->assign('gravatar', get_gravatar($bm_url, $bm_users->get_user_email(), 16)); 
+			 $video = get_youtube($url);
+			 $smarty->assign('micro_content', $video);
+			 if (empty($video))
+				 $smarty->assign('page_image', 'http://img.simpleapi.net/small/'.$url);
 			 $smarty->assign('favicon', $favicon);
 		 }
 		 else
 		 {
 			 $_POST['user_id'] = $bm_users->get_user_id();
 			 $memes->add_meme($_POST);
+			 $smarty->clear_all_cache();
              $title = $_POST['title'];
 			 $url   = $_POST['url'];
 			 $content_body = $_POST['content_body'];
