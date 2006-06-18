@@ -24,13 +24,6 @@
 	  {$meme->votes}
 	  </h3>
 	  </a>
-	<p id="vote_label_{$meme->ID}">&nbsp;</p>
-	<div class="vote-class" id="vote_button_{$meme->ID}">
-	{if $meme->voted <= 0}
-	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','{$logged_userid}')">
-	<img src="/styles/img/meme-votar.png" border="0" alt="{#votes_label#}" /></a>
-	{/if}
-	</div>
     </div>
     <div class="meme-content"><br/>
     <a href="/click/{$meme->ID}/{$meme->url}" >{$meme->title}</a>
@@ -49,9 +42,7 @@
 	{/if}
 	{if $meme->micro_content}
 	<span style="padding:4px">{$meme->micro_content}</span><br/>
-	{if empty($page)}
 	<a href="/videos.php">ver m&aacute;s videos</a><br/>
-	{/if}
 	{/if}
 	  	  {$meme->content|nl2br}
 		  <br/>
@@ -60,9 +51,6 @@
 	{else}
  	  <a  href="{$meme->permalink}">{#comments_label#} {$meme->comments}</a>	
 	{/if}
-	{if $logged_userid == $meme->submitted_user_id || $logged_userid == 1}
-	  <br/><a href="edit_meme.php?meme_id={$meme->ID}">modificar</a>
-        {/if}
 	  </p>
     </div>
      </td></tr>
@@ -71,13 +59,14 @@
 	{html_table loop=$tags_of_meme table_attr='border="0" cellspacing="4" cellpadding="4" ' cols="6"}
 	</td></tr>
      {/if}
-  <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class"> 
+  <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class">
 <a href="/tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="/cat/{$meme->cat_title}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="/click/{$meme->ID}/{$meme->url}" onclick="goto_url({$meme->ID})">{$meme->url|truncate:30:"..."}</a>&nbsp;</div> 
   </td></tr>
-  <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class">
+  <tr><td colspan="3">
+  <div style="padding-left:1em" class="meme-footer-class">
   Compartir: <a href="sendlink.php?meme_id={$meme->ID}"><img src="/sbs/email.png" alt="enviar por correo" border="0" /></a>
   &nbsp;<a onclick="social_click({$meme->ID})" href="http://del.icio.us/post?title={$meme->sociable_title}&url={$meme->sociable_link}"><img src="/sbs/delicious.png" border="0" alt="del.icio.us"/></a>
-  &nbsp;<a onclick="social_click({$meme->ID})" href="http://tec.fresqui.com/post?title=title={$meme->sociable_title}&url={$meme->sociable_link}"><img src="/sbs/fresqui.png" border="0" alt="fresqui"/></a>
+  &nbsp;<a onclick="social_click({$meme->ID})" href="http://tec.fresqui.com/post?title={$meme->sociable_title}&url={$meme->sociable_link}"><img src="/sbs/fresqui.png" border="0" alt="fresqui"/></a>
   &nbsp;<a onclick="social_click({$meme->ID})" href="http://meneame.net/submit.php?url={$meme->sociable_link}"><img src="/sbs/meneame.png" border="0" alt="meneame"/></a>
   &nbsp;<a onclick="social_click({$meme->ID})" href="http://www.neodiario.net/submit.php?url={$meme->sociable_link}"><img src="/sbs/neodiario.png" border="0" alt="neodiario"/></a>
   &nbsp;<iframe src="http://rank.blogalaxia.com/pbrate.php?color=CCEEAF&url={$meme->sociable_link}" width=70 height=15 scrolling=no frameborder=0 marginheight=0 marginwidth=0 style='margin:0; padding:0'></iframe><br/>

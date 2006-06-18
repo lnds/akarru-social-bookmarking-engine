@@ -1,7 +1,15 @@
+{capture name=grid}
+{if $logged_in}
 {foreach from=$memes item=meme name=mg}
 {include file="meme_layout.tpl"}
 <hr />
 {/foreach}
+{else}
+{foreach from=$memes item=meme name=mg}
+{include file="meme_layout_anon.tpl"}
+<hr />
+{/foreach}
+{/if}
 {include file="paginate.tpl"}
 <div>
 <script type="text/javascript" src="http://embed.technorati.com/embed/kru95iwk92.js"></script>
@@ -13,4 +21,5 @@ Recibe BlogMemes por Email<br/><input name="EMAIL" maxlength="255" type="text" s
 <br/>Powered by <a href="http://www.feedblitz.com">FeedBlitz</a></form> 
 </div>
 </div>
-
+{/capture}
+{$smarty.capture.grid}
