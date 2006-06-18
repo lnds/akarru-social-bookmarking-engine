@@ -1,4 +1,6 @@
 {include file="meme_layout.tpl"}
+<h3>Etiquetas</h3>
+{html_table loop=$meme_tags table_attr='border="0" cellspacing="4" cellpadding="4" ' cols="6"}
 {if $logged_in}
 {include file="form_header.tpl"}
 <table>
@@ -8,6 +10,5 @@
 </table>
 {include file="form_footer.tpl"}
 {/if}
-{html_table loop=$meme_tags table_attr='border="0" cellspacing="4" cellpadding="4" ' cols="6"}
 <div style="height:1400px;_height:1400px">&nbsp;</div>
 
