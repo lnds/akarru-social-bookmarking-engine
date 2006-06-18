@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
+/*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -97,7 +97,6 @@ CREATE TABLE `posts` (
   `date_promo` int(11) default NULL,
   `lang` varchar(2) default 'es',
   `clicks` int(11) default '0',
-  `social_clicks` int(11) default '0',
   `rank` int(11) default '0',
   `votes` int(11) NOT NULL default '0',
   `is_micro_content` int(11) NOT NULL default '0',
@@ -108,6 +107,10 @@ CREATE TABLE `posts` (
   `debate_pos` int(11) default '0',
   `allows_debates` int(11) NOT NULL default '0',
   `promoted` int(11) NOT NULL default '0',
+  `disabled` tinyint(1) default '0',
+  `social_clicks` int(11) default '0',
+  `views` int(11) NOT NULL default '0',
+  `shares` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ID`),
   KEY `idx_post_dates` (`date_posted`),
   KEY `idx_post_submiters` (`submitted_user_id`),
@@ -118,7 +121,7 @@ CREATE TABLE `posts` (
   KEY `idx_post_rank` (`rank`),
   KEY `idx_post_votes` (`votes`),
   KEY `idx_prooted` (`promoted`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `tags`
@@ -174,6 +177,8 @@ CREATE TABLE `users` (
   `persistent_session` varchar(64) default NULL,
   `gravatar` varchar(32) default NULL,
   `strong_pass` blob,
+  `send_newsletter` tinyint(1) default '1',
+  `track_comments` tinyint(1) default '1',
   PRIMARY KEY  (`ID`),
   KEY `idx_username` (`username`),
   KEY `idx_user_email` (`email`),
