@@ -170,6 +170,7 @@ class users {
 
 	function change_password($user_id, $new_pass, $confirm_pass)
 	{
+		$user_id = sanitize($user_id);
 		if ($new_pass != $confirm_pass) 
 			return FALSE;
 		$key = $this->aes_key;
@@ -210,7 +211,7 @@ class users {
 			$user->gravatar = get_gravatar($user->gravatar, 40);
 			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
 				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.
-				mb_substr($user->username,0,10).'</a>';
+				mb_substr($user->username,0,10,"UTF-8").'</a>';
 		}
 		return $result;
 	}
@@ -230,7 +231,7 @@ class users {
 			$user->gravatar = get_gravatar($user->gravatar, 40);
 			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
 				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.
-			   mb_substr($user->username,0,10).'</a>';
+			   mb_substr($user->username,0,10,"UTF-8").'</a>';
 		}
 		return $result;
 	}

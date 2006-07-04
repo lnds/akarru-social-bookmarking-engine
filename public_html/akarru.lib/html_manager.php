@@ -154,7 +154,7 @@ function ping_technorati()
 {
     global $bm_url;
 	$blogMemes = new xmlrpc_client("/rpc/ping", "rpc.technorati.com", 80);
-	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval("http://www.blogmemes.com/")));
+	$msg = new xmlrpcmsg("weblogUpdates.ping", array(new xmlrpcval("Blog Memes"), new xmlrpcval($bm_url)));
 	$doPing = $blogMemes->send($msg);
 	return ($doPing && $doPing->faultCode() == 0);
 }
@@ -203,18 +203,50 @@ function get_youtube($url)
 
 function replace_urls($text)
 {
-	return preg_replace( array(
-               "/[^\"'=]((http|ftp|https):\/\/[^\s\"']+)/i",
-               "/<a([^>]*)target=\"?[^\"']+\"?/i",
-               "/<a([^>]+)>/i"
-       ),
-         array(
-               "<a href=\"\\1\">\\1</a>",
-               "<a\\1",
-               "<a\\1  >"
-           ),
-       $text
-       );
+	// Kenji : Simple BBCode replacement [url=http://...]Example[/url] => <a href="http://...">Example</a>
+    $simple_search = array(
+                "/[^\"'=]((http|ftp|https):\/\/[^\s\"']+)/i",
+                '/\[b\](.*?)\[\/b\]/is',                                
+                '/\[i\](.*?)\[\/i\]/is',                                
+                '/\[u\](.*?)\[\/u\]/is',                                
+                '/\[url\=(.*?)\](.*?)\[\/url\]/is',                         
+                '/\[url\](.*?)\[\/url\]/is'
+                );
+
+    $simple_replace = array(
+                "<a href=\"\\1\">\\1</a>",
+                '<strong>$1</strong>',
+                '<em>$1</em>',
+                '<u>$1</u>',
+                '<a href="$1">$2</a>',
+                '<a href="$1">$1</a>'
+                );
+
+    return preg_replace ($simple_search, $simple_replace, $text); 
+}
+
+function remove_urls($text)
+{
+	// Kenji : remove the BBcode
+    $simple_search = array(
+                "/[^\"'=]((http|ftp|https):\/\/[^\s\"']+)/i",
+                '/\[b\](.*?)\[\/b\]/is',                                
+                '/\[i\](.*?)\[\/i\]/is',                                
+                '/\[u\](.*?)\[\/u\]/is',                                
+                '/\[url\=(.*?)\](.*?)\[\/url\]/is',                         
+                '/\[url\](.*?)\[\/url\]/is'
+                );
+
+    $simple_replace = array(
+                "{link}",
+                '$1',
+                '$1',
+                '$1',
+                '$2',
+                '{link}'
+                );
+
+    return preg_replace ($simple_search, $simple_replace, $text); 
 }
 
 ?>

@@ -22,7 +22,7 @@ class memes {
 		while ($user = $this->db->get_record_object($rs)) {
 			$user->gravatar = get_gravatar($user->gravatar, 40);
 			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
-				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.substr($user->username, 0, 10).'</a>';
+				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.mb_substr($user->username, 0, 10, "UTF-8").'</a>';
 		}
 		return $result;
 	}
@@ -107,8 +107,7 @@ class memes {
 		return $this->filter_result($sql);
 	}
 
-
-	function get_meme($id, $share=0)
+    function get_original_meme($id)
 	{
 		global $bm_url;
 		$sql =  'select p.*, pc.cat_title, pc.ID as cat_id, u.username, u.gravatar, u.ID as user_id ';
@@ -136,14 +135,32 @@ class memes {
 
 		$meme->prior_meme->permalink = $this->get_permalink($meme->prior_meme->ID); 
 		$meme->prior_meme->sharelink = $this->get_sharelink($meme->prior_meme->ID);
+        
+        return $meme;
+	}
 
-		if ($share) 
-			$this->db->execute('update posts set views = views + 1, shares = shares+1 where ID = '.$meme->ID);
+	function get_meme($id, $share=0)
+	{
+        $id = sanitize($id);
+		$meme = $this->get_original_meme($id);
+        $meme->content = replace_urls($meme->content);
+
+		if ($share)
+	        $this->db->execute('update posts set shares = shares+1 where ID = '.$id);
 		else
-			$this->db->execute('update posts set views = views + 1  where ID = '.$meme->ID);
+	 		$this->db->execute('update posts set views = views + 1 where ID = '.$id);
 		return $meme;
 	}
     
+    function get_raw_meme($id)
+	{
+        $id = sanitize($id);
+		$meme = $this->get_original_meme($id);
+        $meme->content = remove_urls($meme->content);
+
+		return $meme;
+	}
+
     function disable_meme($meme_id)
     {
         $meme_id = sanitize($meme_id);
@@ -339,7 +356,7 @@ class memes {
 	function check_url_exists_in_db($url)
 	{
 		$url = trim($url);
-		$sql = "select count(id) url_exist from posts where url = '$url'";
+        $sql = "select id from posts where url = '$url'";
 		return $this->db->fetch_scalar($sql);
 	}
 
@@ -594,9 +611,9 @@ class memes {
 		$result =  array();
 		foreach ($users as $user)
 		{
-			$user->gravatar = get_gravatar($user->gravatar, 40);
-			$result[] = '<a href="/profile.php?user_name='.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
-				.'<br/><a style="font-size:10px" href="/profile.php?user_name='.$user->username.'">'.substr($user->username,0,10).'</a>';
+			$user->gravatar = get_gravatar($bm_url, $user->gravatar, 40);
+			$result[] = '<a href="/user/'.$user->username.'"><img border="0" src="'.$user->gravatar.'" alt="'.$user->username.'" /></a>'
+				.'<br/><a style="font-size:10px" href="/user/'.$user->username.'">'.mb_substr($user->username,0,10,"UTF-8").'</a>';
 		}
 		return $result;
 

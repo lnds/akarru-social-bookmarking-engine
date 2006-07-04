@@ -20,13 +20,27 @@ class folksonomy {
 	}
 	function fetch_all($page, $page_size=250)
 	{
-		$p = ($page-1) * $page_size;
-		$sql = "select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id order by memes desc limit $p, $page_size";
+		// Kenji: this version is better at setting the size of the tags
+        $sql = "select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id";
 		$tags = $this->db->fetch($sql);
-		$n = $this->count();
+		$nbTimes = array();
+        
+        foreach ($tags as $tag)
+		{
+           $nbTimes[] = $tag->memes;
+        }
+        $maxNbTimes = max($nbTimes);
+        $minNbTimes = min($nbTimes);
+        $nbFontSize = 8;
+        $threshold = ($maxNbTimes - $minNbTimes)/$nbFontSize;
+        
+		$p = ($page-1) * $page_size;
+		$sql = "select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id limit $p, $page_size";
+		$tags = $this->db->fetch($sql);
+        
 		foreach ($tags as $tag)
 		{
-			$tag->font_size = ceil(($tag->memes/$n)*40)+8;
+            $tag->font_size = 9 + ceil($tag->memes - $min / $threshold) * 2;
 			$result[] = $tag;
 		}
 		return $result;
