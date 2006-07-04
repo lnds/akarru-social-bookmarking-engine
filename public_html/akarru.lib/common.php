@@ -53,8 +53,6 @@ if ($bm_users->is_logged_in())
 
 $bm_tags = new folksonomy($bm_db);
 
-$smarty->assign('community_sample', $bm_users->get_random_profile_links(9));
-$smarty->assign('tags', $bm_tags->fetch_top(21));
 $smarty->assign('bf_date_posted', 'publicado el %d/%m/%Y a las %R');
 $smarty->assign('logged_in', $bm_is_logged_in);
 $smarty->assign('logged_userid', $bm_user);
@@ -66,7 +64,7 @@ if (empty($bm_page))
 
 $smarty->assign('time', time());
 $smarty->assign('page', $bm_page);
-
+/* we don't need this anymore since Smarty will do the caching
 if (isset($_APP['cats'])) {
   $cats = $_APP['cats'];
 }
@@ -81,5 +79,18 @@ else
 	$_APP['cats'] = $cats;
 }
 $smarty->assign('cats_array', $cats);
+*/
+
+// This function is used to determine if ads should be displayed for a particular IP
+// You can add your fixed IP to avoid clicking on google ads in the blogmemes network
+// It would be a bummer to be ban for invalid clicks
+// The IPs below are the IP from my lab at the university and home IP
+function showGGAds()
+{
+$noads = array("221.20.64.61", "130.34.194.50", "130.34.194.51", "130.34.194.52", "130.34.194.53", "130.34.194.54", "130.34.194.55", "130.34.194.56", "130.34.194.57", "130.34.194.58", "130.34.194.59", "130.34.194.60", "130.34.194.61", "130.34.194.62", "130.34.194.63", "130.34.194.64", "130.34.194.65", "130.34.194.66", "130.34.194.67", "130.34.194.68", "130.34.194.69", "130.34.194.70", "130.34.194.49", "130.34.194.48", "130.34.194.47", "130.34.194.46", "130.34.194.45");
+$ip = $_SERVER['REMOTE_ADDR'];
+  return (! in_array($ip, $noads));
+}
+}
 
 ?>
