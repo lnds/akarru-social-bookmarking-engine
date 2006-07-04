@@ -5,6 +5,8 @@
 	  exit();
 	  return;
   }
+  
+  include_once('common_elements.php');
 
   if (empty($_POST))
   {
@@ -37,14 +39,15 @@
               else
               {
                   $user_name = $bm_users->get_user_name();
-                  header("Location: profile.php?user_name=$user_name");
+                  header("Location: /user/$user_name");
                   exit();
                   return;
               }
 		  }
 		  else if ($bm_users->update_profile($_POST)) {
 			  $user_name = $bm_users->get_user_name();
-			  header("Location: profile.php?user_name=$user_name");
+              $smarty->clear_cache(null,'db|users|profile|' . $user_name);
+			  header("Location: /user/$user_name");
 			  exit();
 			  return;
 		  }
@@ -59,7 +62,9 @@
 		 
 	  }
   }
-  $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();  
+  
+  $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();
+  $smarty->assign('content_title', $bm_title);
   $smarty->assign('content', 'profile_edit');
   $smarty->display('master_page.tpl');
 ?>

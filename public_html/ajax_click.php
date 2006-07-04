@@ -1,7 +1,7 @@
 <?
 header("Content-Type: text/xml");
 include_once('akarru.lib/common.php');
-print '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>';
+print '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>';
 ?>
 <root>
 <?php

@@ -1,7 +1,7 @@
 <?
 header("Content-Type: text/xml");
 include_once('akarru.lib/common.php');
-print '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes" ?>';
+print '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>';
 ?>
 <root>
 <?php
@@ -11,9 +11,13 @@ if ($meme_id > 0) {
 	$user_id = intval($_GET['user_id']);
 	if ($user_id == 1) { $bm_memes->promote($meme_id); }
 	if ($user_id == 0) {
-			$bm_memes->vote_anon($meme_id);
+			$voted = $bm_memes->vote_anon($meme_id);
+            if (! $voted)
+            {
+                echo "<error>$be_already_voted</error>";
+            }
 	}
-	else if(!$bm_memes->check_votes_user($meme_id, $user_id)){
+	else if(!$bm_memes->check_votes_user($meme_id,$user_id)){
 		$bm_memes->vote($meme_id,$user_id);
 	}else{
 		echo "<error>$be_already_voted</error>";

@@ -1,6 +1,6 @@
 <?php
   include_once('akarru.lib/common.php');
-  
+  include_once('common_elements.php');  
   // Put your email address in $dest and change ??? to .net .com .fr .jp .ru in the sender email address...
   function mailDetails($user, $meme_url, $meme_title, $meme_text)
   {
@@ -24,7 +24,7 @@
     $message.="\n\n------ End -----\n";
     
     // Fonction Mail
-    mail($dest,$subject,$message, "From : $fromemail");
+    @mail($dest,$subject,$message, "From : $fromemail");
   }
 
 // Following functions are to decode urlencoded strings.
@@ -73,6 +73,7 @@
    return $decodedStr;
 }
 
+
   $bm_cats = new categories($bm_db);
   $bm_cats = $bm_cats->fetch_all_enabled();
   $smarty->assign('bm_cats', $bm_cats);
@@ -107,7 +108,7 @@
 	  else {
 		  $smarty->assign('url', 'http://');
 	  }
-      
+
       $_GET['title'] = unescape($_GET['title']);
       
 	  $smarty->assign('title', $_GET['title']);
@@ -145,7 +146,6 @@
 		 if (!empty($url)) {
 			 $smarty->assign('url', check_plain($url));
 			 if (check_url($url) == 0) {
-				 echo "bad url = $url";
 				 $smarty->assign('error_url', true);
 				 $bm_errors++;
 			 }
@@ -162,7 +162,7 @@
 			 $smarty->assign('favicon', $info[1]);
 			 $smarty->assign('debates', isset($_POST['debates']));
 		 }
-         else
+		 else
          {
              $step = 1;
          }
@@ -194,7 +194,7 @@
 		 $smarty->assign('meme_trackback', check_plain($meme_trackback));
 		 $smarty->assign('meme_tags', check_plain($meme_tags));
 		 $smarty->assign('favicon', $favicon);
-		 $smarty->assign('gravatar', get_gravatar($bm_url, $bm_users->get_user_email(), 16)); 
+		 $smarty->assign('gravatar', get_gravatar($bm_users->get_user_gravatar(), 16));
 		 $video = get_youtube($url);
 		 $smarty->assign('micro_content', $video);
 		 if (empty($video))
@@ -245,9 +245,10 @@
 			 $smarty->clear_all_cache();
              $title = $_POST['title'];
 			 $url   = $_POST['url'];
+             $category = $_POST['category'];
 			 $content_body = $_POST['content_body'];
 			 mailDetails($bm_users->get_user_name(), $url, $title, $content_body);
-			 header("Location: show_cat.php?cat_id=".$_POST['category']);
+             header("Location: /show_cat.php?cat_name=" .$bm_options[$category]);
 			 return exit;
 		 }
 	 }

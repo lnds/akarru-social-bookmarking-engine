@@ -65,7 +65,9 @@ if(isset($_GET['url']))
 {
      $url_format = $bm_url  . "comment.php?meme_id=";
      $startPos = strpos($_GET['url'], $url_format);
-     if ($startPos === false)
+     $rurl_format = $bm_url  . "meme/";
+     $rstartPos = strpos($_GET['url'], $rurl_format);
+     if ($startPos === false && $rstartPos === false)
      {
      ?>
 <FeedFlare>
@@ -77,8 +79,16 @@ if(isset($_GET['url']))
         return;
      }
      
-     $startPos = $startPos + strlen($url_format);
-     $meme_id = substr($_GET['url'], $startPos);
+     if ($rstartPos === false)
+     {
+        $startPos = $startPos + strlen($url_format);
+        $meme_id = substr($_GET['url'], $startPos);
+     }
+     else
+     {
+        $rstartPos = $rstartPos + strlen($rurl_format);
+        $meme_id = substr($_GET['url'], $rstartPos);
+     }
     if (is_numeric($meme_id))
     {
         printFeedFlare($meme_id);

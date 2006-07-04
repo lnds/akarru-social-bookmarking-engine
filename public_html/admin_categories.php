@@ -1,10 +1,13 @@
 <?
   include_once('akarru.lib/common.php');
   if ($bm_user != 1) {
-	  header("Location: index.php");
+      logerror("admin.php: bm_user not admin", "phpErrors");
+	  header("Location: /403.php");
 	  exit();
 	  return;
   }
+  
+  include_once('common_elements.php');
   
   $categories = new categories($bm_db);
   $bm_cats = $categories->fetch_all_enabled();
@@ -20,6 +23,7 @@
           {
             if ($categories->delete_category($cat_id))
             {
+                $smarty->clear_cache(null,'db|categories');
                 header("Location: admin_categories.php");
                 exit();
 			    return;
@@ -44,6 +48,7 @@
               $cat_name = $_GET['name'];
               if ($categories->edit_category($cat_id, $cat_name))
               {
+                $smarty->clear_cache(null,'db|categories');
                 header("Location: admin_categories.php");
                 exit();
                 return;
@@ -66,6 +71,7 @@
           {
             if ($categories->enable_category($cat_id))
             {
+                $smarty->clear_cache(null,'db|categories');
                 header("Location: admin_categories.php");
                 exit();
 			    return;
@@ -81,13 +87,14 @@
           }
 	  }
       else if (!empty($_GET['disable'])) {
-		  // try to enable the category
+		  // try to disable the category
           
           $cat_id = (int) $_GET['disable'];
           if ($cat_id > 0)
           {
             if ($categories->disable_category($cat_id))
             {
+                $smarty->clear_cache(null,'db|categories');
                 header("Location: admin_categories.php");
                 exit();
 			    return;

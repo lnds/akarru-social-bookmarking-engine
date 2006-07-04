@@ -1,5 +1,6 @@
 <?php
   include_once('akarru.lib/common.php');
+  include_once('common_elements.php');
   if (!empty($_POST))  {
 
 	  $user = $_POST['user'];
@@ -7,8 +8,9 @@
 	  $email = $_POST['email'];
 	  $confirm_pass = $_POST['confirm_pass'];
 	  $bm_errors = 0;
-	  if (empty($user)) {
+	  if (empty($user) || ! preg_match('/^[a-z0-9_]+$/i', $user)) {
 		  $smarty->assign('error_user', true);
+          $smarty->assign('user', $user);
 		  $bm_errors++;
 	  }
 	  else{
@@ -24,6 +26,7 @@
 	  }
 	  if (empty($email)) {
 		  $smarty->assign('error_email', true);
+          $smarty->assign('email', $email);
 		  $bm_errors++;
 	  }
 	  else
@@ -52,7 +55,7 @@
 	  if ($bm_errors == 0) 
 	  {
 		  if (empty($_GET['from'])) {
-			  $url = "profile.php?user_name=$user";
+            $url = "/user/" . $user;
 		  }
 		  else
 		  {
@@ -65,14 +68,14 @@
 	  else
 	  {
 		  $smarty->assign('from', $_GET['from']);
-		  $smarty->assign('content_title', 'registro de nuevo usuario');
+    		  $smarty->assign('content_title', $content_title_register);
 		  $smarty->assign('content', 'register');
 	  }
   }
   else
   {
 	  $smarty->assign('from', $_GET['from']);
-	  $smarty->assign('content_title', 'registro de nuevo usuario');
+	  $smarty->assign('content_title', $content_title_register);
 	  $smarty->assign('content', 'register');
   }
   $smarty->display('master_page.tpl');

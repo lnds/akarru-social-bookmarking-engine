@@ -1,6 +1,7 @@
 <?
   include_once('akarru.lib/common.php');
   include_once('akarru.lib/statistics.php');
+  include_once('common_elements.php');
 
   function memes($pa, $pb)
   {
@@ -20,10 +21,11 @@
 
   function infl($pa, $pb)
   {
-	  if ($pb->influece == $pa->influence)
+	  if ($pb->influence == $pa->influence)
 		  return 0;
 	  return $pb->influence > $pa->influence ? 1 : -1;
   }
+
 
   function pop($pa, $pb)
   {
@@ -32,7 +34,7 @@
 	  return $pb->popularity > $pa->popularity ? 1 : -1;
   }
 
-  $smarty->assign('content_title', 'estad&iacute;sticas');
+  $smarty->assign('content_title', $content_title_stats);
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 
   $stats = new statistics($bm_db);

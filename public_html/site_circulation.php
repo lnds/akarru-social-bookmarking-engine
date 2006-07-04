@@ -1,6 +1,7 @@
 <?php
   include_once('akarru.lib/common.php');
-  $smarty->assign('content_title', 'circulaci&oacute;n');
+  include_once('common_elements.php');
+  $smarty->assign('content_title', $content_title_circulation);
 
 
 

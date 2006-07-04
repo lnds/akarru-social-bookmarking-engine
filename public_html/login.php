@@ -1,5 +1,6 @@
 <?php
   include_once('akarru.lib/common.php');
+  include_once('common_elements.php');
   if (!empty($_POST))
   {
 
@@ -33,7 +34,14 @@
   }
   else
   {
-	  $from = $_GET['from'].'.php?post=1';
+       if (stristr($_GET['from'], ".php") === FALSE )
+       {
+	    $from = $_GET['from'].'.php?post=1';
+      }
+      else
+      {
+        $from = $_GET['from'].'?post=1';
+      }
 	  if (!empty($_GET['url'])) {
 		  $from .= '&url='.$_GET['url'];
 	  }
@@ -43,7 +51,7 @@
 
   }
   $smarty->assign('community', true);
-  $smarty->assign('content_title', 'login');
+  $smarty->assign('content_title', $content_title_login);
   $smarty->assign('from', $from);
   $smarty->assign('content', 'login');
   $smarty->display('master_page.tpl');

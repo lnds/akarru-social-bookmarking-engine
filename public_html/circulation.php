@@ -1,12 +1,14 @@
 <?php
-	$meme_id = $_GET['meme_id'];
-	if (empty($_GET['meme_id'])) {
-			header("Location: index.php");
-			exit();
-			return;
+	$meme_id = intval($_GET['meme_id']);
+	if ($meme_id == 0) {
+        logerror("circulation.php: meme_id = 0", "phpErrors");
+        header('Location: /404.php');
+        exit();
+		return;
 	}
   include_once('akarru.lib/common.php');
-  $smarty->assign('content_title', 'circulaci&oacute;n');
+  include_once('common_elements.php');
+  $smarty->assign('content_title', $content_title_circulation);
 
 
 class Circulation {
@@ -85,5 +87,6 @@ xml_parser_free($xml_parser);
   $smarty->assign('total', $total);
   $smarty->assign('clicks', $clicks);
   $smarty->assign('content', 'circulation');
+  $smarty->assign('show_ads', showGGAds());
   $smarty->display('master_page.tpl');
 ?>

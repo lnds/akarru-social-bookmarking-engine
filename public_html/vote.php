@@ -4,8 +4,8 @@ include_once('akarru.lib/common.php');
 
 if(isset($_GET['meme_id']))
 {
-     $meme_id = $_GET['meme_id'];
-     if (is_numeric($meme_id))
+     $meme_id = (int) $_GET['meme_id'];
+     if ($meme_id != 0)
      {
         $voted = 0;
         $bm_memes = new memes($bm_db, $bm_user, $bm_promo_level);
@@ -37,7 +37,7 @@ if(isset($_GET['meme_id']))
             processCache($meme_id);
         }
                 
-        header("Location: comment.php?voted=" .$voted . "&meme_id=" . $meme_id );
+        header("Location: /meme/".$meme_id ."&voted=" .$voted );
         exit();
         return;
     }

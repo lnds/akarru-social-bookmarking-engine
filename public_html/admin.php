@@ -2,12 +2,15 @@
   include_once('akarru.lib/common.php');
   include_once('akarru.lib/statistics.php');
   if ($bm_user != 1) {
-	  header("Location: index.php");
+      logerror("admin.php: bm_user not admin", "phpErrors");
+	  header("Location: /403.php");
 	  exit();
 	  return;
   }
+  
+  include_once('common_elements.php');
 
-  $smarty->assign('content_title', 'administraci&oacute;n');
+  $smarty->assign('content_title', $content_title_admin);
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 
   $smarty->assign('memes', $memes->get_memes($page));

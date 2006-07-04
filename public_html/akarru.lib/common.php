@@ -91,6 +91,39 @@ $noads = array("221.20.64.61", "130.34.194.50", "130.34.194.51", "130.34.194.52"
 $ip = $_SERVER['REMOTE_ADDR'];
   return (! in_array($ip, $noads));
 }
+
+// Error reporting functions
+function mail_error($error) {
+	// Change to your email address
+    mail('dummy@example.org', "Error on blogmemes", $error);
+}
+
+function logerror($error,$filename="errors",$send_email = 0)
+{
+    $date = date('l dS \of F Y h:i:s A');
+    $ip = "[" . $_SERVER["REMOTE_ADDR"] . "] - resolved=[" . gethostbyaddr($_SERVER["REMOTE_ADDR"]) . "]";
+    
+    $report = $error;
+    $report .= "\ndate=" . $date . "\nIP=" . $ip . " ";
+    $report = $report . "\nlooked for : " . $_SERVER["REQUEST_URI"];
+    $report = $report . "\nfrom : " . $_SERVER["HTTP_REFERER"];
+    $report = $report . "\nuser-agent : " . $_SERVER["HTTP_USER_AGENT"];
+    $report = $report . "\nquery-string : " . $_SERVER["QUERY_STRING"];
+    $report = $report . "\nhost : " . $_SERVER["HTTP_HOST"];
+    
+    $logfile = $_SERVER["DOCUMENT_ROOT"] . "/cache/logs/" . $filename;
+    $handleLog = fopen($logfile, "a");
+    if ($handleLog)
+    {
+      fwrite($handleLog, $report . "\n");
+      fclose($handleLog);  
+    }
+    
+    if ($send_email)
+    {
+        mail_error($report);
+    }
+}
 }
 
 ?>

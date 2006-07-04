@@ -20,6 +20,7 @@ $bl_cat_meme = 'カテゴリー';
 $bl_pages = 'ページ';
 $bl_search = '検索';
 $bl_profile_of = 'ユーザーのプロフィール';
+$bl_anonymous = '匿名';
 $bl_login = 'ログイン';
 $bl_login_submit = 'ログイン';
 $bl_logoff = 'ログアウト';

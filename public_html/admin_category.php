@@ -1,7 +1,7 @@
 <?
   include_once('akarru.lib/common.php');
   if ($bm_user != 1) {
-	  header("Location: index.php");
+	  header("Location: /403.php");
 	  exit();
 	  return;
   }
@@ -16,6 +16,8 @@
 	  exit();
 	  return;
   }
+  
+  include_once('common_elements.php');
   
   $categories = new categories($bm_db);
   $bm_cats = $categories->fetch_all();
@@ -67,6 +69,7 @@
           
           if ($result)
           {
+            $smarty->clear_cache(null,'db|categories');
             header("Location: admin_categories.php");
             exit();
             return;

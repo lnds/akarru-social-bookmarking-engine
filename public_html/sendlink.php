@@ -1,7 +1,7 @@
 <?php
 require("lib/class.phpmailer.php");
 include_once('akarru.lib/common.php');
-
+include_once('common_elements.php');
 $copyto = "admin@blogmemes.com";
 
 
@@ -17,7 +17,7 @@ function ValidMessage($message)
 	  $meme_id = intval($_POST['meme_id']);
   }
   if ($meme_id == 0) {
-	  header("Location: index.php");
+	  header("Location: /404.php");
 	  exit();
 	  return;
   }

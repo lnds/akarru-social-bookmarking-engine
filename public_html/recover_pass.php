@@ -1,5 +1,6 @@
 <?php
   include_once('akarru.lib/common.php');
+  include_once('common_elements.php');
   if (empty($_POST['email'])) {
 	  $bm_content = 'recover_pass';
   }
@@ -14,6 +15,6 @@
   }
   $smarty->assign('content_title', $bl_recover_pass);
   $smarty->assign('content', $bm_content);
-  $smarty->assign('show_ads', true);
+  $smarty->assign('show_ads', showGGAds());
   $smarty->display('master_page.tpl');
 ?>

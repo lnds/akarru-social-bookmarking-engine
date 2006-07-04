@@ -1,16 +1,16 @@
 <?php
-header("Content-Type: text/xml");
+header("Content-Type: application/rss+xml");
 include_once('akarru.lib/common.php');
 $bm_memes = new memes($bm_db, $bm_user);
 $memes = $bm_memes->get_memes(0, ' order by date_posted desc ', 1);
-print '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>';
+print '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>';
 ?>
 <rss version="2.0">
 <channel>
-<title><?= $bm_site_name ?></title>
-<link><?= $bm_url ?></link>
-<description><?= $bm_desc ?></description>
-<language><?= $bm_lang ?></language>
+<title><? echo($bm_site_name); ?>  <? echo($bl_last_memes); ?></title>
+<link><? echo($bm_url); ?></link>
+<description><? echo($bm_desc); ?></description>
+<language><? echo($bm_lang); ?></language>
 <copyright>(c) 2005 Eduardo Diaz Cortes</copyright>
 <generator>akarru social bookmarking engine</generator>
 <ttl>5</ttl>
@@ -22,11 +22,15 @@ print '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>';
 <?php
 foreach ($memes as $meme)
 {
+    $permalink = $bm_memes->get_permalink($meme->ID);
 	print '<item>';
 	print '<title>'.htmlspecialchars($meme->title).'</title>';
 	print '<description>'.htmlspecialchars($meme->content).'</description>';
 	print '<pubDate>'.date("r", $meme->date_posted).'</pubDate>';
-	print '<link>http://www.blogmemes.com/comment.php?meme_id='.$meme->ID.'</link>';
+	print '<link>' . $permalink . '</link>';
+    print '<guid isPermaLink="true">' . $permalink . '</guid>';
+	print '<author>dummy@acme.com (' . $meme->username . ')</author>';
+    print '<category>' . $meme->cat_title . '</category>';
 	print '</item>';
 }
 ?>
