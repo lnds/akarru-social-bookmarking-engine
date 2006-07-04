@@ -1,5 +1,6 @@
 <?
   include_once('akarru.lib/common.php');
+  include_once('common_elements.php');
   $memes = new memes($bm_db, $bm_user, $bm_promo_level);
   $data = $memes->get_video_memes($bm_page, '');
   
@@ -15,6 +16,6 @@
   $smarty->assign('$bm_message', $bl_promoted_message);
   $smarty->assign('content', 'memes_grid');
   $smarty->assign('content_feed_link', $bm_main_feeds);
-  $smarty->assign('show_ads', true);
+  $smarty->assign('show_ads', showGGAds());
   echo $smarty->fetch('master_page.tpl');
 ?>
