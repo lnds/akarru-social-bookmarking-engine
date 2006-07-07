@@ -1,3 +1,4 @@
+{config_load file="site.conf"}
 <p>
 {#folksonomy_label#}
 </p>
