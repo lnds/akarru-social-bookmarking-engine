@@ -30,9 +30,9 @@
 <tr>
 <td colspan="3" class="view-label-class">
 {#position_label#}
-<input type="radio" class="view-input-class" name="position" id="position" value="1">a favor</input>
-<input type="radio" class="view-input-class" name="position" id="position" value="-1">en contra</input>
-<input type="radio" class="view-input-class" name="position" id="position" value="0">no opino</input>
+<input type="radio" class="view-input-class" name="position" id="position" value="1">{#friend_posture#}</input>
+<input type="radio" class="view-input-class" name="position" id="position" value="-1">{#foe_posture#}</input>
+<input type="radio" class="view-input-class" name="position" id="position" value="0">{#neutral_posture#}</input>
 </td>
 </tr>
 {/if}
