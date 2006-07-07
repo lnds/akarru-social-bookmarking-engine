@@ -25,6 +25,12 @@
 <tr><td>
 {#label_allows_debates#}&nbsp;<input type="checkbox" name="debates" value="1" {if $meme->allows_debates}checked="checked"{/if} />
 </td></tr>
+{if $logged_userid == 1}
+<tr><td>
+{#label_disable#}&nbsp;<input type="checkbox" name="disable" value="1" {if $meme->disabled}checked="checked"{/if} />
+</td></tr>
+{/if}
+
 <tr><td>
 <input class="view-button-class" type="submit" value="{#post_modify_submit_label#}" name="do_post" />
 </td></tr>
