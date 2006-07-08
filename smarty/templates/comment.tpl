@@ -34,8 +34,9 @@
 <div class="infoboxBody">
 <p>&nbsp;</p>
 <table width="360">
+{if $error_comment}<tr><td class="error">{#error_comment#}</td></tr>{/if}
 <tr><td class="view-label-class">{#comment_label#}</td></tr>
-<tr><td><textarea name="comment" class="view-input-class" cols="40" rows="4"></textarea></td></tr>
+<tr><td><textarea name="comment" class="view-input-class" cols="40" rows="4">{$comment_value}</textarea></td></tr>
 <tr><td class="view-label-class">{#debate_position_label#}</td></tr>
 {if $meme->allows_debates}
 <tr>

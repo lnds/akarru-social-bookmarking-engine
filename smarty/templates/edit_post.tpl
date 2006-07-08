@@ -25,7 +25,7 @@
 <tr><td>
 {#label_allows_debates#}&nbsp;<input type="checkbox" name="debates" value="1" {if $meme->allows_debates}checked="checked"{/if} />
 </td></tr>
-{if $logged_userid == 1}
+{if $is_admin}
 <tr><td>
 {#label_disable#}&nbsp;<input type="checkbox" name="disable" value="1" {if $meme->disabled}checked="checked"{/if} />
 </td></tr>

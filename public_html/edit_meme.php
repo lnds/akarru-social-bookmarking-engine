@@ -21,7 +21,7 @@
   }
   if (!empty($_POST)) 
   {
-      if ($bm_user == 1)
+      if ($bm_users->get_is_admin())
       {
         if ($_POST['disable'] == 1)
         {

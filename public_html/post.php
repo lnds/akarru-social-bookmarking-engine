@@ -1,8 +1,10 @@
 <?php
   include_once('akarru.lib/common.php');
-  include_once('common_elements.php');  
-  // Put your email address in $dest and change ??? to .net .com .fr .jp .ru in the sender email address...
-  function mailDetails($user, $meme_url, $meme_title, $meme_text)
+  include_once('common_elements.php');
+  include_once('akarru.lib/spam_fight.php');
+  
+  // Put your email address in $dest
+  function mailDetails($user, $meme_url, $meme_title, $meme_text, $spam=0)
   {
 	global $bm_domain;
     // Configure these
@@ -14,8 +16,15 @@
     $from = "[" . $_SERVER['HTTP_REFERER'] . "]";
     $what = "what=[" . $_SERVER['HTTP_USER_AGENT'] . "]";        
     $posteddate = date('l dS \of F Y h:i:s A');
-     
-     $subject="Meme entitled '" . $meme_title . "' has been posted by '" . $user . "'";  // Email subject.
+    
+    if ($spam)
+    {
+        $subject="[SPAM] Meme entitled '" . $meme_title . "' submitted by '" . $user . "'";  // Email subject.
+    }
+    else
+    {
+        $subject="Meme entitled '" . $meme_title . "' has been posted by '" . $user . "'";  // Email subject.
+    }
                
     $message ="Posted on " . $posteddate  . "\nIP: " . $ip . "\nFrom: " . $from ."\nUser_agent: " . $what . "\n";
     $message.="By '" .  $user . "',\n URL: " . $meme_url . "\n\n";
@@ -248,15 +257,46 @@
 		 else
 		 {
 			 $_POST['user_id'] = $bm_users->get_user_id();
-			 $memes->add_meme($_POST);
-			 $smarty->clear_all_cache();
-             $title = $_POST['title'];
-			 $url   = $_POST['url'];
+			 $title = $_POST['title'];
+             $url   = $_POST['url'];
              $category = $_POST['category'];
-			 $content_body = $_POST['content_body'];
-			 mailDetails($bm_users->get_user_name(), $url, $title, $content_body);
-             header("Location: /show_cat.php?cat_name=" .$bm_options[$category]);
-			 return exit;
+             $content_body = $_POST['content_body'];
+             $bm_errors = 0;
+             $spam = is_spam($bm_user_name, $bm_users->get_user_email(), $url, $content_body, "", "meme");
+             mailDetails($bm_users->get_user_name(), $url, $title, $content_body, $spam);
+             if ($spam)
+             {
+               $step = 2;
+               $meme_trackback = $_POST['meme_trackback'];
+               $meme_tags = $_POST['meme_tags'];
+               $favicon = $_POST['favicon'];
+    
+               $smarty->assign('title', check_plain($title));
+               $smarty->assign('url', check_plain($url));
+               $smarty->assign('content_body', check_plain($content_body));
+               $smarty->assign('category', $category);
+               $smarty->assign('category_name', $bm_options[$category]);
+               $smarty->assign('meme_trackback', check_plain($meme_trackback));
+               $smarty->assign('meme_tags', check_plain($meme_tags));
+               $smarty->assign('cats', $bm_options);
+               $smarty->assign('gravatar', get_gravatar($bm_url, $bm_users->get_user_email(), 16)); 
+               $video = get_youtube($url);
+               $smarty->assign('micro_content', $video);
+               if (empty($video))
+                   $smarty->assign('page_image', 'http://img.simpleapi.net/small/'.$url);
+               $smarty->assign('favicon', $favicon);
+               
+               $smarty->assign('error_meme', true);
+               $bm_errors++;
+               
+             }
+             else
+             {
+                 $memes->add_meme($_POST);
+                 $smarty->clear_all_cache();
+                 header("Location: /show_cat.php?cat_name=" .$bm_options[$category]);
+                 return exit;
+             }
 		 }
 	 }
   }

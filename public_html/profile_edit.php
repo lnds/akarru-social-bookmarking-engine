@@ -25,7 +25,9 @@
 	  {
 		  if (!empty($_POST['pass'])) {
 			  $pass = $_POST['pass'];
-              $user_id = (int) $_POST['user_id'];
+              //Kenji : security problem with the next line
+              //$user_id = (int) $_POST['user_id'];
+			  $user_id = $bm_users->get_user_id();
 			  $confirm_pass = $_POST['confirm_pass'];
 			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) 
               {

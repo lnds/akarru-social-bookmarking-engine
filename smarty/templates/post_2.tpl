@@ -2,6 +2,7 @@
 <div style="max-width:200">
 <table border="0" cellpadding="2" cellspacing="0" width="100%">
 <tr><td>&nbsp;</td></tr>
+{if $error_meme}<tr><td class="error">{#error_meme#}</td></tr>{/if}
 <tr><td class="view-label-class">{#title_label#}</td></tr>
 <tr><td class="view-data-class">{$title}<input type="hidden" name="title" value="{$title}" /></td></tr>
 {if $url}

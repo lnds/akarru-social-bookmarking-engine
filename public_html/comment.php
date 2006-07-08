@@ -15,20 +15,66 @@
 	  return;
   }
   include_once('akarru.lib/common.php');
+  include_once('akarru.lib/spam_fight.php');
   
   include_once('common_elements.php');
   
+  // Put your email address in $dest
+  function mailDetails($user, $meme_url, $comment_text, $spam=0)
+  {
+	global $bm_domain;
+    // Configure these
+     $fromemail="no-reply@" . $bm_domain;   // Sender's adress
+     $dest="admin@" . $bm_domain;  // Receiver address
+     
+     
+    $ip = "[" . $_SERVER["REMOTE_ADDR"] . "] - resolved=[" . gethostbyaddr($_SERVER["REMOTE_ADDR"]) . "]";
+    $from = "[" . $_SERVER['HTTP_REFERER'] . "]";
+    $what = "what=[" . $_SERVER['HTTP_USER_AGENT'] . "]";        
+    $posteddate = date('l dS \of F Y h:i:s A');
+    
+    if ($spam)
+    {
+        $subject="[SPAM] Comment submitted by '" . $user . "'";  // Email subject.
+    }
+    else
+    {
+        $subject="Comment has been posted by '" . $user . "'";  // Email subject.
+    }
+               
+    $message ="Posted on " . $posteddate  . "\nIP: " . $ip . "\nFrom: " . $from ."\nUser_agent: " . $what . "\n";
+    $message.="By '" .  $user . "',\n URL: " . $meme_url . "\n\n";
+    $message.="\n\nComment text=\n";
+    $message.="\n\n------ Begin -----\n";
+    $message.= $comment_text;
+    $message.="\n\n------ End -----\n";
+    
+    // Fonction Mail
+    @mail($dest,$subject,$message, "From : $fromemail");
+  }
+
   $smarty->assign('content_title', $content_title_comment);
   $memes = new memes($bm_db, $bm_user);
   if (!empty($_POST)) {
-	  $memes->add_comment($meme_id, $_POST['comment']);
-	  if (isset($_POST['position'])) {
+      $bm_errors = 0;
+      $spam = is_spam($bm_user_name, $bm_users->get_user_email(), $bm_users->get_user_url(), $_POST['comment'], $memes->get_permalink($meme_id), "comment");
+      mailDetails($bm_users->get_user_name(), $memes->get_permalink($meme_id), $_POST['comment'], $spam);
+      if ($spam)
+      {
+        $smarty->assign('error_comment', true);
+        $smarty->assign('comment_value', $_POST['comment']);
+        $bm_errors++;
+      }
+      else
+      {
+	    $memes->add_comment($meme_id, $_POST['comment']);
+        if (isset($_POST['position'])) {
 		  $memes->debate($meme_id, $bm_user, $_POST['position'], false);
-
+        mailDetails($bm_users->get_user_name(), $url, "[SPAM] " . $title, $content_body);
+        header("Location: /meme/$meme_id");
+	    exit();
+	    return;
 	  }
-	  header("Location: /meme/$meme_id");
-	  exit();
-	  return;
   }
   $memes->debate($meme_id, $bm_user, 0, true);
   // Kenji : if referer is different than empty or blogmemes
