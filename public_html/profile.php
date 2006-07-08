@@ -18,12 +18,19 @@
 	  return;
   }
   
-  $smarty->caching = 2; // lifetime is per cache 
+  $salt = "";
+  if (strcmp($bm_users->get_user_name(), $user_name) == 0)
+  {
+    // We need to make a separate cache for the owner
+    $salt = "|self";
+  }
   
+  $smarty->caching = 2; // lifetime is per cache 
+
   $view = $_GET['view'];
   if ($view == "c") {
       // profile
-      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . "|comments|" . $bm_page))
+      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . $salt . "|comments|" . $bm_page))
       {
         $smarty->cache_lifetime = 3600*24; // Every 24 hours
         $memes = new memes($bm_db, $bm_user, 0, 5);
@@ -36,12 +43,12 @@
 	    $smarty->assign('query_ext', '&view=c&user_name='.$user_name);
       }
 
-      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . '|comments|' . $bm_page);
+      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|comments|' . $bm_page);
       $profile_title = $bl_profile_comments_by;
   }
   else if ($view == 'v') {
       // profile
-      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . "|votes|" . $bm_page))
+      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . $salt . "|votes|" . $bm_page))
       {
         $smarty->cache_lifetime = 3600*24; // Every 24 hours
         $memes = new memes($bm_db, $bm_user, 0, 5);
@@ -54,12 +61,12 @@
         $smarty->assign('memes', $data);
       }
 
-      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . '|votes|' . $bm_page);
+      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|votes|' . $bm_page);
       $profile_title  = $bl_profile_votes_by;
   }
   else {
       // profile
-      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . "|posted-memes|" . $bm_page))
+      if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . $salt . "|posted-memes|" . $bm_page))
       {
         $smarty->cache_lifetime = 3600*24; // Every 24 hours
         $memes = new memes($bm_db, $bm_user, 0, 5);
@@ -72,7 +79,7 @@
         $smarty->assign('memes', $data);
       }
 
-      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . '|posted-memes|' . $bm_page);
+      $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|posted-memes|' . $bm_page);
       $profile_title = $bl_profile_memes_by;      
   }
 
