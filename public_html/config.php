@@ -23,6 +23,9 @@ $bm_site_name = 'Blog Memes';
 $bm_home = 'index.php';
 $bm_ajax_service = '';
 $bm_login_url =  '';
+
+$bm_date_posted_format='Published on %d/%m/%Y at %R';
+
 // You need to get your own API key for Akismet. The easiest way is to register a wordpress blog at wordpress.com
 //  Then follow the instructions at http://faq.wordpress.com/2005/10/19/api-key/
 $bm_akismet_api_key = '';
