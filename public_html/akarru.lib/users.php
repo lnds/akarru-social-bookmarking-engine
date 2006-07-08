@@ -11,7 +11,7 @@ class users {
 		$this->user = $_SESSION['user_data'];
 		if (empty($this->user)) {
 			$psession = $_COOKIE["bm_login_cookie"];
-			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession'");
+			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession' and not (disabled=true and validated=true)");
 			$_SESSION['user_data'] = $this->user;
 		}
 	}
@@ -21,6 +21,16 @@ class users {
 		$this->user = $_SESSION['user_data'];
 		return !empty($this->user);
 	}
+
+	function is_valid_account()
+    {
+        $valid = false;
+        if (!empty($this->user)) {
+			$valid = !$this->user->disabled && $this->user->validated;
+		}
+        
+        return $valid;
+    }
 
 	function logoff($domain=DOMAIN)
 	{
@@ -47,7 +57,7 @@ class users {
 
 	function get_is_admin()
 	{
-		return $this->users->admin == 1;
+		return $this->user->ID == 1 || $this->user->admin == 1;
 	}
 
 
@@ -60,6 +70,25 @@ class users {
 	function get_user_email()
 	{
 		return isset($this->user) ? $this->user->email : '';
+	}
+    
+    function get_user_url()
+	{
+		if (isset($this->user))
+        {
+            if (strlen($this->user->website))
+            {
+                return $this->user->website;
+            }
+            else
+            {
+                return $this->user->blog;
+            }
+        }
+        else
+        {
+            return '';
+        }
 	}
 
 	function get_user_gravatar()
@@ -87,20 +116,52 @@ class users {
 
 		$now = time();
 		$key = $this->aes_key;
-		$this->db->execute("insert into users(username,email,strong_pass,join_date,gravatar) values('$user','$email', aes_encrypt(md5('$pass'), md5($now || '$key')), $now, md5('$email'))");
+		$this->db->execute("insert into users(username,email,strong_pass,join_date,gravatar,original_username,disabled,validated) values('$user','$email', aes_encrypt(md5('$pass'), md5($now || '$key')), $now, md5('$email'), '$user', TRUE, FALSE)");
 
 		return $this->do_login($user, $pass, false);
 	}
+
+	function validate_user($user_id)
+	{
+        $user_id = sanitize($user_id);
+        $sql  = "update users set validated=TRUE, disabled=FALSE where ID = $user_id";
+		return $this->db->execute($sql);
+	}
+    
+    function invalidate_user($user_id)
+	{
+        $user_id = sanitize($user_id);
+        $sql  = "update users set validated=FALSE, disabled=TRUE where ID = $user_id";
+		return $this->db->execute($sql);
+	}
+    
+    function disable_user($user_id)
+    {
+        $user_id = sanitize($user_id);
+        $sql  = "update users set disabled=TRUE where ID = $user_id";
+		return $this->db->execute($sql);
+    }
+    
+    function enable_user($user_id)
+    {
+        $user_id = sanitize($user_id);
+        $sql  = "update users set disabled=FALSE where ID = $user_id";
+		return $this->db->execute($sql);
+    }
 
 
 	function do_login($user_name, $pass, $remember, $domain=DOMAIN)
 	{
 		$user_name = sanitize(strtolower($user_name));
-		$user = $this->db->fetch_object("select ID, join_date from users where lower(username)=$user_name");
-		if (empty($user->ID)) 
+        // search for user_name, ignore banned account (disabled and validated)
+		$user = $this->db->fetch_object("select ID, join_date from users where lower(username)=$user_name and not (disabled=true and validated=true)");
+		if (empty($user->ID))
+        {
 			return false;
+        }
 		$key = $this->aes_key;
 		$user = $this->db->fetch_object("select * from users where lower(username)=$user_name and aes_decrypt(strong_pass, md5(join_date || '$key')) = md5('$pass')");
+
 		if (empty($user->ID))
 			return false;
 		$_SESSION['user_data'] = $user;
@@ -117,6 +178,7 @@ class users {
 
 	function update_profile($data)
 	{
+		$oldEmail = $this->get_user_email();
 		$sql  = ' update users set ';
 		$sql .= ' email = '.sanitize($data['email']).',';
 		$sql .= ' gravatar = md5('.sanitize($data['email']).'), ';
@@ -132,13 +194,28 @@ class users {
 		$this->user->website = $data['website'];
 		$this->user->blog = $data['blog'];
 		$_SESSION['user_data'] = $this->user;
+
+        if (strcmp($oldEmail, $data['email']) != 0)
+        {
+            $this->invalidate_user($this->user->ID);
+            $this->sendValidationLink($this->user->username, $this->user->email);
+        }
+        
 		return true;
 	}
 
 	function get_user_profile($user_name, $memes, $promote_level = 5)
-	{
+	{   
 		$id = $this->db->fetch_scalar(" select id from users where username = '$user_name' ");
 		return $this->get_user_profile_by_id($id, $memes, $promote_level);
+	}
+    
+    function get_user_id_by_user_name($user_name)
+	{
+        if (!$this->check_user_exists($user_name)) 
+			return 0;
+		$id = $this->db->fetch_scalar(" select id from users where username = '$user_name' ");
+		return $id;
 	}
 
 
@@ -235,6 +312,115 @@ class users {
 		}
 		return $result;
 	}
+    
+    function makeRandomKey($minlength, $maxlength)
+    {
+        $charset = "abcdefghijklmnopqrstuvwxyz";
+        $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $charset .= "0123456789";
+        if ($minlength > $maxlength) $length = mt_rand ($maxlength, $minlength);
+        else                         $length = mt_rand ($minlength, $maxlength);
+        for ($i=0; $i<$length; $i++) $key .= $charset[(mt_rand(0,(strlen($charset)-1)))];
+        return $key;
+    }
+    
+    function makeValidationLink($user, $user_email, $code)
+    {
+        global $bm_url;
+        $hash_value = md5($user . $user_email);
+        $user_id = $this->get_user_id_by_user_name($user);
+        $validationLink = $bm_url . "validate_user.php?h=" . $hash_value . "&k=" . $code;
+        $validationFile = $_SERVER["DOCUMENT_ROOT"] . "/cache/validations/" . $hash_value;
+        $handleValidation = fopen($validationFile, "w");
+        if ($handleValidation)
+        {
+            fwrite($handleValidation, $code . "\n" . $user_id . "\n" . $user . "\n" . $user_email);
+            fclose($handleValidation);
+        }
+       
+        return $validationLink;    
+    }
+    
+    function sendValidationLink($user, $user_email)
+    {
+        global $bm_site_name;
+        global $bl_validate_user;
+        global $bf_validation_link_email_body;
+        global $bm_domain;
+        $code = $this->makeRandomKey(8,12);
+        $validationLink = $this->makeValidationLink($user, $user_email, $code);
+        // Configure these
+        $fromemail="no-reply@" . $bm_domain;   // Sender's adress
+        $subject = '['.$bm_site_name.'] '.$user . ":" .$bl_validate_user;
+        $body = $bf_validation_link_email_body;
+	  
+        return mail($user_email, $subject, sprintf($body, $user, $validationLink, $code), "From : $fromemail");
+    }
+    
+    function verifyValidationLink($hash_value, $key)
+    {
+        global $smarty;
+        $valid = false;
+        $validHash = false;
+        $validKey = false;
+    
+        if (! empty($hash_value))
+        {
+            $validHash = ctype_alnum($hash_value);
+        }
+        
+        if (! empty($key))
+        {
+            $validKey = ctype_alnum($key);
+        }
+        
+        if ($validHash && $validKey)
+        {
+            $validationFile = $_SERVER["DOCUMENT_ROOT"] . "/cache/validations/" . $hash_value;
+            $validationFileExists = file_exists($validationFile);
+            $validKey = false;
+            if ($validationFileExists)
+            {
+                $strings = array_map('rtrim',file($validationFile));
+                $validKey = strcmp($strings[0], $key) == 0;
+                $user_id_value = $strings[1];
+                $user_name_value = $strings[2];
+                $email_value = $strings[3];
+
+                unlink($validationFile);
+                
+                $valid = $validKey;
+                
+                if ($valid)
+                {                    
+                    if ($user_id_value > 0)
+                    {
+                        $this->validate_user($user_id_value);
+                        $smarty->clear_cache(null,'db|users|profile|' . $user_name_value);
+                    }
+                    else
+                    {
+                        $valid = false;
+                    }
+                }
+            }
+        }
+        
+        return $valid;
+    }
+    
+    function verifyValidationKey($key)
+    {
+        if (! $this->is_logged_in())
+        {
+            return false;
+        }
+        
+        $this->user->username;
+        $this->user->email;
+        $hash = md5($this->user->username . $this->user->email);
+        return $this->verifyValidationLink($hash, $key);
+    }
 
 }
 ?>
