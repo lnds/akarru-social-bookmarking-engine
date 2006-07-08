@@ -3,8 +3,7 @@ include_once("akarru.lib/app_vars.php");
 
 session_start();
 
-// comment if your Blogmemes needs UTF-8
-mb_http_output("utf-8");
+mb_http_output("UTF-8");
 require('Smarty/Smarty.class.php');
 
 class BM_Smarty extends Smarty {
@@ -40,22 +39,27 @@ include_once('akarru.lib/folksonomy.php');
 include_once('akarru.lib/memes.php');
 include_once('akarru.lib/form_manager.php');
 include_once('akarru.lib/cache_manager.php');
-include_once('locale.es');
+include_once('locale');
 
 $bm_db = new database();
 $bm_users = new users($bm_db);
+$bm_is_logged_in = 0;
+$bm_is_logged_and_valid = 0;
 if ($bm_users->is_logged_in())
 {
 	$bm_user = $bm_users->user->ID;
 	$bm_user_name = $bm_users->user->username;
 	$bm_is_logged_in = 1;
+    $bm_is_logged_and_valid = $bm_users->is_valid_account();
 }
 
 $bm_tags = new folksonomy($bm_db);
 
-$smarty->assign('bf_date_posted', 'publicado el %d/%m/%Y a las %R');
+$smarty->assign('bf_date_posted', $bm_date_posted_format);
 $smarty->assign('logged_in', $bm_is_logged_in);
+$smarty->assign('logged_and_valid', $bm_is_logged_and_valid);
 $smarty->assign('logged_userid', $bm_user);
+$smarty->assign('is_admin', $bm_users->get_is_admin());
 $smarty->assign('logged_username', $bm_user_name);
 
 $bm_page = intval($_GET['page']);
@@ -94,8 +98,8 @@ $ip = $_SERVER['REMOTE_ADDR'];
 
 // Error reporting functions
 function mail_error($error) {
-	// Change to your email address
-    mail('dummy@example.org', "Error on blogmemes", $error);
+	global $bm_domain;
+    mail('admin@' . $bm_domain, "Error on blogmemes", $error);
 }
 
 function logerror($error,$filename="errors",$send_email = 0)
