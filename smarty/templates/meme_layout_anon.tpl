@@ -1,4 +1,3 @@
-{capture name=layout}
 <div class="meme-bg">
 <table width="440" border="0" cellspacing="0" cellpadding="2" >
   <tr><td>
@@ -16,64 +15,77 @@
   {/if}
   </div>
   </td></tr>
+  {if !$meme->disabled}
   <tr>
   <td colspan="3">
-    <div class="votos" >
-    <a href="{$meme->permalink}">
-	  <h3  id="vote_count_{$meme->ID}" style="text-align:center" align="center">
+  {if $meme->promoted}<div class="votos">{else}<div class="votosqueue">{/if}
+  <h3 id="vote_count_{$meme->ID}" style="text-align:center" align="center">
+  	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','0')" id="vote_count_{$meme->ID}" style="text-align:center" align="center">
 	  {$meme->votes}
-	  </h3>
-	  </a>
+	</a>
+    </h3>	  
+	{if $meme->voted <= 0}
+	<p id="vote_label_{$meme->ID}">{#votes_label#}</p>
+    {else}
+    <p id="vote_label_{$meme->ID}">{#votes_label#}</p>
+	{/if}
+	<div class="vote-class" id="vote_button_{$meme->ID}">
+	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','0')">投票する</a>
+	</div>
     </div>
     <div class="meme-content"><br/>
-    <a href="/click/{$meme->ID}/{$meme->url}" >{$meme->title}</a>
+    <a href="{$meme->url}" target="_blank" onmousedown="return goto_url({$meme->ID},'{$meme->url}')">{$meme->title}</a>
 	<div class="whowhen-class">
-	&nbsp;{#cat_label#}: <a style="font-size:10px" href="/show_cat.php?cat_id={$meme->cat_id}">{$meme->cat_title}</a>
-	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}  
-	&nbsp;{#posted_by_label#}&nbsp;
+	&nbsp;{#cat_label#}: <a style="font-size:10px" href="/show_cat.php?cat_name={$meme->cat_title}">{$meme->cat_title}</a>
+	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}
+	<br />&nbsp;{#posted_by_label#}&nbsp;
 	<a href="/user/{$meme->username}"><img src="{$meme->small_gravatar}" alt="{$meme->username}" border="0"/></a><br/>
 	<a style="font-size:10px" href="/user/{$meme->username}">{$meme->username}</a>
 	</div>
-	<p style="right-margin:1em">
+ 	<p style="right-margin:1em">
 	{if $meme->page_image}
-	<a  href="/click/{$meme->ID}/{$meme->url}" target="_new">	
+	<a href="{$meme->url}" target="_blank" onmousedown="return goto_url({$meme->ID},'{$meme->url}')">
 	<img border="0" style="float:right;border:none" src="{$meme->page_image}" alt="snapshot" />
 	</a>
 	{/if}
 	{if $meme->micro_content}
-	<span style="padding:4px">{$meme->micro_content}</span><br/>
-	<a href="/videos.php">ver m&aacute;s videos</a><br/>
+	<span style="padding:4px">{$meme->micro_content}</span><br />
+    <a href="/videos.php">{#more_videos#}</a><br/>
 	{/if}
 	  	  {$meme->content|nl2br}
 		  <br/>
 	{if $meme->allows_debates}
-	  <a  href="{$meme->permalink}#debate">{#debate_label#} {#friend_posture#}: {$meme->debate_pos}, {#foe_posture#}: {$meme->debate_neg}</a>
+	  <a href="{$meme->permalink}#debate">{#debate_label#} {#friend_posture#}: {$meme->debate_pos}, {#foe_posture#}: {$meme->debate_neg}</a>
 	{else}
- 	  <a  href="{$meme->permalink}">{#comments_label#} {$meme->comments}</a>	
+	  <a href="{$meme->permalink}">{#comments_label#} {$meme->comments}</a>
 	{/if}
 	  </p>
     </div>
      </td></tr>
      {if $tags_of_meme}
-     <tr><td colspan="3"><b>Etiquetas:</b>
+     <tr><td colspan="3"><b>{#tag_label#}</b>
 	{html_table loop=$tags_of_meme table_attr='border="0" cellspacing="4" cellpadding="4" ' cols="6"}
 	</td></tr>
      {/if}
   <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class">
-<a href="/tag_meme.php?meme_id={$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="/cat/{$meme->cat_title}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="/click/{$meme->ID}/{$meme->url}" onclick="goto_url({$meme->ID})">{$meme->url|truncate:30:"..."}</a>&nbsp;</div> 
+<a href="/tag-meme/{$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="/show_cat.php?cat_name={$meme->cat_title}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="{$meme->url}"  onmousedown="return goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:30:"..."}</a>&nbsp;</div>
   </td></tr>
   <tr><td colspan="3">
   <div style="padding-left:1em" class="meme-footer-class">
-  Compartir: <a href="sendlink.php?meme_id={$meme->ID}"><img src="/sbs/email.png" alt="enviar por correo" border="0" /></a>
-  &nbsp;<a onclick="social_click({$meme->ID})" href="http://del.icio.us/post?title={$meme->sociable_title}&url={$meme->sociable_link}"><img src="/sbs/delicious.png" border="0" alt="del.icio.us"/></a>
-  &nbsp;<a onclick="social_click({$meme->ID})" href="http://tec.fresqui.com/post?title={$meme->sociable_title}&url={$meme->sociable_link}"><img src="/sbs/fresqui.png" border="0" alt="fresqui"/></a>
-  &nbsp;<a onclick="social_click({$meme->ID})" href="http://meneame.net/submit.php?url={$meme->sociable_link}"><img src="/sbs/meneame.png" border="0" alt="meneame"/></a>
-  &nbsp;<a onclick="social_click({$meme->ID})" href="http://www.neodiario.net/submit.php?url={$meme->sociable_link}"><img src="/sbs/neodiario.png" border="0" alt="neodiario"/></a>
-  &nbsp;<iframe src="http://rank.blogalaxia.com/pbrate.php?color=CCEEAF&url={$meme->sociable_link}" width=70 height=15 scrolling=no frameborder=0 marginheight=0 marginwidth=0 style='margin:0; padding:0'></iframe><br/>
-  Vistas: {$meme->views}&nbsp;|&nbsp;Enlaces: {$meme->shares}&nbsp;|&nbsp;Clicks: {$meme->clicks}&nbsp;|&nbsp;Compartido: {$meme->social_clicks} veces
+  {include file="meme_stats.tpl"}
+  <br />
+  {include file="social_tools.tpl"}
+  </div>
   </td></tr>
-  
+  {else}
+  <tr>
+  <td colspan="3">
+  <div class="meme-content"><br/>
+    <p style="right-margin:1em">
+       {#disabled_meme#}
+	</p>
+    </div>
+     </td></tr>
+  {/if}
 </table>
 </div>
-{/capture}
-{$smarty.capture.layout}

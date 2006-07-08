@@ -4,7 +4,10 @@
 <!---
 function update_vote_div(div_name,user_id){
 	post_id=div_name.replace(/vote_count_/g,"");
+    div_name="vote_button_"+post_id;
+    mydiv=document.getElementById(div_name);
 {/literal}
+    mydiv.innerHTML = "{#voting_please_wait#}";
 	ajaxRead("{#ajax_service#}?meme_id="+post_id+"&user_id="+user_id);
 {literal}
 	return false;
@@ -12,12 +15,13 @@ function update_vote_div(div_name,user_id){
 
 function goto_url(meme_id)
 {
-if(document.images)
+  if(document.images)
   {
     (new Image()).src="/click.php?meme_id=" + meme_id;
     return true;
   }
 }
+
 function social_click(meme_id)
 {
 	if(document.images)
@@ -85,6 +89,11 @@ function handleResponse(){
 				
 			}
     }
+}
+
+if (parent.frames.length > 0)
+{
+  window.top.location.href = location.href;
 }
 -->
 </script>

@@ -50,18 +50,17 @@
 			  $smarty->assign('error_cant_register', true);
 			  $bm_errors++;
 		  }
+          else if (!$bm_users->sendValidationLink($user, $email))
+          {
+              $smarty->assign('error_cant_send_validation_link', true);
+			  $bm_errors++;
+          }
 	  }
 
 	  if ($bm_errors == 0) 
 	  {
-		  if (empty($_GET['from'])) {
-            $url = "/user/" . $user;
-		  }
-		  else
-		  {
-			  $url = $_GET['from'].'.php';
-		  }
-		  header("Location: $url");
+          $url = "/validate_user.php";
+  		  header("Location: $url");
 		  exit();
 		  return;
 	  }

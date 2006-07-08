@@ -11,6 +11,6 @@
 <table border="0" cellspacing="0"cellpadding="0">
 <tr><td>user</td><td># posts</td></tr>
 {foreach from=$posters item=poster}
-<tr><td><a href="profile.php?user_name={$poster->username}">{$poster->username}</a></td><td align="right">{$poster->memes}</td></tr>
+<tr><td><a href="/user/{$poster->username}">{$poster->username}</a></td><td align="right">{$poster->memes}</td></tr>
 {/foreach}
 </table>

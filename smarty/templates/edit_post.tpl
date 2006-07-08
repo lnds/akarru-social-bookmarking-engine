@@ -17,9 +17,9 @@
 <tr><td class="view-label-class">{#label_content_type#}</td></tr>
 <tr><td>
 	<select class="view-input-class" name="content_type">
-		<option value="0" {if $meme_type == 0}selected="selected"{/if}>url</option>
-		<option value="2" {if $meme_type == 2}selected="selected"{/if}>youtube</option>
-		<option value="1"{if $meme_type == 1}selected="selected"{/if}>texto</option>
+		<option value="0" {if $meme_type == 0}selected="selected"{/if}>{#meme_type_url#}</option>
+		<option value="2" {if $meme_type == 2}selected="selected"{/if}>{#meme_type_video#}</option>
+		<option value="1"{if $meme_type == 1}selected="selected"{/if}>{#meme_type_text#}</option>
 	</select>
 </td></tr>
 <tr><td>

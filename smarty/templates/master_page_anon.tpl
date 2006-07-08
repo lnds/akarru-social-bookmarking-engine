@@ -1,5 +1,5 @@
 <head>
-<title>{$page_title}</title>
+<title>{#site_caption#}{if $sub_title} : {$sub_title}{else}{if $content_title} : {$content_title}{/if}{/if}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css" media="all">@import "/styles/memes.css";</style>
 <!--[if gte IE 5.5000]>
@@ -19,13 +19,16 @@
 			</form>
 			<ul>
 				<li>
+					<a href="/about.php">{#about_label#}</a>
+				</li>
+				<li>
 					<a href="/help.php">{#help_label#}</a>
 				</li>
 				<li>
 					{if $from}                                                   
-					<a href="/login.php?from={$from}" alt="ingresar">{#login_label#}</a>
+					<a href="/login.php?from={$from}">{#login_label#}</a>
 					{else}
-					<a href="/login.php" alt="ingresar">{#login_label#}</a>
+					<a href="/login.php">{#login_label#}</a>
 					{/if}
 				</li>
 				<li>
@@ -76,7 +79,11 @@ google_color_text = "000000";
 		<div id="top-bg"></div>
 		<div id="content-wrapper">
 			<div id="meme">
-				{include file="$content.tpl"}
+				{if $cached_content}
+                    {$content}
+                {else}
+				    {include file="$content.tpl"}
+                {/if}
 			</div> 
 		</div>
 		<div id="sidebar">
@@ -86,30 +93,14 @@ google_color_text = "000000";
 				<br /><a href="/unpopular.php">{#unpopular_label_url#}</a>
 			</div>
 			<div id="sidebar-cat">
-				<h1><span style="padding-right: 1.5em;">{#categories_label#}</span></h1>
-				<div style="padding-left:8px">
-				{html_table cols="3" loop=$cats_array table_attr='border="0" align="center" width="100%" cellpadding="2" cellspacing="2"'}
-				</div>
-				
+				{$categories}
 				<div id="folk" style="padding-right: 15px;">
-{if $community}				
-{else}
-				<h2 >{#community_label#}</h2>
-				<div style="padding-left:2em">
-{html_table loop=$community_sample table_attr='border=0 cellpadding=4 align=center' cols="3"}</div>
-{/if}
-<a href="/community.php">{#community_link#}</a>
-					<h2>
-					<span style="padding-right: 0.5em;"><a style="font-size:16pt;" href="/show_folksonomy.php">{#folksonomy_caption#}</a></span>
-					</h2>
-					<div style="letter-spacing: normal; width: 190px; margin: 10px; margin-top: 0;">{#folksonomy_bar_text#}</div>
-					<div>
-						{foreach name="tags" from=$tags item=tag}
-						<a href="/tag/{$tag->tag}">{$tag->tag}</a>&nbsp;&nbsp;
-						{/foreach}
-						<br/>
-						<a href="/show_folksonomy.php">{#show_all_folksonomy_label#}</a>
-					</div>
+				{if $community}
+				{else}
+                {$community_random_profiles}
+				{/if}
+				<a href="/community.php">{#community_link#}</a>
+                {$tag_sample}					
 				</div>
 				<div>
 					<h2>enlaces destacados  &nbsp;&nbsp;</h2>
@@ -149,7 +140,7 @@ google_color_text = "000000";
 //--></script>
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
+</script><br/><br/>
 {/literal}
 </div>
 </div>

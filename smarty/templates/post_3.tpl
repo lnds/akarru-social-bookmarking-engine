@@ -1,7 +1,7 @@
-<h2>vista previa</h2>
-Este es el contenido que se publicar&aacute; revise su ortograf&iacute;a y los enlaces y si est&aacute; todo correcto presione 
-el bot&oacute;n {#post_submit_label#}
-
+<h2>{#post_title_preview#}</h2>
+<p>
+{#post_preview_warning#}
+</p>
 <hr />
 <form method="post" action="{$smarty.server.PHP_SELF}">
 <table width="460" border="0" cellspacing="0" cellpadding="2" >
@@ -34,8 +34,8 @@ el bot&oacute;n {#post_submit_label#}
 		  <input type="hidden" name="content_body" value="{$content_body}" />
 	  </p>
 	<div class="meme-footer-class">
-	categor&iacute;a: {$category_name}<input type="hidden" name="category" value="{$category}" />&nbsp;|&nbsp
-	{if $meme_tags}etiquetas: {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">trackback</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}{if $debates}|&nbsp;<b>permite debates</b>{/if}
+	{#category_label#}{$category_name}<input type="hidden" name="category" value="{$category}" />&nbsp;|&nbsp
+	{if $meme_tags}{#tags_label#} {$meme_tags} &nbsp;|&nbsp; {/if}<input type="hidden" name="meme_tags" value="{$meme_tags}" /> {if $meme_trackback}| <a href="{$meme_trackback}" alt="{$meme_trackback}">{#trackback_label#}</a><input type="hidden" name="meme_trackback" value="{$meme_trackback}" />&nbsp;{/if}{if $debates}|&nbsp;<b>{#debate_label#}</b>{/if}
 	<input type="hidden" name="step" value="{$step}" /> 
 	<input type="hidden" name="debates" value="{$debates}" />
 	<input type="hidden" name="favicon" value="{$favicon}" />

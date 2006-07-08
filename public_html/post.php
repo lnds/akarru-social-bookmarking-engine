@@ -4,9 +4,10 @@
   // Put your email address in $dest and change ??? to .net .com .fr .jp .ru in the sender email address...
   function mailDetails($user, $meme_url, $meme_title, $meme_text)
   {
+	global $bm_domain;
     // Configure these
-      $fromemail="no-reply@blogmemes.???";   // Sender's adress
-     $dest="";  // Receiver address
+     $fromemail="no-reply@" . $bm_domain;   // Sender's adress
+     $dest="admin@" . $bm_domain;  // Receiver address
      
      
     $ip = "[" . $_SERVER["REMOTE_ADDR"] . "] - resolved=[" . gethostbyaddr($_SERVER["REMOTE_ADDR"]) . "]";
@@ -92,6 +93,12 @@
 		  $login_url .= '&action=ep'.$action;
 	  }
 	  header("Location: $login_url");
+	  exit();
+	  return;
+  }
+  else if (!$bm_users->is_valid_account()) {
+	  $bm_home = $bm_page;
+      header("Location: /validate_user.php");      
 	  exit();
 	  return;
   }

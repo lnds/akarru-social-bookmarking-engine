@@ -36,12 +36,13 @@ function start_element($parser, $name, $attr)
 {
 	global $views;
 	global $clicks;
+	global $bm_domain;
 	if ($name == 'REFERRER') {
 		$url = $attr['URL'];
 		$url_data = @parse_url($url);
 		if (empty($url_data['host'])) {
-			$views['www.blogmemes.com'] += $attr['ITEMVIEWS'];
-			$clicks['www.blogmemes.com'] += $attr['CLICKTHROUGHS'];
+			$views['www.' . $bm_domain] += $attr['ITEMVIEWS'];
+			$clicks['www.' . $bm_domain] += $attr['CLICKTHROUGHS'];
 		}
 		else
 		{
@@ -62,8 +63,8 @@ $xml_parser = xml_parser_create();
 xml_set_element_handler($xml_parser, "start_element", "end_element");
 
 # CHANGE THIS!!!
-$feed_uri = 'http://feeds.feedburner.com/PUT_YOUR_FEED_BURNER_URL';
-$item_url = 'http://www.blogmemes.com/comment.php?meme_id='.$_GET['meme_id'];
+$feed_uri = $bm_url_feeds;
+$item_url = $bm_url . 'meme/' . $meme_id;
 $dates = date('Y-m-d', time()-86400*30).','.date('Y-m-d');
 $url  = 'http://api.feedburner.com/awareness/1.0/GetResyndicationData?uri='.$feed_uri.'&itemurl='.$item_url.'&dates='.$dates;
 $data = @file_get_contents($url);

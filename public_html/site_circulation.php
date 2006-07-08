@@ -30,7 +30,7 @@ class Circulation {
 }
 
 $circ_data = array();
-  $total = new Circulation('TOTAL', 'http://www.blogmemes.com', 0, 0);
+  $total = new Circulation('TOTAL', $bm_url, 0, 0);
 
 
 function start_element($parser, $name, $attr)
@@ -56,7 +56,7 @@ $xml_parser = xml_parser_create();
 xml_set_element_handler($xml_parser, "start_element", "end_element");
 
 # Change THIS
-$url  = 'http://api.feedburner.com/awareness/1.0/GetResyndicationData?uri=PUT_YOUR_FEED_BURNER_URL';
+$url  = 'http://api.feedburner.com/awareness/1.0/GetResyndicationData?uri='.$bm_url_feeds;
 echo $url;
 $data = @file_get_contents($url);
 

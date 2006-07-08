@@ -21,7 +21,7 @@
 <tr><td><input type="password" name="pass" class="view-input-class" size="30" /></td></tr>
 {if $error_pass }<tr><td class="error">{#error_pass#}</td></tr>{/if}
 <tr><td class="view-label-class"><b>{#profile_confirm_pass_label#}</b></td></tr>
-<tr><td><input type="text" name="blog" class="view-input-class" size="30" /></td></tr>
+<tr><td><input type="password" name="confirm_pass" class="view-input-class" size="30" /></td></tr>
 <tr><td><input type="hidden" name="user_id" value="{$user_id}" /><input type="submit" name="do_profile_edit" value="{#label_profile_submit#}" /></td></tr>
 
 </table>

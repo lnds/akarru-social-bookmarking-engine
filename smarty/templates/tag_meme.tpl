@@ -1,7 +1,7 @@
 {include file="meme_layout.tpl"}
-<h3>Etiquetas</h3>
+<h3>{#tag_label#}</h3>
 {html_table loop=$meme_tags table_attr='border="0" cellspacing="4" cellpadding="4" ' cols="6"}
-{if $logged_in}
+{if $logged_and_valid}
 {include file="form_header.tpl"}
 <table>
 <tr><td class="view-label-class">{#tag_label#}</td></tr>

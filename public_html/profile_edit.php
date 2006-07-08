@@ -62,7 +62,7 @@
 		 
 	  }
   }
-  
+
   $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();
   $smarty->assign('content_title', $bm_title);
   $smarty->assign('content', 'profile_edit');

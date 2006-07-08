@@ -1,4 +1,15 @@
-{if $logged_in}
+{if $voted}
+<div>
+<p>{#voted_thanks_message#}</p>
+</div>
+{else}
+{if $alreadyvoted}
+<div>
+<p>{#already_voted_message#}</p>
+</div>
+{/if}
+{/if}
+{if $logged_and_valid}
 {include file="meme_layout.tpl"}
 {else}
 {include file="meme_layout_anon.tpl"}
@@ -15,7 +26,7 @@
 <div class="infoboxFooter"><p>&nbsp;</p></div>
 </div>
 {/foreach}
-{if $logged_in}
+{if $logged_and_valid}
 {include file="form_header.tpl"}
 <br />
 <br />
@@ -44,9 +55,15 @@
 {include file="form_footer.tpl"}
 
 {else}
-<strong>{#comment_no_login_label#}</strong>
-<br />
-<a href="/login.php?from=comment">{#comment_login#}</a> | <a href="/register.php?from=comment">{#comment_register#}</a>
+    {if $logged_in}
+    <strong>{#comment_not_valid_account_label#}</strong>
+    <br />
+    <a href="/validate_user.php">{#comment_validate_user#}</a> | <a href="/send_validation.php">{#comment_send_validation_code#}</a>
+    {else}
+    <strong>{#comment_no_login_label#}</strong>
+    <br />
+    <a href="/login.php">{#comment_login#}</a> | <a href="/register.php">{#comment_register#}</a>
+    {/if}
 {/if}
 {if $meme->allows_debates}
 <hr />
@@ -94,7 +111,7 @@
 </div>
 {else}
 <hr/>
-<strong>Personas que han votado por este meme</strong><br/>
+{#users_who_voted_for_this_meme#}
 {html_table loop=$voters table_attr='id="voters" border="0" cellpaddig="2" align"center"' cols="7"}
 {/if}
 <script type="text/javascript" src="http://embed.technorati.com/embed/kru95iwk92.js"></script>

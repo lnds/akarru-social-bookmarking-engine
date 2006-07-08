@@ -1,5 +1,5 @@
-{capture name=grid}
-{if $logged_in}
+{config_load file="site.conf"}
+{if $logged_and_valid}
 {foreach from=$memes item=meme name=mg}
 {include file="meme_layout.tpl"}
 <hr />

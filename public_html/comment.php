@@ -66,7 +66,7 @@
 	  $smarty->assign('sponsors', $sponsors);
 	  $neutrals = $memes->get_neutrals($meme_id);
 	  $neutrals = array_diff($neutrals, $sponsors);
-	  $neutrals[] = '<img border="0" src="/anon40.png" alt="' . $bl_anonymous . '"/><br /><a href="register.php">'.$meme->clicks.'&nbsp;'.$bl_anonymous.'</a>';
+	  $neutrals[] = '<img border="0" src="/anon40.png" alt="' . $bl_anonymous . '"/><br /><a href="/register.php">'.$meme->clicks.'&nbsp;'.$bl_anonymous.'</a>'; 
 	  $smarty->assign('neutrals', $neutrals);
   }
   else

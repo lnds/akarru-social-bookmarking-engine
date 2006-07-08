@@ -1,6 +1,6 @@
 <form method="post" action="{$smarty.server.PHP_SELF}">
 <div class="infobox">
-<h3>al publicar considera lo siguiente:</h3>
+<h3>{#post_title_some_advices#}</h3>
 <div class="infoboxBody">
 <br/>
 <p>
@@ -18,14 +18,13 @@
 {if $error_url}<tr><td class="error">{#error_url#}</td></tr>{/if}
 <tr><td class="view-label-class">{#label_content_type#}</td></tr>
 <tr><td>
-<input type="radio" value="0" id="content_type" name="content_type" checked="true">url</input>
-<input type="radio" value="2" id="content_type" name="content_type">video</input>
-<input type="radio" value="1" id="content_type" name="content_type">texto</input>
+<input type="radio" value="0" id="content_type" name="content_type" checked="true">{#meme_type_url#}</input>
+<input type="radio" value="2" id="content_type" name="content_type">{#meme_type_video#}</input>
+<input type="radio" value="1" id="content_type" name="content_type">{#meme_type_text#}</input>
 </td></tr>
 <tr><td class="view-label-class" valign="middle">{#label_allows_debates#}&nbsp;<input class="view-input-class" type="checkbox" value="1" name="debates" /></td></tr>
 <tr><td><input type="hidden" name="step" value="{$step}" /><input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
-<tr><td><br/><font size="x-small">(Si envias video este debe ser un link a un video <a href="http://www.youtube.com">youtube</a>, <a href="http://video.google.com">google video</a>, o <a href="http://www.myvideo.es">MyVideo.es</a>)</a></td></tr>
-
+<tr><td><br/><font size="x-small">{#video_link_explanation#}</td></tr>
 </table>
 </div>
 <div style="height:250px">

@@ -20,6 +20,9 @@ $bl_cat_meme = 'カテゴリー';
 $bl_pages = 'ページ';
 $bl_search = '検索';
 $bl_profile_of = 'ユーザーのプロフィール';
+$bl_profile_comments_by = 'ユーザーが次のミームにコメントを投稿した：';
+$bl_profile_votes_by = 'ユーザーが次のミームに投票した：';
+$bl_profile_memes_by = 'ユーザーが次のミームを投稿した：';
 $bl_anonymous = '匿名';
 $bl_login = 'ログイン';
 $bl_login_submit = 'ログイン';
@@ -150,4 +153,9 @@ $bl_help = "ヘルプ";
 $bl_about = "ブログ・ミームズについて"; 
 
 $bl_automatic_message_email = "ブログミームズのユーザー%USER%が下記の記事をあなたに送りました。\n\n%MEME_URL%\n\n「%TITLE%」\n\n%TEXT%\n\n送信された時、この記事に%VOTES%票がありました。\n読みたければリンクをクリックして下さい。";
+$bl_validate_user = "アカウントの確認コード";
+$bl_validated_user = "アカウントが有効！";
+$bf_validation_link_email_body = "ご登録いただき誠に有難う御座います。\nBlogmemesで「%s」のアカウントを有効にするためには下記のリンクをクリックするか確認コードを記入して下さい。\n\n%s\n\n確認コード： %s";
+
+$bl_send_validation = "確認コードを発行"
 ?>

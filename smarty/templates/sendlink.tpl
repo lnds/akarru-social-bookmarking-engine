@@ -7,10 +7,10 @@
 <table border="0" cellpadding="2" cellspacing="0" width="300" align="center">
 <tr><td>&nbsp;</td></tr>
 <tr><td class="view-label-class"><font color="red">*</font>{#subject_email_label#}</td></tr>
-<tr><td ><input class="view-input-class" type="text" name="email_subject" value="{$email_subject}" size="60" /></td></tr>
+<tr><td><input class="view-input-class" type="text" name="email_subject" value="{$email_subject}" size="60" /></td></tr>
 <tr><td class="view-label-class"><font color="red">*</font>{#sender_email_label#}</td></tr>
 {if $error_sender_email}<tr><td class="error">{#error_sender_email#}</td></tr>{/if}
-<tr><td ><input class="view-input-class" type="text" name="sender_email" value="{$sender_email}" size="60" /></td></tr>
+<tr><td><input class="view-input-class" type="text" name="sender_email" value="{$sender_email}" size="60" /></td></tr>
 <tr><td class="view-label-class">{#sender_name_label#}</td></tr>
 <tr><td><input class="view-input-class" type="text" name="sender_name" value="{$sender_name}" size="60" /></td></tr>
 <tr><td class="view-label-class"><font color="red">*</font>{#receiver_email_label#}</td></tr>

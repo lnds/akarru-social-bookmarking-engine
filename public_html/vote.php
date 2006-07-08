@@ -9,7 +9,7 @@ if(isset($_GET['meme_id']))
      {
         $voted = 0;
         $bm_memes = new memes($bm_db, $bm_user, $bm_promo_level);
-        if ($bm_users->is_logged_in())
+        if ($bm_users->is_logged_in() && $bm_users->is_valid_account())
         {
             $user_id = $bm_users->get_user_id();
             if ($user_id == 1)
@@ -43,13 +43,13 @@ if(isset($_GET['meme_id']))
     }
     else
     {
-        header("Location: index.php");
+        header("Location: /index.php");
         exit();
         return;
     }
 }
 
-header("Location: index.php");
+header("Location: /index.php");
 exit();
 return;
 

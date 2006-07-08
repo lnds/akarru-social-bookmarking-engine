@@ -2,7 +2,7 @@
 require("lib/class.phpmailer.php");
 include_once('akarru.lib/common.php');
 include_once('common_elements.php');
-$copyto = "admin@blogmemes.com";
+$copyto = "admin@" . $bm_domain;
 
 
 function ValidMessage($message)

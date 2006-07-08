@@ -19,19 +19,19 @@
 </tr>
 {foreach name=posters  from=$posters item=poster}
 <tr><td>{$smarty.foreach.posters.index+1}</td>
-    <td><img border="0" src="{$poster->small_gravatar}" /></td>
-    <td><a href="profile.php?user_name={$poster->username}">{$poster->username}</a></td>
-    <td align="right">{$poster->memes}</td>
-    <td align="right">{$poster->votes}</td>
-    <td align="right">{$poster->comments}</td>
-    <td align="right">{$poster->influence|string_format:"%4.2f"}</td>
-    <td align="right">{$poster->popularity|string_format:"%4.2f"}</td>
+	<td><img border="0" src="{$poster->small_gravatar}" /></td>
+    <td><a href="/user/{$poster->username}">{$poster->username}</a></td>
+    <td align="center">{$poster->memes}</td>
+    <td align="center">{$poster->votes}</td>
+    <td align="center">{$poster->comments}</td>
+    <td align="center">{$poster->rank|string_format:"%4.2f"}</td>
+    <td align="center">{$poster->popularity|string_format:"%4.2f"}</td>    
     </tr>
 {/foreach}
 </table>
 
 <a id="help"></a>
-<p>La <b>influencia</b> mide la manera en que un usuario logra que un meme ascienda en la cola de promoción.
+<p>La <b>influencia</b> mide la manera en que un usuario logra que un meme ascienda en la cola de promocin.
 Esto quiere decir, que un usuario con un valor de influencia m&aacute;s alto ha logrado que m&aacute;s 
 memes se destaquen en primera p&aacute;gina.</p>
 <p>La <b>popularidad</b> es una funcion de los votos recibidos por los memes publicados por el usuario</p>
