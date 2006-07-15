@@ -37,10 +37,10 @@ class folksonomy {
 		$p = ($page-1) * $page_size;
 		$sql = "select t.tag, tp.tag_id, count(tp.post_id) memes from tags_posts tp join tags t on t.id = tp.tag_id group by t.tag, tp.tag_id limit $p, $page_size";
 		$tags = $this->db->fetch($sql);
-        
+
 		foreach ($tags as $tag)
 		{
-            $tag->font_size = 9 + ceil($tag->memes - $min / $threshold) * 2;
+			$tag->font_size = 9 + ceil($tag->memes - $minNbTimes / $threshold) * 2;
 			$result[] = $tag;
 		}
 		return $result;

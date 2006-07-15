@@ -72,6 +72,7 @@ class memes {
 	{
 		$memes_count = $this->count_memes($promoted, $conditions);
 		if ($memes_count <= 0) {
+			$this->pages = 0;
 			return array();
 		}
 		
@@ -274,11 +275,12 @@ class memes {
 			$counter++;
 			$this->db->execute('update posts set views = views + 1 where ID = '.$meme->ID);
 		}
+		$result->memes_count = $counter;
 		return $result;
 	}
 
 
-	function get_memes_by_tag($tag_id='',$page='', $sort='order by date_posted desc')
+	function get_memes_by_tag($tag_id,$page=0, $sort='order by date_posted desc')
 	{
 		$sql = "select post_id from tags_posts where tag_id = $tag_id";
 		$result = $this->db->fetch($sql);
@@ -434,7 +436,7 @@ class memes {
 			$tag = trim($tag);
 			if (!empty($tag)) 
 			{
-				$sql = "select ID from tags where tag = '$tag'";
+				$sql = "select ID from tags where tag = '$tag' LIMIT 1";
 				$row = $this->db->fetch($sql);
 				$tag_id =  $row[0]->ID;
 				if (empty($tag_id))
@@ -481,16 +483,15 @@ class memes {
 		$nv = $meme->votes + $add_votes;
 		$nc = $meme->comments + $add_comments;
 		$now = time();
-		$hours_posted = 1000*ceil(($now - $meme->date_posted)/3600);
-		$hours_promoted = 10*ceil(($now - $meme->date_promo)/3600);
-		if ($hours_promoted < 0) 
+		$hours_posted = ceil(($now - $meme->date_posted)/3600);
+		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
+        if ($hours_promoted < 0) 
 			$hours_promoted = 1;
-		if ($hour_posted < 0) 
+		if ($hours_posted < 0) 
 			$hours_posted = 1;
-		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->views+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
-		$rank *=  1/(1+log10(10+$hours_posted));
- 	$rank *=  1/(1+log10(10+$hours_promoted));
-//		$rank = ceil($rank*log10(100*$meme->votes+10));
+		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->social_clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
+		$rank *=  1/(1+log10(10+$hours_posted*1000));
+ 		$rank *=  10/(1+log10(10+$hours_promoted));
 
 		if ($update_promo_date)
 			$sql = "update posts set rank = $rank, date_promo = $now";
@@ -658,6 +659,5 @@ class memes {
 		$this->db->execute("update posts set debate_neg = (select count(*) from debate where position < 0 and post_id = $meme_id) where ID = $meme_id");
 
 	}
-
 }
 ?>

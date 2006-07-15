@@ -52,15 +52,6 @@ class statistics {
 
 	function calc_influence($user_id)
 	{
-/* Kenji: this is not working well. Numbers are too low.
-		$memes = $this->count_memes();
-		$sql  = " select submitted_user_id, count(p.id) memes, sum(votes) memes_votes, sum(comments) received_comments from posts p where (p.submitted_user_id = $user_id) group by submitted_user_id";
-		$u = $this->db->fetch_object($sql);
-		$u->comments = $this->db->fetch_scalar("select count(*) from post_comments where user_id = $user_id");
-		$u->votes = $this->db->fetch_scalar("select count(*) from post_votes where user_id = $user_id");
-		$u->popularity = (($u->memes+1) / ($memes+1)) * log($u->memes_votes+$u->received_comments+1);
-		$u->influence =  log($u->votes + $u->comments + $u->received_comments) * (($u->memes+1)/($memes+1));
-*/
 		$memes = $this->count_memes();
 		$sql  = " select submitted_user_id, count(p.id) memes, sum(votes) memes_votes, sum(comments) received_comments ";
         $sql .= " from posts p ";
@@ -69,9 +60,33 @@ class statistics {
 		$u = $this->db->fetch_object($sql);
 		$u->comments = $this->db->fetch_scalar("select count(*) from post_comments where user_id = $user_id");
 		$u->votes = $this->db->fetch_scalar("select count(*) from post_votes where user_id = $user_id");
-		$u->popularity = $u->memes+1 * log($u->memes_votes+$u->received_comments+1);
+		if (!isset($u->memes))
+        {
+         $u->memes = 0;
+        }
+        
+        if (!isset($u->memes_votes))
+        {
+         $u->memes_votes = 0;
+        }
+        
+        if (!isset($u->received_comments))
+        {
+         $u->received_comments = 0;
+        }
+        
+        if (!isset($u->comments))
+        {
+            $u->comments = 0;
+        }
+        
+        if (!isset($u->votes))
+        {
+            $u->votes = 0;
+        }
+		
+		$u->popularity = ($u->memes+1) * log($u->memes_votes+$u->received_comments+1);
         $u->influence = 100.0*(($u->votes-$u->memes+$u->comments+1)/($memes+1));
-
 		return $u;
 	}
 
@@ -87,15 +102,15 @@ class statistics {
 		foreach ($users as $u)
 		{
 			$user_id = $u->ID;
-			$u->small_gravatar = get_gravatar($bm_url, $u->gravatar, 40);
+			$u->small_gravatar = get_gravatar($u->gravatar, 40);
 			$sql  = " select submitted_user_id, sum(votes) memes_votes, sum(comments) received_comments from posts p where (p.submitted_user_id = $u->ID) group by submitted_user_id";
 			$uf = $this->db->fetch_object($sql);
 			$u->memes_votes = $uf->memes_votes;
 			$u->received_comments = $uf->received_comments;
 			$u->comments = $this->db->fetch_scalar("select count(*) from post_comments where user_id = $user_id");
 			$u->votes = $this->db->fetch_scalar("select count(*) from post_votes where user_id = $user_id");
-			$u->popularity = (($u->memes+1) / ($memes+1)) * log($u->memes_votes+$u->received_comments+1);
-			$u->influence =  log($u->votes + $u->comments + $u->received_comments) * (($u->memes+1)/($memes+1));
+			$u->popularity = $u->memes+1 * log($u->memes_votes+$u->received_comments+1);
+            $u->influence = 100.0*(($u->votes-$u->memes+$u->comments+1)/($memes+1));
 			$result[] = $u;
 			
 		}

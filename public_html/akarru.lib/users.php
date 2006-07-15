@@ -8,10 +8,12 @@ class users {
 	{
 		$this->aes_key = $aes_key;
 		$this->db = $db;
-		$this->user = $_SESSION['user_data'];
+		if (isset($_SESSION['user_data']))
+            $this->user = $_SESSION['user_data'];
+        
 		if (empty($this->user)) {
-			$psession = $_COOKIE["bm_login_cookie"];
-			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession' and not (disabled=true and validated=true)");
+			$psession = isset($_COOKIE["bm_login_cookie"]) ? $_COOKIE["bm_login_cookie"] : '';
+			$this->user = $this->db->fetch_object("select * from users where persistent_session = '$psession' and not (disabled=TRUE and validated=TRUE) LIMIT 1");
 			$_SESSION['user_data'] = $this->user;
 		}
 	}
@@ -25,18 +27,47 @@ class users {
 	function is_valid_account()
     {
         $valid = false;
-        if (!empty($this->user)) {
-			$valid = !$this->user->disabled && $this->user->validated;
+        if (isset($this->user)) {
+            // Need to check the database to avoid the situation where the user has been banned
+            // but still have a valid session going on
+            $id = $this->user->ID;
+             $exists  = $this->db->fetch_scalar("select count(*) from users where
+ ID = '$id'  and (disabled=false and validated=true) LIMIT 1");
+            $valid = $exists > 0;            
 		}
         
         return $valid;
     }
 
+	function is_banned()
+    {
+        $banned = false;
+        if (isset($this->user)) {
+            // Need to check the database to avoid the situation where the user has been banned
+            // but still have a valid session going on
+            $id = $this->user->ID;
+             $exists  = $this->db->fetch_scalar("select count(*) from users where
+ ID = '$id'  and (disabled=TRUE and validated=TRUE) LIMIT 1");
+            $banned = $exists > 0;
+		}
+        
+        return $banned;
+    }
+
 	function logoff($domain=DOMAIN)
 	{
-		$psession = $_COOKIE["bm_login_cookie"];
-		$this->db->execute("update users set persistent_session = null where persistent_session = '$psession'");
-		unset($this->user);
+		if (isset($_COOKIE["bm_login_cookie"]))
+        {
+		    $psession = $_COOKIE["bm_login_cookie"];
+		    $this->db->execute("update users set persistent_session = null where persistent_session = '$psession'");
+        }
+        else if (isset($this->user))
+        {
+            $this->db->execute("update users set persistent_session = null where ID = '$this->user->ID'");
+        }
+        
+        unset($this->user);
+		
 		@session_destroy();
 		@session_unset();
 		$sessionid=session_name();
@@ -57,7 +88,14 @@ class users {
 
 	function get_is_admin()
 	{
-		return $this->user->ID == 1 || $this->user->admin == 1;
+		if ($this->is_logged_in() && isset($this->user))
+        {
+		    return $this->user->ID == 1 || $this->user->admin == 1;
+        }
+        else
+        {
+            return false;
+        }
 	}
 
 
@@ -148,7 +186,31 @@ class users {
         $sql  = "update users set disabled=FALSE where ID = $user_id";
 		return $this->db->execute($sql);
     }
-
+    
+    function ban_user($user_id)
+    {
+        $user_id = sanitize($user_id);
+        $sql  = "update users set disabled=TRUE, validated=TRUE, persistent_session = null where ID = $user_id";
+		return $this->db->execute($sql);
+    }
+    
+    function unban_user($user_id)
+    {
+       $user_id = sanitize($user_id);
+       $sql  = "update users set disabled=FALSE, validated=TRUE where ID = $user_id";
+       return $this->db->execute($sql);
+    }
+    
+    function is_user_banned($username)
+    {
+        $username = sanitize($username);
+        $exists  = $this->db->fetch_scalar("select count(*) from users where
+ username = $username  and (disabled=TRUE and validated=TRUE) LIMIT 1");
+        $banned = $exists > 0;
+	  
+        return $banned;
+    }
+    
 
 	function do_login($user_name, $pass, $remember, $domain=DOMAIN)
 	{
@@ -167,7 +229,7 @@ class users {
 		$_SESSION['user_data'] = $user;
 		if (!empty($remember))
 		{
-			$psession = md5($user->user_name . '-' . time());
+			$psession = md5($user->username . '-' . time());
 			$uid = $user->ID;
 			$this->db->execute("update users set persistent_session = '$psession' where ID = $uid");
 			setcookie("bm_login_cookie", $psession, time()+24*60*60*30, '/', $domain);
@@ -185,7 +247,7 @@ class users {
 		$sql .= ' fullname= '.sanitize($data['fullname']).',';
 		$sql .= ' website = '.sanitize($data['website']).',';
 		$sql .= ' blog = '.sanitize($data['blog']).' ';
-		$sql .= ' where ID = '.sanitize($data['user_id']);
+		$sql .= ' where ID = '.sanitize($this->get_user_id());
 		$this->db->execute($sql);
 
 
@@ -204,12 +266,27 @@ class users {
 		return true;
 	}
 
+	function edit_user($data)
+	{
+		$oldEmail = $this->get_user_email();
+		$sql  = ' update users set ';
+		$sql .= ' email = '.sanitize($data['email']).',';
+		$sql .= ' gravatar = md5('.sanitize($data['email']).'), ';
+		$sql .= ' fullname= '.sanitize($data['fullname']).',';
+		$sql .= ' website = '.sanitize($data['website']).',';
+		$sql .= ' blog = '.sanitize($data['blog']).' ';
+		$sql .= ' where ID = '.sanitize($data['user_id']);
+		$this->db->execute($sql);
+
+		return true;
+	}
+
 	function get_user_profile($user_name, $memes, $promote_level = 5)
 	{   
 		$id = $this->db->fetch_scalar(" select id from users where username = '$user_name' ");
 		return $this->get_user_profile_by_id($id, $memes, $promote_level);
 	}
-    
+
     function get_user_id_by_user_name($user_name)
 	{
         if (!$this->check_user_exists($user_name)) 
@@ -234,8 +311,8 @@ class users {
 		$profile->popularity = $infl->popularity;
 		$profile->memes_votes = $infl->memes_votes;
 
-		$memes->get_memes_by_user($profile->id);
-		$profile->promoted_memes = $memes->memes_count;
+		$user_memes = $memes->get_memes_by_user($profile->id);
+		$profile->promoted_memes = $user_memes->memes_count;
 
 		// gravatar
 		$profile->small_gravatar = get_gravatar($profile->gravatar, 40);
@@ -243,6 +320,20 @@ class users {
 
 
 		return $profile;
+	}
+
+	function get_user_by_id($user_id)
+	{
+		$sql  = ' select id, username, email, gravatar, fullname, blog, join_date, website, disabled, validated ';
+		$sql .= ' from users';
+		$sql .= " where id = $user_id ";
+		$user_data = $this->db->fetch_object($sql);
+		// gravatar
+		$user_data->small_gravatar = get_gravatar($user_data->gravatar, 40);
+		$user_data->gravatar = get_gravatar($user_data->gravatar, 80);
+
+
+		return $user_data;
 	}
 
 	function change_password($user_id, $new_pass, $confirm_pass)
@@ -257,6 +348,7 @@ class users {
 
 	function gen_password($email, $subject, $body, $login_url)
 	{
+		global $bm_domain;
 		$user = $this->db->fetch_object("select * from users where email = '$email' limit 1");
 		if ($user) 
 		{
@@ -264,19 +356,21 @@ class users {
 			$key = $this->aes_key;
 			$sql = "update users set strong_pass = aes_encrypt(md5('$pass'), md5(join_date || '$key')) where ID = $user->ID";
 			$this->db->execute($sql);
-			mail($email, $subject, sprintf($body, $user->username, $pass, $login_url));
+			$from = "no-reply@" . $bm_domain;
+            $header = 'From: '.$from."\n";
+            mb_send_mail($email, $subject, sprintf($body, $user->username, $pass, $login_url), $header);
 		}
 		return $pass;
 	}
 
 	function check_email_exists($email)
 	{
-		return $this->db->fetch_scalar("select count(*) from users where email = '$email'");
+		return $this->db->fetch_scalar("select count(*) from users where email = '$email' LIMIT 1");
 	}
 
 	function check_user_exists($username)
 	{
-		return $this->db->fetch_scalar("select count(*) from users where username = '$username'");
+		return $this->db->fetch_scalar("select count(*) from users where username = '$username' LIMIT 1");
 	}
 
 	function get_random_profile_links($n)
@@ -318,9 +412,13 @@ class users {
         $charset = "abcdefghijklmnopqrstuvwxyz";
         $charset .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $charset .= "0123456789";
-        if ($minlength > $maxlength) $length = mt_rand ($maxlength, $minlength);
-        else                         $length = mt_rand ($minlength, $maxlength);
-        for ($i=0; $i<$length; $i++) $key .= $charset[(mt_rand(0,(strlen($charset)-1)))];
+        $key = "";
+        if ($minlength > $maxlength)
+        	$length = mt_rand ($maxlength, $minlength);
+        else
+        	$length = mt_rand ($minlength, $maxlength);
+        for ($i=0; $i<$length; $i++)
+        	$key .= $charset[(mt_rand(0,(strlen($charset)-1)))];
         return $key;
     }
     
@@ -350,11 +448,11 @@ class users {
         $code = $this->makeRandomKey(8,12);
         $validationLink = $this->makeValidationLink($user, $user_email, $code);
         // Configure these
-        $fromemail="no-reply@" . $bm_domain;   // Sender's adress
+        $from="no-reply@" . $bm_domain;   // Sender's adress
         $subject = '['.$bm_site_name.'] '.$user . ":" .$bl_validate_user;
         $body = $bf_validation_link_email_body;
-	  
-        return mail($user_email, $subject, sprintf($body, $user, $validationLink, $code), "From : $fromemail");
+        $header = 'From: '.$from."\n";
+        return mb_send_mail($user_email, $subject, sprintf($body, $user, $validationLink, $code), $header);
     }
     
     function verifyValidationLink($hash_value, $key)

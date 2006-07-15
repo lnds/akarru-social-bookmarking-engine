@@ -127,7 +127,13 @@ function find_media_info($url)
 		preg_match('/\<a href="([^\"]+)" rel="trackback"\>/i', $data, $regs);
 	}
 
-	$result[] = $regs[1];
+	if (empty($regs[1])) {
+	    $result[] = '';
+    }
+    else
+    {
+        $result[] = $regs[1];
+    }
 
 	// find_favicon($url)
 	$icon = '';
@@ -191,13 +197,20 @@ function get_googlevideo($url)
 
 function get_youtube($url)
 {
-        $matches = array();
-        @preg_match('/v=(.*)$/', $url, $matches);
-        if (empty($matches[1])) {
-                return get_googlevideo($url);
+		if (stristr($url, "youtube.com"))
+        {
+            $matches = array();
+            @preg_match('/v=(.*)$/', $url, $matches);
+            if (empty($matches[1])) {
+                    return get_googlevideo($url);
+            }
+            $url = 'http://youtube.com/v/'.$matches[1];
+            return '<object width="300" height="250"><param name="movie" value="'.$url.'"></param><embed src="'.$url.'" type="application/x-shockwave-flash" width="300" height="250"></embed></object>';
         }
-        $url = 'http://youtube.com/v/'.$matches[1];
-        return '<object width="300" height="250"><param name="movie" value="'.$url.'"></param><embed src="'.$url.'" type="application/x-shockwave-flash" width="300" height="250"></embed></object>';
+        else
+        {       
+            return get_googlevideo($url);
+        }
 }
 
 
@@ -214,13 +227,14 @@ function replace_urls($text)
                 );
 
     $simple_replace = array(
-                "<a href=\"\\1\">\\1</a>",
+                "<a href=\"\\1\">Link</a>",
                 '<strong>$1</strong>',
                 '<em>$1</em>',
                 '<u>$1</u>',
                 '<a href="$1">$2</a>',
                 '<a href="$1">$1</a>'
                 );
+
 
     return preg_replace ($simple_search, $simple_replace, $text); 
 }

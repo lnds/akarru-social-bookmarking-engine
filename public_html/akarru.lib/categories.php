@@ -125,13 +125,13 @@ class categories {
     function check_category_id_exists($cat_id)
 	{
         $cat_id = sanitize($cat_id);
-		return $this->db->fetch_scalar("select count(*) from post_cats where ID = '$cat_id'");
+		return $this->db->fetch_scalar("select count(*) from post_cats where ID = '$cat_id' LIMIT 1");
 	}
     
     function is_category_enabled($cat_id)
     {
         $cat_id = sanitize($cat_id);
-		return $this->db->fetch_scalar("select count(*) from post_cats where ID = '$cat_id' AND disabled = FALSE");
+		return $this->db->fetch_scalar("select count(*) from post_cats where ID = '$cat_id' AND disabled = FALSE LIMIT 1");
     }
 	
 }

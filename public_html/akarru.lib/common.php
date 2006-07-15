@@ -45,12 +45,16 @@ $bm_db = new database();
 $bm_users = new users($bm_db);
 $bm_is_logged_in = 0;
 $bm_is_logged_and_valid = 0;
+$bm_is_banned = 0;
+$bm_user = 0;
+$bm_user_name="";
 if ($bm_users->is_logged_in())
 {
 	$bm_user = $bm_users->user->ID;
 	$bm_user_name = $bm_users->user->username;
 	$bm_is_logged_in = 1;
-    $bm_is_logged_and_valid = $bm_users->is_valid_account();
+	$bm_is_logged_and_valid = $bm_users->is_valid_account();
+	$bm_is_banned = $bm_users->is_banned();
 }
 
 $bm_tags = new folksonomy($bm_db);
@@ -58,32 +62,19 @@ $bm_tags = new folksonomy($bm_db);
 $smarty->assign('bf_date_posted', $bm_date_posted_format);
 $smarty->assign('logged_in', $bm_is_logged_in);
 $smarty->assign('logged_and_valid', $bm_is_logged_and_valid);
+$smarty->assign('banned_account', $bm_is_banned);
 $smarty->assign('logged_userid', $bm_user);
 $smarty->assign('is_admin', $bm_users->get_is_admin());
 $smarty->assign('logged_username', $bm_user_name);
 
-$bm_page = intval($_GET['page']);
-if (empty($bm_page)) 
-	$bm_page = 1;
+$bm_page = 1;
+if (isset($_GET['page']))
+{
+    $bm_page = intval($_GET['page']);
+}
 
 $smarty->assign('time', time());
 $smarty->assign('page', $bm_page);
-/* we don't need this anymore since Smarty will do the caching
-if (isset($_APP['cats'])) {
-  $cats = $_APP['cats'];
-}
-else
-{
-	$bm_cats = new categories($bm_db);
-	$bm_cats = $bm_cats->fetch_all();
-	$smarty->assign('bm_cats', $bm_cats);
-	foreach ($bm_cats as $cat) {
-		$cats[] = '<a href="/cat/'.$cat->cat_title.'" >'.$cat->cat_title.'</a>';
-	}
-	$_APP['cats'] = $cats;
-}
-$smarty->assign('cats_array', $cats);
-*/
 
 // This function is used to determine if ads should be displayed for a particular IP
 // You can add your fixed IP to avoid clicking on google ads in the blogmemes network
@@ -98,8 +89,8 @@ $ip = $_SERVER['REMOTE_ADDR'];
 
 // Error reporting functions
 function mail_error($error) {
-	global $bm_domain;
-    mail('admin@' . $bm_domain, "Error on blogmemes", $error);
+	global $bm_admin_email_address;
+    mail($bm_admin_email_address, "Error on blogmemes", $error);
 }
 
 function logerror($error,$filename="errors",$send_email = 0)
