@@ -30,8 +30,8 @@
     // and for the administrators
     $salt.="|adm";
   }
-
-
+  
+  
   $smarty->caching = 2; // lifetime is per cache 
 
   $view = isset($_GET['view']) ? $_GET['view'] : "";
@@ -84,10 +84,7 @@
         	$smarty->assign('pages', $memes->pages+1);
 
 	    $smarty->assign('query_ext', '&user_name='.$user_name);
-        $smarty->assign('memes', $data);
-        $feed_url = "/user/feed/" . $user_name;
-        $smarty->assign('content_feed', $feed_url);
-        $smarty->assign('content_feed_link', "<a href=\"$feed_url\">".'<img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" border="0"/></a>');
+        $smarty->assign('memes', $data);        
       }
 
       $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|posted-memes|' . $bm_page);
@@ -96,6 +93,9 @@
 
   $smarty->caching = false; // turn off caching
   
+  $feed_url = "/user/feed/" . $user_name;
+  $smarty->assign('content_feed', $feed_url);
+  $smarty->assign('content_feed_link', "<a href=\"$feed_url\">".'<img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" border="0"/></a>');
   $smarty->assign('content_title', $bl_profile.' '.$profile->username);
   $smarty->assign('profile_title', $profile_title);
   $smarty->assign('cached_content', TRUE);
