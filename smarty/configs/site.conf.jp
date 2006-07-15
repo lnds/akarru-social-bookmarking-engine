@@ -1,4 +1,5 @@
 site_caption="ブログ・ミームズ"
+top_memes_label_url="第一面のミーム"
 promote_label_url="スタンバイ中のミーム"
 post_label_url="ミームを投稿する"
 popular_label_url="一番人気"
@@ -9,12 +10,15 @@ profile_label= "プロフィール："
 login_label="ログイン"
 voters_label="投票者"
 logoff_label="ログアウト"
+tools_label="ツール"
+blog_label="ブログ"
 register_label="登録"
 about_label="当サイトについて"
 suggestions_label="お勧め"
 folksonomy_caption="タグ"
 show_all_folksonomy_label="全部"
 votes_label="票"
+vote_action_label="投票する"
 posted_by_label="投稿者："
 edit_meme_label="編集"
 disabled_meme = "スパムなどのため未表示されたミームです。"
@@ -95,6 +99,7 @@ profile_edit_instructions = 'パスワードを更新したくない場合は記
 
 profile_pass_label="新しいパスワード："
 profile_confirm_pass_label="パスワードを再び記入（確認のため）："
+label_ban_user="追放"
 
 tag_label="キーワードとタグをコンマであけて下さい："
 tag_submit_label='こちらのキーワードとタグを追加する'
@@ -103,6 +108,7 @@ recover_done_message="あなたのメールアドレスが登録されていれ�
 
 
 error_login="ニックネームまたはパスワードは違います"
+error_banned="不正行為により、<strong>アカウントを停止させていただきました</strong>。<br />アカウントを再開したい場合は<a href="/imeleu/?u=adminjp&d=blogmemes&t=jp">ご連絡</a>をお願い致します。"
 error_user="ニックネームの記入に間違いがあったようです。使える文字は数字と英字のみです。"
 error_pass="パスワードを正しく記入しなければなりません"
 error_confirm_pass="パスワードを２回記入して下さい"
@@ -130,8 +136,8 @@ main_feed= "<a href="http://feeds.feedburner.com/blogmemesjp" title="ブログ�
 url_feeds="http://feeds.feedburner.com/blogmemesjp"
 
 
-login_welcome_message="<p>Blogmemesとは皆が参加できるの面白い情報（「ミーム」）を紹介するサイトです。投票によって<a href="/memes_queue.php">投稿されたミーム</a>が第一面に昇進される。雲の中にある数字は票数です。</p><p>紹介されているサイトは記事のタイトルからアクセス出来る。<b>面白かった場合は雲のしたにある「投票する」をクリックして下さい。</b></p><p><b>最新のネタは<a href="/memes_queue.php">スタンバイ中のミーム</a>にあります</b>気に入るネタはきっとありますので投票を忘れなくご覧ください。</p><p><b><a href="/facile.php#bookmarklet">ブックマークレット</a>を使えばネタの投稿は簡単です。</b></p><hr />"
-not_login_welcome_message= "<p>Blogmemesとは皆が参加できるの面白い情報（「ミーム」）を紹介するサイトです。投票によって<a href="/memes_queue.php">投稿されたミーム</a>が第一面に昇進される。雲の中にある数字は票数です。</p><p>紹介されているサイトは記事のタイトルからアクセス出来る。<b>面白かった場合は雲のしたにある「投票する」をクリックして下さい。</b></p><p><b>最新のネタは<a href="/memes_queue.php">スタンバイ中のミーム</a>にあります</b>気に入るネタはきっとありますので投票を忘れなくご覧ください。</p><p>ネタを投稿するには<a href="/register.php">登録</a>が必要です。<b>登録は簡単だし、無料です。</b></p><hr />"
+login_welcome_message="<p>Blogmemesとは皆が参加できるの面白い情報（「ミーム」）を紹介するサイトです。投票によって<a href="/memes_queue.php">投稿されたミーム</a>が第一面に昇進される。雲の中にある数字は票数です。</p><p>紹介されているサイトは記事のタイトルからアクセス出来る。<b>面白かった場合は雲のしたにある「投票する」をクリックして下さい。</b></p><p><b>最新のネタは<a href="/memes_queue.php">スタンバイ中のミーム</a>にあります。</b>気に入るネタはきっとありますので投票を忘れなくご覧ください。</p><p><b><a href="/facile.php#bookmarklet">ブックマークレット</a>や<a href="/facile.php#firefox">Firefox用の拡張機能</a>を使えばネタの投稿は簡単です。</b></p><hr />"
+not_login_welcome_message= "<p>Blogmemesとは皆が参加できるの面白い情報（「ミーム」）を紹介するサイトです。投票によって<a href="/memes_queue.php">投稿されたミーム</a>が第一面に昇進される。雲の中にある数字は票数です。</p><p>紹介されているサイトは記事のタイトルからアクセス出来る。<b>面白かった場合は雲のしたにある「投票する」をクリックして下さい。</b></p><p><b>最新のネタは<a href="/memes_queue.php">スタンバイ中のミーム</a>にあります。</b>気に入るネタはきっとありますので投票を忘れなくご覧ください。</p><p>ネタを投稿するには<a href="/register.php">登録</a>が必要です。<b>登録は簡単だし、無料です。</b></p><hr />"
 
 
 ajax_service="http://www.blogmemes.jp/ajax_vote.php"
@@ -217,7 +223,8 @@ error_cant_send_validation_link="確認コードを発行出来ませんでし�
 label_send_validation_email="宛先："
 label_send_validation_code="確認コードを発行する"
 
-master_not_valid_account="<strong>アカウントが無効です！</strong>"
+master_banned_account="<h3>アカウント停止！</h3>不正行為により、<strong>アカウントを停止させていただきました</strong>。アカウントを再開したい場合は<a href="/imeleu/?u=adminjp&d=blogmemes&t=jp">ご連絡</a>をお願い致します。"
+master_not_valid_account="<h3>アカウントの確認手続き</h3><strong>アカウントが無効です！</strong>"
 master_validate_user_label="アカウントの有効化"
 master_send_validation_label="確認コードの再発行"
 
