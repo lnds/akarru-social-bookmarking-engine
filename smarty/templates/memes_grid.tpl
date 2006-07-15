@@ -21,5 +21,3 @@ Recibe BlogMemes por Email<br/><input name="EMAIL" maxlength="255" type="text" s
 <br/>Powered by <a href="http://www.feedblitz.com">FeedBlitz</a></form> 
 </div>
 </div>
-{/capture}
-{$smarty.capture.grid}

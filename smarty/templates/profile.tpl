@@ -11,14 +11,18 @@
   <tr><td><b>{#profile_blog_label#}</b></td><td><a href="{$user_profile->blog}">{$user_profile->blog}</a></td></tr>
   <tr><td><b>{#profile_website_label#}</b></td><td><a href="{$user_profile->website}">{$user_profile->website}</a></td></tr>
   </table>
-  {if $user_profile->username eq $logged_username}
+  {if $logged_in and ($user_profile->username eq $logged_username) and not $banned_account}
 	{if not $logged_and_valid}
     {#profile_not_valid_account#}
     <strong><a href="/validate_user.php">{#profile_validate_user_label#}</a></strong>&nbsp;|&nbsp;
     <strong><a href="/send_validation.php">{#profile_send_validation_label#}</a></strong>
     <br />
     {/if}
-    <strong><a href="/edit-profile/{$logged_userid}">{#profile_modify_label#}</a></strong>
+    <strong><a href="/edit-profile/">{#profile_modify_label#}</a></strong>
+  {else}
+    {if $is_admin}
+    <strong>!! <a href="/edit-user/{$user_profile->id}">{#profile_modify_label#}</a> !!</strong>
+    {/if}
   {/if}
 </div>
 <hr />

@@ -45,12 +45,14 @@
   <tr><td>&nbsp;</td></tr>
   <tr>
   <td></td><td >
-<input class="view-button-class" type="submit" value="{#post_modify_submit_label#}" name="do_edit" />
-<input class="view-button-class" type="submit" value="{#post_submit_label#}" name="do_post" />
+<input class="view-button-class" type="submit" value="{#post_modify_submit_label#}" id="do_edit" name="do_edit" />
+<input class="view-button-class" type="submit" value="{#post_submit_label#}" id="do_post" name="do_post" />
 </td>
 </tr>  
 </table>
 </hr>
 </form>
+<script type="text/javascript">
+document.getElementById('do_post').focus();
+</script>
 <div style="height:1400px;_height:1400px">&nbsp;</div>
-
