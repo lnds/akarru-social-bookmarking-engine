@@ -6,7 +6,7 @@
 	<tr>
 		<td>
 {foreach from=$all_tags item=tag}		
-<a style="font-size:{$tag->font_size}pt;text-decoration:none" href="/tag/{$tag->tag}">{$tag->tag}</a>&nbsp; 
+<span style="line-height:{$tag->font_size}px; font-size:{$tag->font_size}px;text-decoration:none"><a href="/memes_by_tag.php?tag_name={$tag->tag}" style="text-decoration:none">{$tag->tag}</a></span>&nbsp;|&nbsp;
 {/foreach}
 </td>
 </tr>

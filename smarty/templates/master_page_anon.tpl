@@ -87,7 +87,11 @@ google_color_text = "000000";
 			</div> 
 		</div>
 		<div id="sidebar">
+			{if $in_queue}
+            <div id="sidebar-tab1"><a href="/index.php">{#top_memes_label_url#}</a></div>
+            {else}            
 			<div id="sidebar-tab1"><a href="/memes_queue.php">{#promote_label_url#}</a></div>
+            {/if}
 			<div id="sidebar-tab2"><a href="/post.php">{#post_label_url#}</a></div>
 			<div id="sidebar-tab3"><a href="/popular.php">{#popular_label_url#}</a>
 				<br /><a href="/unpopular.php">{#unpopular_label_url#}</a>

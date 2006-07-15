@@ -35,7 +35,7 @@ La circulaci&oacute;n es calculada revisando las <a href="http://www.feedburner.
   <tr><td colspan="2">
   <hr />
 	<div class="whowhen-class">{#posted_by_label#}&nbsp;<a class="whowhen-class" 
-	style="font-size:10px" href="profile.php?user_name={$meme->username}">{$meme->username}</a>
+	style="font-size:10px" href="/user/{$meme->username}">{$meme->username}</a>
 	&nbsp;{$meme->date_posted|date_format:$bf_date_posted}</div>
 	  <p>
   

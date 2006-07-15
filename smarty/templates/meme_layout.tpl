@@ -34,7 +34,7 @@
 	{/if}
 	<div class="vote-class" id="vote_button_{$meme->ID}">
 	{if $meme->voted <= 0}
-	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','{$logged_userid}')">投票する</a>
+	<a class="vote-class" href="#vote_count_{$meme->ID}" onclick="update_vote_div('vote_count_{$meme->ID}','{$logged_userid}')">{#vote_action_label#}</a>
 	{/if}
 	</div>
     </div>
@@ -75,7 +75,7 @@
 	</td></tr>
     {/if}
   <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class"> 
-  {if $logged_userid == $meme->submitted_user_id || $logged_userid == 1}<a href="/edit-meme/{$meme->ID}">{#edit_label#}編集</a>&nbsp;|&nbsp;{/if}{#comments_label#} <a href="/meme/{$meme->ID}">{$meme->comments}</a>&nbsp;|&nbsp;<a href="/tag-meme/{$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="/show_cat.php?cat_name={$meme->cat_title}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="{$meme->url}"  onmousedown="return goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:30:"..."}</a>&nbsp;</div>
+  {if $logged_userid == $meme->submitted_user_id || $is_admin}<a href="/edit-meme/{$meme->ID}">{#edit_label#}</a>&nbsp;|&nbsp;{/if}{#comments_label#} <a href="/meme/{$meme->ID}">{$meme->comments}</a>&nbsp;|&nbsp;<a href="/tag-meme/{$meme->ID}">{#tag_meme_label#}</a> | {#cat_label#}: <a href="/show_cat.php?cat_name={$meme->cat_title}">{$meme->cat_title}</a> | {#url_label#}&nbsp;<a href="{$meme->url}"  onmousedown="return goto_url({$meme->ID},'{$meme->url}')">{$meme->url|truncate:30:"..."}</a>&nbsp;</div>
   <tr><td colspan="3"><div style="padding-left:1em" class="meme-footer-class">
   {include file="meme_stats.tpl"}
   <br />

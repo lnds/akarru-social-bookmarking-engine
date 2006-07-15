@@ -76,13 +76,19 @@ google_color_text = "000000";
 		<div id="content-wrapper">
 			<div id="meme">
 				<p>
-				{if (not $logged_and_valid) and not (($content == "send_validation") || ($content == "validate_user") || ($content == "profile"))}
-                {#master_not_valid_account#}
-                <strong><a href="/validate_user.php">{#master_validate_user_label#}</a></strong>&nbsp;|&nbsp;
-                <strong><a href="/send_validation.php">{#master_send_validation_label#}</a></strong>
-                <br />
+				{if $banned_account}
+                    {#master_banned_account#}
+                    <hr />
+                {else}
+				    {if (not $logged_and_valid) and not (($content == "send_validation") || ($content == "validate_user") || ($content == "profile"))}
+                    {#master_not_valid_account#}
+                    <strong><a href="/validate_user.php">{#master_validate_user_label#}</a></strong>&nbsp;|&nbsp;
+                    <strong><a href="/send_validation.php">{#master_send_validation_label#}</a></strong>
+                    <hr />
+                    {/if} 
                 {/if}
-				{#login_welcome_message#}</p>
+				{#login_welcome_message#}
+				</p>
 				{if $cached_content}
                     {$content}
                 {else}
@@ -91,7 +97,11 @@ google_color_text = "000000";
 			</div> 
 		</div>
 		<div id="sidebar">
+			{if $in_queue}
+            <div id="sidebar-tab1"><a href="/index.php">{#top_memes_label_url#}</a></div>
+            {else}            
 			<div id="sidebar-tab1"><a href="/memes_queue.php">{#promote_label_url#}</a></div>
+            {/if}
 			<div id="sidebar-tab2"><a href="/post.php">{#post_label_url#}</a></div>
 			<div id="sidebar-tab3"><a href="/popular.php">{#popular_label_url#}</a>
 				<br /><a href="/unpopular.php">{#unpopular_label_url#}</a>
