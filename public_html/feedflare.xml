@@ -1,0 +1,15 @@
+<FeedFlareUnit>
+	<Catalog>
+		<Author>Kenji Baheux</Author>
+		<Link href="http://www.blogmemes.jp"/>
+		<Title>Post to BlogMemes Japan</Title>
+		<Description>
+			Post this item on the blogmemes.jp japanese social news site
+		</Description>
+	</Catalog>
+ 	<FeedFlare>
+		<!-- Bookmark items with BlogMemes Japan (http://www.blogmemes.jp) -->
+		<Text>Post to Blogmemes Japan</Text>
+		<Link href="http://www.blogmemes.jp/post.php?url=${link}&amp;title=${title}"/>
+	</FeedFlare>
+</FeedFlareUnit>
