@@ -21,10 +21,10 @@
 <tr><td>{$smarty.foreach.posters.index+1}</td>
 	<td><img border="0" src="{$poster->small_gravatar}" /></td>
     <td><a href="/user/{$poster->username}">{$poster->username}</a></td>
-    <td align="center">{$poster->memes}</td>
-    <td align="center">{$poster->votes}</td>
-    <td align="center">{$poster->comments}</td>
-    <td align="center">{$poster->rank|string_format:"%4.2f"}</td>
+    <td align="center"><a href="/user/{$poster->username}">{$poster->memes}</a></td>
+    <td align="center"><a href="/votes/{$poster->username}">{$poster->votes}</a></td>
+    <td align="center"><a href="/comments/{$poster->username}">{$poster->comments}</a></td>
+    <td align="center">{$poster->influence|string_format:"%4.2f"}</td>
     <td align="center">{$poster->popularity|string_format:"%4.2f"}</td>    
     </tr>
 {/foreach}
