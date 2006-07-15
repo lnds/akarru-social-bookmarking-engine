@@ -9,7 +9,7 @@
   
   if ($memes->pages > 1) 
 	  $smarty->assign('pages', $memes->pages+1);
-  $smarty->assign('show_ads', $bm_page < $memes->pages);
+  $smarty->assign('show_ads', showGGAds() && $bm_page < $memes->pages);
   $smarty->assign('content', 'memes_grid');
   $smarty->display('master_page.tpl');
 ?>

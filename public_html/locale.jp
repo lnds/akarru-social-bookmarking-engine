@@ -9,7 +9,7 @@ $bl_popular = '一番人気';  // popular blogMemes
 $bl_unpopular = '人気のない'; // less popular blogMemes
 $bl_categories = 'カテゴリー';
 $bl_folksonomy = 'folksonomy';
-$bl_folksonomy_bar_text = '一番人気のあるタグはこちらです。';
+$bl_folksonomy_bar_text = '一番人気のタグはこちらです。';
 $bl_folksonomy_bar_link = '全てのタグ';
 $bl_votes = '投票';
 $bl_posted_by = '投稿者';
@@ -152,6 +152,7 @@ $bl_community = "コミュニティ";
 $bl_help = "ヘルプ";
 $bl_about = "ブログ・ミームズについて"; 
 
+$content_title_sendlink = "友達に紹介する";
 $bl_automatic_message_email = "ブログミームズのユーザー%USER%が下記の記事をあなたに送りました。\n\n%MEME_URL%\n\n「%TITLE%」\n\n%TEXT%\n\n送信された時、この記事に%VOTES%票がありました。\n読みたければリンクをクリックして下さい。";
 $bl_validate_user = "アカウントの確認コード";
 $bl_validated_user = "アカウントが有効！";

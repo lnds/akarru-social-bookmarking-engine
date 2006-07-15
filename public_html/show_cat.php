@@ -2,7 +2,7 @@
   include_once('akarru.lib/common.php');
   include_once('common_elements.php');
   $memes = new memes($bm_db, $bm_user, 0);
-  $cat_id = intval($_GET['cat_id']);
+  $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
 
   if (!empty($_GET['cat_name']))
   {

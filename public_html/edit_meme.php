@@ -35,6 +35,7 @@
       
 	  $_POST['user_id'] = $bm_users->get_user_id();
 	  $memes->update_meme($_POST);
+	  $smarty->clear_cache(null,'db|memes');
 
 	  header("Location: /meme/$meme_id");
 	  exit();

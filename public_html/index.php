@@ -10,7 +10,6 @@
   $smarty->assign('sub_title', $bl_sub_title);
   $smarty->assign('memes', $data);
 
-  $smarty->assign('page_title', 'blogmemes - '.$data[0]->title);
   if ($memes->pages > 50) 
 	  $memes->pages = 50;
   if ($memes->pages > 1) 

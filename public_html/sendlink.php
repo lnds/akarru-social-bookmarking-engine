@@ -2,7 +2,7 @@
 require("lib/class.phpmailer.php");
 include_once('akarru.lib/common.php');
 include_once('common_elements.php');
-$copyto = "admin@" . $bm_domain;
+$copyto = $bm_admin_email_address;
 
 
 function ValidMessage($message)
@@ -29,7 +29,7 @@ function ValidMessage($message)
   $smarty->assign('permalink', $memes->get_permalink($meme_id));
   $smarty->assign('username', $bm_users->get_user_name());
 
-  $step = intval($_POST['step']);
+  $step = isset($_POST['step']) ? intval($_POST['step']) : 0;
     
   if (empty($_POST) || $step == 0)
   {
@@ -118,6 +118,7 @@ function ValidMessage($message)
             if ($mail->Send())
             {
                 $step = 2;
+				$memes->social_click($meme_id, $bm_users->get_user_id());
                 header("Location: sendlink_ok.php?meme_id=" . $meme_id);
 			    return exit;
             }
@@ -145,7 +146,6 @@ function ValidMessage($message)
   $smarty->assign('content', 'sendlink');
   $smarty->assign('content_title', $content_title_sendlink);
   $smarty->assign('community', true);
-  $smarty->assign('page', $page);
   $smarty->assign('step', $step);
   $smarty->display('master_page.tpl');
 ?>

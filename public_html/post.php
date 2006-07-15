@@ -2,14 +2,13 @@
   include_once('akarru.lib/common.php');
   include_once('common_elements.php');
   include_once('akarru.lib/spam_fight.php');
-  
-  // Put your email address in $dest
+
   function mailDetails($user, $meme_url, $meme_title, $meme_text, $spam=0)
   {
 	global $bm_domain;
-    // Configure these
-     $fromemail="no-reply@" . $bm_domain;   // Sender's adress
-     $dest="admin@" . $bm_domain;  // Receiver address
+	global $bm_admin_email_address;
+    $fromemail = "no-reply@" . $bm_domain;   // Sender's adress
+    $dest = $bm_admin_email_address;  // Receiver address
      
      
     $ip = "[" . $_SERVER["REMOTE_ADDR"] . "] - resolved=[" . gethostbyaddr($_SERVER["REMOTE_ADDR"]) . "]";
@@ -25,7 +24,7 @@
     {
         $subject="Meme entitled '" . $meme_title . "' has been posted by '" . $user . "'";  // Email subject.
     }
-               
+
     $message ="Posted on " . $posteddate  . "\nIP: " . $ip . "\nFrom: " . $from ."\nUser_agent: " . $what . "\n";
     $message.="By '" .  $user . "',\n URL: " . $meme_url . "\n\n";
     $message.="\n\nMeme text=\n";
@@ -34,7 +33,7 @@
     $message.="\n\n------ End -----\n";
     
     // Fonction Mail
-    @mail($dest,$subject,$message, "From : $fromemail");
+    @mb_send_mail($dest,$subject,$message, "From : $fromemail\n");
   }
 
 // Following functions are to decode urlencoded strings.
@@ -83,7 +82,6 @@
    return $decodedStr;
 }
 
-
   $bm_cats = new categories($bm_db);
   $bm_cats = $bm_cats->fetch_all_enabled();
   $smarty->assign('bm_cats', $bm_cats);
@@ -112,11 +110,12 @@
 	  return;
   }
 
-  $step = intval($_POST['step']);
+  $step = isset($_POST['step']) ? intval($_POST['step']) : 0;
+
   if (empty($_POST) || $step == 0)
   {
 	  $step = 1;
-	  $url = $_GET['url'];
+	  $url = isset($_GET['url']) ? $_GET['url'] : "";
 	  if (!empty($url))
 	  {
 		  $smarty->assign('url', $url);
@@ -125,9 +124,9 @@
 		  $smarty->assign('url', 'http://');
 	  }
 
-      $_GET['title'] = unescape($_GET['title']);
+      $title = isset($_GET['title']) ? unescape($_GET['title']) : "";
       
-	  $smarty->assign('title', $_GET['title']);
+	  $smarty->assign('title', $title);
 	  $smarty->assign('meme_trackback', '');
 
   }
@@ -143,7 +142,7 @@
 	 $step = $_POST['step'];
 	 $memes = new memes($bm_db, $bm_user, $bm_promo_level);
 	 if ($_POST['step'] == 1) {
-		 $smarty->assign('debates', $_POST['debates']);
+		 $smarty->assign('debates', isset($_POST['debates']) ? $_POST['debates'] : 0);
    		 $title = $_POST['title'];
 		 $url   = $_POST['url'];
 		 if ($url == 'http://') {
@@ -293,7 +292,7 @@
              else
              {
                  $memes->add_meme($_POST);
-                 $smarty->clear_all_cache();
+                 $smarty->clear_cache(null,'db|memes');
                  header("Location: /show_cat.php?cat_name=" .$bm_options[$category]);
                  return exit;
              }

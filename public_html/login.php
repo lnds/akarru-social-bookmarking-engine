@@ -26,7 +26,16 @@
 			  return;
 		  }
 		  else
-			  $smarty->assign('error_login', true);
+		  {
+              if ($bm_users->is_user_banned($_POST['user']))
+              {
+			    $smarty->assign('error_banned', true);
+              }
+              else
+              {
+                $smarty->assign('error_login', true);
+              }
+          }
 	  }
   }
   if (empty($_GET['from'])) {

@@ -5,6 +5,5 @@
   $smarty->assign('content', 'validated_user');
   $smarty->assign('content_title', $bl_validated_user);
   $smarty->assign('community', true);
-  $smarty->assign('page', $page);
   $smarty->display('master_page.tpl');
 ?>

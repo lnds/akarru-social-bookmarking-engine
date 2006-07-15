@@ -1,7 +1,13 @@
 <?php
   include_once('akarru.lib/common.php');
   if (!$bm_users->is_logged_in()) {
-	  header("Location: login.php");
+	  header("Location: /login.php");
+	  exit();
+	  return;
+  }
+  
+  if ($bm_users->is_banned()) {
+	  header("Location: /403.php");
 	  exit();
 	  return;
   }
@@ -25,7 +31,7 @@
 	  {
 		  if (!empty($_POST['pass'])) {
 			  $pass = $_POST['pass'];
-              //Kenji : security problem with the next line
+			  //Kenji : security problem with the next line
               //$user_id = (int) $_POST['user_id'];
 			  $user_id = $bm_users->get_user_id();
 			  $confirm_pass = $_POST['confirm_pass'];
@@ -61,10 +67,8 @@
               $smarty->assign('blog', $bm_users->user->blog);
               $smarty->assign('fullname', $bm_users->user->fullname);
 		  }
-		 
 	  }
   }
-
   $bm_title = $bl_profile_edit.' '.$bm_users->get_user_name();
   $smarty->assign('content_title', $bm_title);
   $smarty->assign('content', 'profile_edit');

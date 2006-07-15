@@ -44,8 +44,8 @@
   $smarty->assign('votes', $stats->count_votes());
   $posters = $stats->top_posters(50); 
 
-  $sort=$_GET['sort'];
-  if (!empty($sort)) {
+  if (isset($_GET['sort'])) {
+      $sort=$_GET['sort'];
 	  usort($posters, $sort);
   }
   $smarty->assign('posters', $posters);

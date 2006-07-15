@@ -7,6 +7,7 @@
 
   $smarty->assign('memes', $data);
   $smarty->assign('bm_message', $bm_message_meme_queue);
+  $smarty->assign('in_queue', true);
   if ($memes->pages > 1) 
 	  $smarty->assign('pages', $memes->pages+1);
   $smarty->assign('content_feed_link', $bm_queue_feeds);

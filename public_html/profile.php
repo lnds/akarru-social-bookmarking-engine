@@ -25,9 +25,16 @@
     $salt = "|self";
   }
   
+  if ($bm_users->get_is_admin())
+  {
+    // and for the administrators
+    $salt.="|adm";
+  }
+
+
   $smarty->caching = 2; // lifetime is per cache 
 
-  $view = $_GET['view'];
+  $view = isset($_GET['view']) ? $_GET['view'] : "";
   if ($view == "c") {
       // profile
       if (!$smarty->is_cached("profile.tpl", "db|users|profile|" . $user_name . $salt . "|comments|" . $bm_page))
@@ -36,9 +43,9 @@
         $memes = new memes($bm_db, $bm_user, 0, 5);
         $profile = $bm_users->get_user_profile($user_name, $memes);
         $smarty->assign('user_profile', $profile);
+        $data = $memes->get_commented_memes_by_user($bm_page, $profile->id);
         if ($memes->pages > 1) 
 	        $smarty->assign('pages', $memes->pages+1);
-        $data = $memes->get_commented_memes_by_user($bm_page, $profile->id);
         $smarty->assign('memes', $data);
 	    $smarty->assign('query_ext', '&view=c&user_name='.$user_name);
       }
@@ -54,9 +61,9 @@
         $memes = new memes($bm_db, $bm_user, 0, 5);
         $profile = $bm_users->get_user_profile($user_name, $memes);
         $smarty->assign('user_profile', $profile);
+        $data = $memes->get_voted_memes_by_user($bm_page, $profile->id);
         if ($memes->pages > 1) 
 	        $smarty->assign('pages', $memes->pages+1);
-        $data = $memes->get_voted_memes_by_user($bm_page, $profile->id);
         $smarty->assign('query_ext', '&view=v&user_name='.$user_name);
         $smarty->assign('memes', $data);
       }
@@ -72,11 +79,15 @@
         $memes = new memes($bm_db, $bm_user, 0, 5);
         $profile = $bm_users->get_user_profile($user_name, $memes);
         $smarty->assign('user_profile', $profile);
-        if ($memes->pages > 1) 
-	        $smarty->assign('pages', $memes->pages+1);
         $data = $memes->get_memes_by_user($profile->id, $bm_page);
+        if ($memes->pages > 1)
+        	$smarty->assign('pages', $memes->pages+1);
+
 	    $smarty->assign('query_ext', '&user_name='.$user_name);
         $smarty->assign('memes', $data);
+        $feed_url = "/user/feed/" . $user_name;
+        $smarty->assign('content_feed', $feed_url);
+        $smarty->assign('content_feed_link', "<a href=\"$feed_url\">".'<img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" border="0"/></a>');
       }
 
       $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|posted-memes|' . $bm_page);
@@ -89,7 +100,6 @@
   $smarty->assign('profile_title', $profile_title);
   $smarty->assign('cached_content', TRUE);
   $smarty->assign('content', $profile);
-  $smarty->assign('page', $page);
   $smarty->assign('show_ads', showGGAds());
   $smarty->display('master_page.tpl');
 ?>

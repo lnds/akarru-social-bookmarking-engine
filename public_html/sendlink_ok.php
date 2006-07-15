@@ -19,6 +19,5 @@
   $smarty->assign('content', 'sendlink_ok');
   $smarty->assign('content_title', $content_title_sendlink);
   $smarty->assign('community', true);
-  $smarty->assign('page', $page);
   $smarty->display('master_page.tpl');
 ?>

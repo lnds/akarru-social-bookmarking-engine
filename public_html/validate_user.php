@@ -40,6 +40,7 @@
           }
           else
           {
+			  $bm_users->logoff();
               $url = "/validated_user.php";
               header("Location: $url");
               exit();
@@ -79,6 +80,7 @@
           }
           else
           {
+			  $bm_users->logoff();
               $url = "/validated_user.php";
               header("Location: $url");
               exit();

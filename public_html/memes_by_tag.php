@@ -1,11 +1,11 @@
 <?php
   include_once('akarru.lib/common.php');
   include_once('common_elements.php');
-  $tag_id = intval($_GET['tag_id']);
+  $tag_id = isset($_GET['tag_id']) ? intval($_GET['tag_id']) : 0;
   $bm_no_folkbar = true;
   $memes = new memes($bm_db, $bm_user);
   if (! empty($_GET['tag_name']))
-    {
+  {
 	  $tag_name = $_GET['tag_name'];
 	  $bm_title = $bl_tag_meme .': '.$tag_name;
 	  $tag_id = $memes->get_tag_id($tag_name);

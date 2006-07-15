@@ -36,13 +36,13 @@ function start_element($parser, $name, $attr)
 {
 	global $views;
 	global $clicks;
-	global $bm_domain;
+	global $bm_web_address;
 	if ($name == 'REFERRER') {
 		$url = $attr['URL'];
 		$url_data = @parse_url($url);
 		if (empty($url_data['host'])) {
-			$views['www.' . $bm_domain] += $attr['ITEMVIEWS'];
-			$clicks['www.' . $bm_domain] += $attr['CLICKTHROUGHS'];
+			$views[$bm_web_address] += $attr['ITEMVIEWS'];
+			$clicks[$bm_web_address] += $attr['CLICKTHROUGHS'];
 		}
 		else
 		{

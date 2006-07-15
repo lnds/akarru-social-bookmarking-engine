@@ -50,7 +50,7 @@
 			  $smarty->assign('error_cant_register', true);
 			  $bm_errors++;
 		  }
-          else if (!$bm_users->sendValidationLink($user, $email))
+		  else if (!$bm_users->sendValidationLink($user, $email))
           {
               $smarty->assign('error_cant_send_validation_link', true);
 			  $bm_errors++;
@@ -59,21 +59,21 @@
 
 	  if ($bm_errors == 0) 
 	  {
-          $url = "/validate_user.php";
+		  $url = "/validate_user.php";
   		  header("Location: $url");
 		  exit();
 		  return;
 	  }
 	  else
 	  {
-		  $smarty->assign('from', $_GET['from']);
+		  $smarty->assign('from', isset($_GET['from']) ? $_GET['from'] : "");
     		  $smarty->assign('content_title', $content_title_register);
 		  $smarty->assign('content', 'register');
 	  }
   }
   else
   {
-	  $smarty->assign('from', $_GET['from']);
+	  $smarty->assign('from', isset($_GET['from']) ? $_GET['from'] : "");
 	  $smarty->assign('content_title', $content_title_register);
 	  $smarty->assign('content', 'register');
   }
