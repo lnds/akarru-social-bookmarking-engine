@@ -1,0 +1,15 @@
+<FeedFlareUnit>
+	<Catalog>
+		<Author>Kenji Baheux</Author>
+		<Link href="http://www.blogmemes.jp"/>
+		<Title>Vote for this meme at BlogMemes Japan</Title>
+		<Description>
+			Cast your vote for this item on the blogmemes.jp japanese social news site
+		</Description>
+	</Catalog>
+ 	<FeedFlare>
+		<!-- Cast your vote on meme at BlogMemes Japan (http://www.blogmemes.jp) -->
+		<Text>Cast your vote</Text>
+		<Link href="http://www.blogmemes.jp/vote.php?url=${link}"/>
+	</FeedFlare>
+</FeedFlareUnit>
