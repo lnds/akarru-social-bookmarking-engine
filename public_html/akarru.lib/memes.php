@@ -4,7 +4,7 @@ include_once('lib/xmlrpcs.inc');
 
 class memes {
 
-	function memes($db, $user, $promo_level=5, $records_to_page=15)
+	function memes($db, $user, $promo_level=4, $records_to_page=15)
 	{
 		$this->db = $db;
 		$this->user_id = $user;
@@ -63,10 +63,19 @@ class memes {
 
 	}
 
+	function count_comments()
+	{
+		$this->db->do_query("select SQL_CALC_FOUND_ROWS * from post_comments p");
+
+		return $this->db->fetch_scalar('Select FOUND_ROWS()');
+		return $this->db->fetch_scalar('Select FOUND_ROWS()');
+
+	}
+
 	function get_video_memes($page)
 	{
-		return $this->get_memes($page, 'order by views desc', 0, 'is_micro_content = 2');
-	}
+		return $this->get_memes($page, 'order by date_posted desc', 0, 'is_micro_content = 2');
+    }
 
 	function get_memes($page=0, $sort='', $promoted=1, $conditions='')
 	{
@@ -140,7 +149,7 @@ class memes {
         return $meme;
 	}
 
-	function get_meme($id, $share=0)
+    function get_meme($id, $share=0)
 	{
         $id = sanitize($id);
 		$meme = $this->get_original_meme($id);
@@ -148,8 +157,8 @@ class memes {
 
 		if ($share)
 	        $this->db->execute('update posts set shares = shares+1 where ID = '.$id);
-		else
-	 		$this->db->execute('update posts set views = views + 1 where ID = '.$id);
+		//else
+	 	//	$this->db->execute('update posts set views = views + 1 where ID = '.$id);
 		return $meme;
 	}
     
@@ -161,7 +170,7 @@ class memes {
 
 		return $meme;
 	}
-
+        
     function disable_meme($meme_id)
     {
         $meme_id = sanitize($meme_id);
@@ -195,10 +204,24 @@ class memes {
 	function get_comments($meme_id)
 	{
 		$meme_id = sanitize($meme_id);
-		$sql  = ' select c.title, c.content, c.date_posted, u.username, u.gravatar, c.post_id as ID ' ;
+		$sql  = ' select c.title, c.id as c_ID, c.content, c.date_posted, u.username, u.gravatar, c.post_id as ID ' ;
 		$sql .= ' from post_comments c left join users u on c.user_id = u.ID ';
 		$sql .= ' where post_id = '.$meme_id;
-		return $this->filter_result($sql);
+		return $this->filter_result_comment($sql);
+	}
+
+	function get_recent_comments($max_nb_comments = 20)
+	{
+		$comments_count = $this->count_comments();
+		if ($comments_count <= 0) {
+			return array();
+		}
+		$sql  = ' select c.title, c.id as c_ID, c.content, c.date_posted, u.username, u.gravatar, c.post_id as ID ' ;
+		$sql .= ' from post_comments c left join users u on c.user_id = u.ID ';
+        $sql .= ' order by c.date_posted desc ';
+		$sql .= ' LIMIT '.$max_nb_comments;
+        
+		return $this->filter_result_comment($sql);
 	}
 
 	function get_commented_memes_by_user($page, $user_id)
@@ -279,6 +302,28 @@ class memes {
 		return $result;
 	}
 
+    // calculate gravatar, permalink, htmlized comment...
+	function filter_result_comment($sql)
+	{
+		global $bm_url;
+		$rs = $this->db->get_recordset($sql);
+		$result = array();
+		$counter = 0;
+		while ($comment = $this->db->get_record_object($rs)) 
+		{
+            $meme = $this->get_meme($comment->ID);
+            $comment->title = isset($meme->title) ? $meme->title : '';
+			$comment->small_gravatar = get_gravatar($comment->gravatar, 24);
+			$comment->content = replace_urls($comment->content);
+            $comment->anchor = 'c-' . $comment->c_ID;
+			$comment->permalink = $this->get_permalink($comment->ID) . '#' . $comment->anchor;
+			$result[] = $comment;
+			$counter++;
+		}
+		$result->memes_count = $counter;
+		return $result;
+	}
+
 
 	function get_memes_by_tag($tag_id,$page=0, $sort='order by date_posted desc')
 	{
@@ -346,19 +391,19 @@ class memes {
 
 	function check_is_valid_url($url)
 	{
-		$furl = @fopen($url, "r");
+	/*	$furl = @fopen($url, "r");
 		if (!$furl) {
 			return false;
 		}
 		@fclose($furl);
+		*/
 		return true;
-
 	}
 
 	function check_url_exists_in_db($url)
 	{
 		$url = trim($url);
-        $sql = "select id from posts where url = '$url'";
+        $sql = "select id from posts where url = '$url' LIMIT 1";
 		return $this->db->fetch_scalar($sql);
 	}
 
@@ -419,7 +464,7 @@ class memes {
 	}
 
 
-	function ping($ping_host, $ping_app, $meme_id, $title='Blog Memes', $main_url='http://www.blogmemes.com/')
+	function ping($ping_host, $ping_app, $meme_id, $title='BlogMemes', $main_url='http://www.blogmemes.jp/')
 	{
 		$blogMemes = new xmlrpc_client('', $ping_host, 80);
 		$msg = new xmlrpcmsg($ping_app, array(new xmlrpcval($title), new xmlrpcval()));
@@ -538,7 +583,7 @@ class memes {
 
         $title = urlencode($data['title']);
         $excerpt = urlencode($bl_vote_for_it_message_in_trackback . $data['content_body']);
-        $blog_name = urlencode('blogmemes.com');
+        $blog_name = urlencode('www.blogmemes.jp');
         $tb_url = $data['meme_trackback'];
         $url = urlencode($this->get_permalink($data['meme_id']));
         $query_string = "charset=UTF-8&title=$title&url=$url&blog_name=$blog_name&excerpt=$excerpt";
@@ -547,7 +592,7 @@ class memes {
         $http_request .= 'Host: '.$trackback_url['host']."\r\n";
         $http_request .= 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'."\r\n";
         $http_request .= 'Content-Length: '.strlen($query_string)."\r\n";
-        $http_request .= "User-Agent: AKARRU (http://www.blogmemes.com) ";
+        $http_request .= "User-Agent: AKARRU (http://www.blogmemes.jp) ";
         $http_request .= "\r\n\r\n";
         $http_request .= $query_string;
 		$http_request = utf8_encode($http_request);
