@@ -30,8 +30,8 @@
     // and for the administrators
     $salt.="|adm";
   }
-  
-  
+
+
   $smarty->caching = 2; // lifetime is per cache 
 
   $view = isset($_GET['view']) ? $_GET['view'] : "";
@@ -84,7 +84,7 @@
         	$smarty->assign('pages', $memes->pages+1);
 
 	    $smarty->assign('query_ext', '&user_name='.$user_name);
-        $smarty->assign('memes', $data);        
+        $smarty->assign('memes', $data);
       }
 
       $profile = $smarty->fetch('profile.tpl','db|users|profile|' . $user_name . $salt . '|posted-memes|' . $bm_page);

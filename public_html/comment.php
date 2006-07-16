@@ -72,7 +72,6 @@
         {
 		  $memes->debate($meme_id, $bm_user, $_POST['position'], false);
         }
-        mailDetails($bm_users->get_user_name(), $url, "[SPAM] " . $title, $content_body);
         header("Location: /meme/$meme_id");
 	    exit();
 	    return;
