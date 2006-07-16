@@ -16,10 +16,11 @@
 {/if}
 {foreach from=$comments item=comment}
 <div class="infobox" id="debate_form">
-<div>
+<div id="{$comment->anchor}">
 <div class="whowhen-class">
 {$comment->date_posted|date_format:$bf_date_posted} 
-&nbsp;{#comment_sender#}<a href="/user/{$comment->username}">{$comment->username}</a>&nbsp;<img src="{$comment->small_gravatar}" />&nbsp; 
+&nbsp;{#comment_sender#}<a href="/user/{$comment->username}">{$comment->username}</a>&nbsp;<img src="{$comment->small_gravatar}" />&nbsp;
+<a href="#{$comment->anchor}" title="permalink" rel="bookmark">#</a>
 </div>
 <div style="padding:1em">{$comment->content|nl2br}</div>
 </div>
@@ -115,7 +116,6 @@
 {#users_who_voted_for_this_meme#}
 {html_table loop=$voters table_attr='id="voters" border="0" cellpaddig="2" align"center"' cols="7"}
 {/if}
-<script type="text/javascript" src="http://embed.technorati.com/embed/kru95iwk92.js"></script>
 </p>
 <div style="height:400px">&nbsp;</div>
 
