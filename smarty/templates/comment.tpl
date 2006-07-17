@@ -27,6 +27,10 @@
 <div class="infoboxFooter"><p>&nbsp;</p></div>
 </div>
 {/foreach}
+<ul>
+<li>{#comment_meme_feed_subscribe#}<a href="/meme/feed/{$meme_id}" title="RSS" rel="alternate"><img src="/img/feed-icon16x16.png" width="16" height="16" alt="RSS" style="border:0"/></a></li>
+<li>{#comments_feed_subscribe#}<a href="/comments/feed/" title="RSS" rel="alternate"><img src=""/img/feed-icon16x16.png" width="16" height="16" alt="RSS" style="border:0"/></a></li>
+</ul>
 {if $logged_and_valid}
 {include file="form_header.tpl"}
 <br />
