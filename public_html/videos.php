@@ -13,9 +13,9 @@
 	  $memes->pages = 50;
   if ($memes->pages > 1) 
 	  $smarty->assign('pages', $memes->pages+1);
-  $smarty->assign('$bm_message', $bl_promoted_message);
+  $smarty->assign('bm_message', $bl_promoted_message);
   $smarty->assign('content', 'memes_grid');
   $smarty->assign('content_feed_link', $bm_main_feeds);
   $smarty->assign('show_ads', showGGAds());
-  echo $smarty->fetch('master_page.tpl');
+  $smarty->display('master_page.tpl');
 ?>
