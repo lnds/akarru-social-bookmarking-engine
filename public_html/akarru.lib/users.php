@@ -154,7 +154,7 @@ class users {
 
 		$now = time();
 		$key = $this->aes_key;
-		$this->db->execute("insert into users(username,email,strong_pass,join_date,gravatar,original_username,disabled,validated) values('$user','$email', aes_encrypt(md5('$pass'), md5($now || '$key')), $now, md5('$email'), '$user', TRUE, FALSE)");
+		$this->db->execute("insert into users(username,email,strong_pass,join_date,gravatar,disabled,validated) values('$user','$email', aes_encrypt(md5('$pass'), md5($now || '$key')), $now, md5('$email'), TRUE, FALSE)");
 
 		return $this->do_login($user, $pass, false);
 	}
