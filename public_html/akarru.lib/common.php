@@ -79,10 +79,11 @@ $smarty->assign('page', $bm_page);
 // This function is used to determine if ads should be displayed for a particular IP
 // You can add your fixed IP to avoid clicking on google ads in the blogmemes network
 // It would be a bummer to be ban for invalid clicks
-// The IPs below are the IP from my lab at the university and home IP
 function showGGAds()
 {
-$noads = array("221.20.64.61", "130.34.194.50", "130.34.194.51", "130.34.194.52", "130.34.194.53", "130.34.194.54", "130.34.194.55", "130.34.194.56", "130.34.194.57", "130.34.194.58", "130.34.194.59", "130.34.194.60", "130.34.194.61", "130.34.194.62", "130.34.194.63", "130.34.194.64", "130.34.194.65", "130.34.194.66", "130.34.194.67", "130.34.194.68", "130.34.194.69", "130.34.194.70", "130.34.194.49", "130.34.194.48", "130.34.194.47", "130.34.194.46", "130.34.194.45");
+// Example "222.222.222.22", "222.222.222.21"...
+// Add your own IP and email the other members so they can do the same to their config
+$noads = array();
 $ip = $_SERVER['REMOTE_ADDR'];
   return (! in_array($ip, $noads));
 }
@@ -118,7 +119,6 @@ function logerror($error,$filename="errors",$send_email = 0)
     {
         mail_error($report);
     }
-}
 }
 
 ?>
