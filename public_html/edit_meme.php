@@ -14,8 +14,8 @@
   $smarty->assign('content_title', $content_title_editar);
   $memes = new memes($bm_db, $bm_user);
   $meme = $memes->get_original_meme($meme_id);
-  if ($meme->submitted_user_id != $bm_user && $bm_user != 1) {
-	  header("Location: comment.php?meme_id=$meme_id");
+  if ($meme->submitted_user_id != $bm_user && !$bm_users->get_is_admin()) {
+	  header("Location: /meme/$meme_id");
 	  exit();
 	  return;
   }
