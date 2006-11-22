@@ -179,6 +179,8 @@ CREATE TABLE `users` (
   `strong_pass` blob,
   `send_newsletter` tinyint(1) default '1',
   `track_comments` tinyint(1) default '1',
+  `disabled` tinyint(1) default NULL,
+  `validated` tinyint(1) default NULL,
   PRIMARY KEY  (`ID`),
   KEY `idx_username` (`username`),
   KEY `idx_user_email` (`email`),
