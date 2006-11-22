@@ -1,461 +1,830 @@
+2006-11-22 14:28  eadiaz
+
+	* create.sql: support for spam fighting
+
+2006-11-22 14:15  eadiaz
+
+	* public_html/profile_edit.php: minor conflicts on code of eadiaz
+	  and kenji
+
+2006-11-22 14:14  eadiaz
+
+	* public_html/circulation.php, public_html/config.php,
+	  public_html/favicon.ico, public_html/feed.php,
+	  public_html/feedflare.xml, public_html/styles/memes.css,
+	  public_html/test_index.php: cache thanks to Kenji.
+
+2006-11-22 14:10  eadiaz
+
+	* public_html/akarru.lib/cache_manager.php,
+	  public_html/akarru.lib/common.php,
+	  public_html/akarru.lib/database.php,
+	  public_html/akarru.lib/html_manager.php,
+	  public_html/akarru.lib/memes.php: The main changes are in
+	  promotion algorithm, a more smooth function is used.
+
+2006-07-19 20:36  lekeno
+
+	* public_html/akarru.lib/cachemanager.php: not needed as the right
+	  one is cache_manager
+
+2006-07-19 20:33  lekeno
+
+	* public_html/akarru.lib/common.php: fix the unneeded }
+	  remove my ips in the noads function. It's better to send our
+	  fixed ips if any by email. Or be responsible.
+
+2006-07-19 20:28  lekeno
+
+	* public_html/edit_meme.php: fix for the bug where user with admin
+	  rights could not edit a meme
+	  fix to use the url rewriting scheme
+
+2006-07-19 10:00  lekeno
+
+	* smarty/templates/paginate.tpl: fixed the pagination bug
+
+2006-07-18 04:30  lekeno
+
+	* smarty/templates/meme_layout.tpl: fixed an error on the label
+	  name "edit this meme" edit_label => edit_meme_label
+
+2006-07-17 21:29  lekeno
+
+	* public_html/akarru.lib/users.php: removed original_username field
+
+2006-07-17 20:56  lekeno
+
+	* public_html/comments_feed.php: added per meme comments
+
+2006-07-17 20:45  lekeno
+
+	* public_html/.htaccess, public_html/config.php,
+	  public_html/videos.php: videos.php removed unneeded use of fetch
+	  config.php minor typo
+	  .htaccess added rewrite rules for comments feeds
+
+2006-07-17 20:44  lekeno
+
+	* public_html/styles/img/feed-icon16x16.png:
+
+2006-07-17 20:43  lekeno
+
+	* smarty/templates/comment.tpl: added links to comments feeds
+
+2006-07-17 20:42  lekeno
+
+	* smarty/configs/site.conf: added models for the new strings
+
+2006-07-16 22:53  lekeno
+
+	* smarty/templates/comment.tpl: comment.tpl : permalinks for
+	  comments
+
+2006-07-16 22:50  lekeno
+
+	* public_html/akarru.lib/memes.php: memes.php function to get
+	  recents comments, bug fixes...
+
+2006-07-16 22:45  lekeno
+
+	* public_html/comment.php, public_html/comments_feed.php,
+	  public_html/profile.php: comment.php mail send 2 times bug fix
+	  comments_feed.php rss feeds for the recent comments
+	  profile.php user feed cache bug fix
+
+2006-07-16 05:33  lekeno
+
+	* smarty/templates/tag_meme.tpl: wrong label was used for the list
+	  of tags
+
+2006-07-15 23:00  lekeno
+
+	* public_html/profile.php: Bug fix : problem with caching and feed
+	  link
+
+2006-07-15 22:46  lekeno
+
+	* public_html/feedflare.xml:
+
+2006-07-15 22:45  lekeno
+
+	* public_html/votefeedflare.xml:
+
+2006-07-15 22:44  lekeno
+
+	* public_html/cat_feed.php, public_html/circulation.php,
+	  public_html/comment.php, public_html/config.php,
+	  public_html/edit_meme.php, public_html/feed.php,
+	  public_html/index.php, public_html/locale.jp,
+	  public_html/login.php, public_html/memes_by_tag.php,
+	  public_html/memes_queue.php, public_html/post.php,
+	  public_html/profile.php, public_html/profile_edit.php,
+	  public_html/queue_feed.php, public_html/register.php,
+	  public_html/send_validation.php, public_html/sendlink.php,
+	  public_html/sendlink_ok.php, public_html/show_cat.php,
+	  public_html/site_circulation.php, public_html/stats.php,
+	  public_html/tag_feed.php, public_html/unpopular.php,
+	  public_html/user_edit.php, public_html/user_feed.php,
+	  public_html/validate_user.php, public_html/validated_user.php:
+	  cache management
+	  bug fixes
+	  user validation
+	  user administration
+	  new feeds (by tag, user)
+	  smarty caching (partial)
+
+2006-07-15 22:43  lekeno
+
+	* public_html/.htaccess: more url rewrites
+	  languages settings
+
+2006-07-15 22:42  lekeno
+
+	* public_html/akarru.lib/cache_manager.php,
+	  public_html/akarru.lib/categories.php,
+	  public_html/akarru.lib/common.php,
+	  public_html/akarru.lib/folksonomy.php,
+	  public_html/akarru.lib/html_manager.php,
+	  public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/spam_fight.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php: bug fixes, optimizations,
+	  validation of user, ban user, cache management...
+
+2006-07-15 22:41  lekeno
+
+	* smarty/templates/add_category.tpl,
+	  smarty/templates/circulation.tpl,
+	  smarty/templates/edit_category.tpl,
+	  smarty/templates/edit_post.tpl,
+	  smarty/templates/folksonomy_grid.tpl,
+	  smarty/templates/login.tpl,
+	  smarty/templates/master_page_anon.tpl,
+	  smarty/templates/master_page_logged.tpl,
+	  smarty/templates/meme_layout.tpl,
+	  smarty/templates/user_edit.tpl,
+	  smarty/templates/validation_link_sent.tpl: auto focus
+	  url rewrite corrections
+	  edit_post : radio buttons
+	  folksonomy_grid.tpl : better sizing
+	  login.tpl : added messages
+	  master_page_*.tpl : added link to first page on queue page
+	  user_edit.tpl : for admins to edit a user profile and to ban
+	  spammers and so on
+	  validation_link_sent.tpl : page that says that a validation code
+	  / link has been sent
+
+2006-07-15 22:37  lekeno
+
+	* smarty/templates/memes_grid.tpl, smarty/templates/post_1.tpl,
+	  smarty/templates/post_2.tpl, smarty/templates/post_3.tpl,
+	  smarty/templates/profile.tpl, smarty/templates/profile_edit.tpl,
+	  smarty/templates/recover_pass.tpl,
+	  smarty/templates/register.tpl,
+	  smarty/templates/send_validation.tpl,
+	  smarty/templates/sendlink.tpl,
+	  smarty/templates/social_tools.tpl: memes_grid.tpl removed
+	  capture command (not needed)
+	  post_1.tpl, post_2.tpl, post_3.tpl auto focus
+	  profile.tpl : added link for validation and administration of an
+	  user
+	  profile_edit.tpl : fixed security bug and auto focus
+	  recover_pass.tpl : auto focus
+	  register.tpl : auto focus
+	  send_validation.tpl : auto focus
+	  sendlink.tpl : auto focus
+	  social_tools.tpl : use the permalink property of the meme
+
+2006-07-15 22:33  lekeno
+
+	* smarty/templates/stats.tpl, smarty/templates/tag_meme.tpl:
+	  stats.tpl : added links to user profiles
+	  tag_meme.tpl : auto focus
+
+2006-07-15 22:32  lekeno
+
+	* smarty/templates/validate_user.tpl: auto focus on the form fields
+
+2006-07-15 22:31  lekeno
+
+	* smarty/configs/site.conf, smarty/configs/site.conf.jp:
+
+2006-07-08 23:45  lekeno
+
+	* public_html/comment.php, public_html/edit_meme.php,
+	  public_html/post.php, public_html/profile_edit.php,
+	  smarty/configs/site.conf.jp, smarty/templates/comment.tpl,
+	  smarty/templates/edit_post.tpl, smarty/templates/post_2.tpl:
+	  spam checking and user validation plus security bug fix and hard
+	  coded string cleanup
+
+2006-07-08 23:34  lekeno
+
+	* public_html/akarru.lib/users.php: validation related, plus bug
+	  fixes
+
+2006-07-08 23:26  lekeno
+
+	* public_html/akarru.lib/common.php: validation related changes,
+	  removed hard coded stuff
+	* public_html/config.php: added setting for published date format
+
+2006-07-08 23:19  lekeno
+
+	* public_html/config.php: added setting for Akismet API key
+
+2006-07-08 23:14  lekeno
+
+	* public_html/akarru.lib/spam_fight.php: spam checking tools
+
+2006-07-08 23:13  lekeno
+
+	* public_html/lib/Akismet.class.php: akismet anti-spam service
+
+2006-07-08 23:09  lekeno
+
+	* public_html/profile.php: fix caching bug where cache was common
+	  for everybody. owner and other user have separate caches
+
+2006-07-08 07:24  lekeno
+
+	* public_html/circulation.php, public_html/comment.php,
+	  public_html/config.php, public_html/locale.jp,
+	  public_html/post.php, public_html/profile_edit.php,
+	  public_html/register.php, public_html/send_validation.php,
+	  public_html/sendlink.php, public_html/site_circulation.php,
+	  public_html/test_index.php, public_html/validate_user.php,
+	  public_html/validated_user.php, public_html/vote.php,
+	  smarty/templates/403.tpl, smarty/templates/404.tpl,
+	  smarty/templates/admin.tpl, smarty/templates/categories.tpl,
+	  smarty/templates/comment.tpl,
+	  smarty/templates/community_random_profiles.tpl,
+	  smarty/templates/edit_post.tpl,
+	  smarty/templates/java_script.tpl,
+	  smarty/templates/master_page.tpl,
+	  smarty/templates/master_page_anon.tpl,
+	  smarty/templates/master_page_logged.tpl,
+	  smarty/templates/meme_layout.tpl,
+	  smarty/templates/meme_layout_anon.tpl,
+	  smarty/templates/meme_stats.tpl,
+	  smarty/templates/memes_grid.tpl, smarty/templates/paginate.tpl,
+	  smarty/templates/post_1.tpl, smarty/templates/post_3.tpl,
+	  smarty/templates/profile.tpl, smarty/templates/profile_edit.tpl,
+	  smarty/templates/recover_pass.tpl,
+	  smarty/templates/send_validation.tpl,
+	  smarty/templates/sendlink.tpl,
+	  smarty/templates/social_bookmarks.tpl,
+	  smarty/templates/social_tools.tpl, smarty/templates/stats.tpl,
+	  smarty/templates/tag_meme.tpl, smarty/templates/tag_sample.tpl,
+	  smarty/templates/validate_user.tpl,
+	  smarty/templates/validated_user.tpl: validation by email of new
+	  registration
+	  remove hard coded strings
+	  bug fixes
+	  simplifications of some templates
+	  403 and 404
+	  smarty caching
+	  ...
+
+2006-07-07 22:32  lekeno
+
+	* public_html/akarru.lib/.htaccess,
+	  public_html/akarru.lib/cachemanager.php:
+
+2006-07-07 22:31  lekeno
+
+	* smarty/templates/folksonomy_grid.tpl: include site.conf for
+	  smarty caching
+	* smarty/templates/edit_post.tpl: admin can disable memes
+
+2006-07-07 22:30  lekeno
+
+	* smarty/templates/community_grid.tpl: include site.conf for
+	  smarty caching
+
+2006-07-07 22:29  lekeno
+
+	* smarty/templates/comment.tpl: removed hard coded strings
+
+2006-07-04 22:29  lekeno
+
+	* public_html/403.php, public_html/404.php,
+	  public_html/common_elements.php: added 403 404
+	  common_elements.php
+
+2006-07-04 22:25  lekeno
+
+	* public_html/.htaccess, public_html/about.php,
+	  public_html/admin.php, public_html/admin_categories.php,
+	  public_html/admin_category.php, public_html/ajax_click.php,
+	  public_html/ajax_vote.php, public_html/akarru.lib/common.php,
+	  public_html/cat_feed.php, public_html/circulation.php,
+	  public_html/comment.php, public_html/community.php,
+	  public_html/config.php, public_html/dynvotefeedflare.php,
+	  public_html/edit_meme.php, public_html/feed.php,
+	  public_html/help.php, public_html/index.php,
+	  public_html/locale.jp, public_html/login.php,
+	  public_html/logout.php, public_html/memes_by_tag.php,
+	  public_html/memes_queue.php, public_html/popular.php,
+	  public_html/post.php, public_html/profile.php,
+	  public_html/profile_edit.php, public_html/promote.php,
+	  public_html/promote_queue.php, public_html/queue.php,
+	  public_html/queue_feed.php, public_html/recover_pass.php,
+	  public_html/register.php, public_html/search.php,
+	  public_html/sendlink.php, public_html/sendlink_ok.php,
+	  public_html/show_cat.php, public_html/show_folksonomy.php,
+	  public_html/site_circulation.php, public_html/stats.php,
+	  public_html/tag_meme.php, public_html/unpopular.php,
+	  public_html/vote.php: smarty caching (newer templates on the way)
+	  cleanup hard coded strings
+	  cleanup forgotten url rewriting
+	  cleanup title management (newer templates on the way)
+	  cleanup error pages handling
+	  added 403 404 pages
+	  added common_elements.php for smarty caching
+	  bug fixes (tags in edit meme, folksonomy font size...)
+
+2006-07-04 21:35  lekeno
+
+	* public_html/akarru.lib/cache_manager.php,
+	  public_html/akarru.lib/folksonomy.php,
+	  public_html/akarru.lib/html_manager.php,
+	  public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php: Added some functions to deal
+	  with BB code in memes and some cleanup
+
+2006-07-04 21:12  lekeno
+
+	* public_html/videos.php:
+	* public_html/akarru.lib/common.php: Added a function to determine
+	  if Ads should be displayed to avoid invalid clicks on ads by
+	  people involved with blogmemes
+	  Removed caching of categories since it will be done by Smarty.
+	  Removed fetching sample data (tags, users) from the database
+	  since it will be done by Smarty (caching)
+
+2006-07-04 13:38  eadiaz
+
+	* public_html/videos.php: Added videos.php shows a list of all
+	  video files.
+
+2006-06-29 23:03  lekeno
+
+	* public_html/tag_feed.php: RSS feed for a particular tag
+	* public_html/memes_by_tag.php: RSS feed per tags
+
+2006-06-19 22:47  eadiaz
+
+	* public_html/styles/img/main-bottom.png: Small size images
+
+2006-06-19 22:16  eadiaz
+
+	* public_html/anon16.png, public_html/anon24.png,
+	  public_html/anon40.png: Small size images
+
+2006-06-19 22:13  eadiaz
+
+	* public_html/anon80.png: Small size image.
+
+2006-06-18 16:42  eadiaz
+
+	* ChangeLog: New release, the last one before Beta 5.
+
+2006-06-18 16:41  eadiaz
+
+	* create.sql: Add permalink support, and more statistics fields
+
 2006-06-18 16:37  eadiaz
 
-	* trunk/smarty/templates/profile.tpl,
-	  trunk/smarty/templates/sendlink.tpl,
-	  trunk/smarty/templates/sendlink_ok.tpl,
-	  trunk/smarty/templates/tag_meme.tpl: Sendlink style improved.
+	* smarty/templates/profile.tpl, smarty/templates/sendlink.tpl,
+	  smarty/templates/sendlink_ok.tpl, smarty/templates/tag_meme.tpl:
+	  Sendlink style improved.
 	  Profile modified and add some links.
 
 2006-06-18 16:36  eadiaz
 
-	* trunk/smarty/templates/edit_post.tpl,
-	  trunk/smarty/templates/post_1.tpl,
-	  trunk/smarty/templates/post_3.tpl: Post uses a radio box style
-	  for content type selection.
+	* smarty/templates/edit_post.tpl, smarty/templates/post_1.tpl,
+	  smarty/templates/post_3.tpl: Post uses a radio box style for
+	  content type selection.
 
 2006-06-18 16:34  eadiaz
 
-	* trunk/smarty/templates/meme_layout.tpl,
-	  trunk/smarty/templates/meme_layout_anon.tpl,
-	  trunk/smarty/templates/memes_grid.tpl: Split display of logged
-	  and anonymous sessions.
+	* smarty/templates/meme_layout.tpl,
+	  smarty/templates/meme_layout_anon.tpl,
+	  smarty/templates/memes_grid.tpl: Split display of logged and
+	  anonymous sessions.
 
 2006-06-18 16:32  eadiaz
 
-	* trunk/smarty/templates/java_script.tpl,
-	  trunk/smarty/templates/master_page.tpl,
-	  trunk/smarty/templates/master_page_anon.tpl,
-	  trunk/smarty/templates/master_page_logged.tpl: master page is
-	  split on anonymous template, and logged in template. This make
-	  the smarty process a bit faster.
+	* smarty/templates/java_script.tpl,
+	  smarty/templates/master_page.tpl,
+	  smarty/templates/master_page_anon.tpl,
+	  smarty/templates/master_page_logged.tpl: master page is split on
+	  anonymous template, and logged in template. This make the smarty
+	  process a bit faster.
 
 2006-06-18 16:31  eadiaz
 
-	* trunk/smarty/templates/folksonomy_grid.tpl: Added pagination.
+	* smarty/templates/folksonomy_grid.tpl: Added pagination.
 
 2006-06-18 16:30  eadiaz
 
-	* trunk/smarty/templates/community_grid.tpl: Add pagination for
+	* smarty/templates/community_grid.tpl: Add pagination for
 	  community grid
 
 2006-06-18 16:29  eadiaz
 
-	* trunk/smarty/templates/comment.tpl: Handle differences between
-	  logged and anonymous templates.
+	* smarty/templates/comment.tpl: Handle differences between logged
+	  and anonymous templates.
 
 2006-06-18 16:26  eadiaz
 
-	* trunk/smarty/configs/site.conf.en,
-	  trunk/smarty/configs/site.conf.es: site.conf.en and site.conf.es
-	  replaces old site.conf file.
+	* smarty/configs/site.conf.en, smarty/configs/site.conf.es:
+	  site.conf.en and site.conf.es replaces old site.conf file.
 	  You must use the right one for your language.
 
 2006-06-18 16:21  eadiaz
 
-	* trunk/public_html/locale.es: new labels in spanish
+	* public_html/locale.es: new labels in spanish
 
 2006-06-18 16:02  eadiaz
 
-	* trunk/public_html/post.php: More secure version.
+	* public_html/post.php: More secure version.
 
 2006-06-17 01:03  lekeno
 
-	* trunk/public_html/edit_meme.php,
-	  trunk/smarty/templates/edit_post.tpl: Kenji : fix to set the
-	  tags and type of content correctly
+	* public_html/edit_meme.php, smarty/templates/edit_post.tpl: Kenji
+	  : fix to set the tags and type of content correctly
 
 2006-06-16 20:22  eadiaz
 
-	* trunk/public_html/show_cat.php: more secure version of this
-	  script.
+	* public_html/show_cat.php: more secure version of this script.
 
 2006-06-16 20:21  eadiaz
 
-	* trunk/public_html/stats.php: change on sort functions.
+	* public_html/stats.php: change on sort functions.
 
 2006-06-16 20:20  eadiaz
 
-	* trunk/public_html/show_folksonomy.php: add pagination to
-	  folksonomy.
+	* public_html/show_folksonomy.php: add pagination to folksonomy.
 
 2006-06-16 20:18  eadiaz
 
-	* trunk/public_html/search.php: more secure version of this script.
+	* public_html/search.php: more secure version of this script.
 
 2006-06-16 20:15  eadiaz
 
-	* trunk/public_html/queue_feed.php: utf-8 is now the only
-	  supported encoding
-	* trunk/public_html/feed.php: utf-8 is now the only supported
+	* public_html/queue_feed.php: utf-8 is now the only supported
 	  encoding
+	* public_html/feed.php: utf-8 is now the only supported encoding
 
 2006-06-16 20:13  eadiaz
 
-	* trunk/public_html/index.php, trunk/public_html/memes_queue.php:
-	  Fix security flaw and uses the new $bm_page variable.
+	* public_html/index.php, public_html/memes_queue.php: Fix security
+	  flaw and uses the new $bm_page variable.
 
 2006-06-16 20:11  eadiaz
 
-	* trunk/public_html/lib/class.phpmailer.php,
-	  trunk/public_html/lib/class.smtp.php: class.phpmailer.php and
+	* public_html/lib/class.phpmailer.php,
+	  public_html/lib/class.smtp.php: class.phpmailer.php and
 	  class.smtp.php are needed for email sharing.
 
 2006-06-16 19:48  eadiaz
 
-	* trunk/public_html/profile.php: Profile now contains search of
-	  votes and comentaries sent by user.
+	* public_html/profile.php: Profile now contains search of votes
+	  and comentaries sent by user.
 
 2006-06-16 19:47  eadiaz
 
-	* trunk/public_html/memes_by_tag.php: pagination support
+	* public_html/memes_by_tag.php: pagination support
 
 2006-06-16 19:46  eadiaz
 
-	* trunk/public_html/edit_meme.php: Fix security flaw with meme_id
+	* public_html/edit_meme.php: Fix security flaw with meme_id
 
 2006-06-16 19:45  eadiaz
 
-	* trunk/public_html/comment.php: Fix security flaw, and add tags.
+	* public_html/comment.php: Fix security flaw, and add tags.
 
 2006-06-16 19:35  eadiaz
 
-	* trunk/public_html/community.php: added pagination on community
-	  list.
+	* public_html/community.php: added pagination on community list.
 
 2006-06-16 19:32  eadiaz
 
-	* trunk/public_html/test_index.php: this script is used for
+	* public_html/test_index.php: this script is used for
 	  benchmarking, and performance tunning
 
 2006-06-16 19:30  eadiaz
 
-	* trunk/public_html/click.php, trunk/public_html/redirect.php,
-	  trunk/public_html/social_click.php: added social tracking of
-	  memes.
+	* public_html/click.php, public_html/redirect.php,
+	  public_html/social_click.php: added social tracking of memes.
 
 2006-06-16 19:28  eadiaz
 
-	* trunk/public_html/popular.php,
-	  trunk/public_html/promote_queue.php,
-	  trunk/public_html/unpopular.php: Fix security flaw.
+	* public_html/popular.php, public_html/promote_queue.php,
+	  public_html/unpopular.php: Fix security flaw.
 
 2006-06-16 19:27  eadiaz
 
-	* trunk/public_html/sendlink.php,
-	  trunk/public_html/sendlink_ok.php: Uses phpmailer for email
-	  dispatch.
+	* public_html/sendlink.php, public_html/sendlink_ok.php: Uses
+	  phpmailer for email dispatch.
 
 2006-06-16 19:23  eadiaz
 
-	* trunk/public_html/cat_feed.php: Now we officially support utf-8
-	  only.
+	* public_html/cat_feed.php: Now we officially support utf-8 only.
 
 2006-06-16 19:21  eadiaz
 
-	* trunk/public_html/ajax_click.php,
-	  trunk/public_html/ajax_vote.php: Fix security flaw.
+	* public_html/ajax_click.php, public_html/ajax_vote.php: Fix
+	  security flaw.
 
 2006-06-16 19:19  eadiaz
 
-	* trunk/public_html/.htaccess: This .htaccess file defines
-	  ModRewrite rules for the new format of permalinks.
+	* public_html/.htaccess: This .htaccess file defines ModRewrite
+	  rules for the new format of permalinks.
 
 2006-06-16 19:17  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: Support for new
-	  permalink format.
+	* public_html/akarru.lib/memes.php: Support for new permalink
+	  format.
 	  Refactoring of many functions.
 
 2006-06-16 19:14  eadiaz
 
-	* trunk/public_html/akarru.lib/mail.php: Change sender of all
-	  emails.
+	* public_html/akarru.lib/mail.php: Change sender of all emails.
 
 2006-06-16 19:13  eadiaz
 
-	* trunk/public_html/akarru.lib/html_manager.php: Mail validation
-	  and support for many video sharing services.
+	* public_html/akarru.lib/html_manager.php: Mail validation and
+	  support for many video sharing services.
 
 2006-06-16 19:11  eadiaz
 
-	* trunk/public_html/akarru.lib/folksonomy.php: support for
-	  pagination of folksonomy.
+	* public_html/akarru.lib/folksonomy.php: support for pagination of
+	  folksonomy.
 
 2006-06-16 19:09  eadiaz
 
-	* trunk/public_html/akarru.lib/database.php: Now we officially
-	  support utf-8 only.
+	* public_html/akarru.lib/database.php: Now we officially support
+	  utf-8 only.
 
 2006-06-16 19:08  eadiaz
 
-	* trunk/public_html/akarru.lib/common.php: Now we officially
-	  support utf-8 only.
+	* public_html/akarru.lib/common.php: Now we officially support
+	  utf-8 only.
 	  If you need other encoding comments the proper lines.
 	  Also now we add better look for permalinks (need mod_rewrite)
 
 2006-06-16 19:06  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: Get user emails, and
-	  other profile modifications.
+	* public_html/akarru.lib/users.php: Get user emails, and other
+	  profile modifications.
 
 2006-06-16 18:30  eadiaz
 
-	* trunk/public_html/akarru.lib/common.php: introduces the $bm_page
+	* public_html/akarru.lib/common.php: introduces the $bm_page
 	  global variable keeps track of current page, and fix a secuirity
 	  flaw.
 
 2006-06-16 17:48  eadiaz
 
-	* trunk/public_html/styles/memes.css: new styles for votes
-	  hyperlinks.
+	* public_html/styles/memes.css: new styles for votes hyperlinks.
 
 2006-06-08 20:35  lekeno
 
-	* trunk/create.sql: added social clicks field to posts
+	* create.sql: added social clicks field to posts
 	  added disabled co categories
 
 2006-06-08 20:27  lekeno
 
-	* trunk/smartyJP.zip:
+	* smartyJP.zip:
 
 2006-06-08 20:26  lekeno
 
-	* trunk/public_html/locale.jp:
+	* public_html/locale.jp:
 
 2006-06-08 20:24  lekeno
 
-	* trunk/public_html/akarru.lib/cachemanager.php:
+	* public_html/akarru.lib/cachemanager.php:
 
 2006-06-08 20:23  lekeno
 
-	* trunk/smarty/templates/admin_category.tpl,
-	  trunk/smarty/templates/social_bookmarks.tpl:
+	* smarty/templates/admin_category.tpl,
+	  smarty/templates/social_bookmarks.tpl:
 
 2006-06-08 20:22  lekeno
 
-	* trunk/smarty/templates/admin_category.tpl:
+	* smarty/templates/admin_category.tpl:
 
 2006-06-06 22:24  lekeno
 
-	* trunk/public_html/sendlink.php:
+	* public_html/sendlink.php:
 
 2006-06-06 22:12  lekeno
 
-	* trunk/smarty/templates/sendlink.tpl:
+	* smarty/templates/sendlink.tpl:
 
 2006-06-06 21:51  lekeno
 
-	* trunk/public_html/akarru.lib/html_manager.php:
+	* public_html/akarru.lib/html_manager.php:
 
 2006-06-06 21:49  lekeno
 
-	* trunk/public_html/post.php:
+	* public_html/post.php:
 
 2006-06-06 21:43  lekeno
 
-	* trunk/public_html/akarru.lib/memes.php:
+	* public_html/akarru.lib/memes.php:
 
 2006-06-06 21:42  lekeno
 
-	* trunk/public_html/sbs/.htaccess,
-	  trunk/public_html/sbs/delicious.png,
-	  trunk/public_html/sbs/email.png,
-	  trunk/public_html/sbs/reddit.png:
-	* trunk/public_html/sendlink.php,
-	  trunk/public_html/sendlink_ok.php:
+	* public_html/sbs/.htaccess, public_html/sbs/delicious.png,
+	  public_html/sbs/email.png, public_html/sbs/reddit.png:
+	* public_html/sendlink.php, public_html/sendlink_ok.php:
 
 2006-06-06 21:40  lekeno
 
-	* trunk/public_html/click.php,
-	  trunk/public_html/dynvotefeedflare.php,
-	  trunk/public_html/dynvotefeedflare.xml,
-	  trunk/public_html/ig.php, trunk/public_html/sbs,
-	  trunk/public_html/social_click.php, trunk/public_html/vote.php:
+	* public_html/click.php, public_html/dynvotefeedflare.php,
+	  public_html/dynvotefeedflare.xml, public_html/ig.php,
+	  public_html/sbs, public_html/social_click.php,
+	  public_html/vote.php:
 
 2006-06-06 21:39  lekeno
 
-	* trunk/smarty/configs/site.conf:
+	* smarty/configs/site.conf:
 
 2006-06-06 21:38  lekeno
 
-	* trunk/smarty/templates/java_script.tpl:
-	* trunk/smarty/templates/meme_layout.tpl:
+	* smarty/templates/java_script.tpl:
+	* smarty/templates/meme_layout.tpl:
 
 2006-06-06 21:37  lekeno
 
-	* trunk/smarty/templates/sendlink.tpl,
-	  trunk/smarty/templates/sendlink_ok.tpl,
-	  trunk/smarty/templates/social_tools.tpl:
-	* trunk/smarty/templates/add_category.tpl:
+	* smarty/templates/sendlink.tpl, smarty/templates/sendlink_ok.tpl,
+	  smarty/templates/social_tools.tpl:
+	* smarty/templates/add_category.tpl:
 
 2006-06-06 21:36  lekeno
 
-	* trunk/smarty/templates/edit_category.tpl:
-	* trunk/smarty/templates/meme_stats.tpl:
+	* smarty/templates/edit_category.tpl:
+	* smarty/templates/meme_stats.tpl:
 
 2006-06-06 21:35  lekeno
 
-	* trunk/smarty/templates/admin_categories.tpl:
+	* smarty/templates/admin_categories.tpl:
 
 2006-06-04 21:45  lekeno
 
-	* trunk/public_html/akarru.lib/cache_manager.php,
-	  trunk/public_html/akarru.lib/common.php:
+	* public_html/akarru.lib/cache_manager.php,
+	  public_html/akarru.lib/common.php:
 
 2006-06-04 21:42  lekeno
 
-	* trunk/public_html/akarru.lib/cachemanager.php:
-	* trunk/public_html/akarru.lib/memes.php:
+	* public_html/akarru.lib/cachemanager.php:
+	* public_html/akarru.lib/memes.php:
 
 2006-06-03 22:02  lekeno
 
-	* trunk/public_html/akarru.lib/html_manager.php:
+	* public_html/akarru.lib/html_manager.php:
 
 2006-06-03 22:01  lekeno
 
-	* trunk/public_html/akarru.lib/database.php:
-	* trunk/public_html/akarru.lib/categories.php:
+	* public_html/akarru.lib/database.php:
+	* public_html/akarru.lib/categories.php:
 
 2006-06-03 21:59  lekeno
 
-	* trunk/public_html/admin_categories.php,
-	  trunk/public_html/admin_category.php:
-	* trunk/public_html/profile_edit.php:
+	* public_html/admin_categories.php,
+	  public_html/admin_category.php:
+	* public_html/profile_edit.php:
 
 2006-05-30 21:49  lekeno
 
-	* trunk/public_html/admin_categories.php,
-	  trunk/public_html/styles/img/delete.gif,
-	  trunk/public_html/styles/img/disabled.gif,
-	  trunk/public_html/styles/img/edit.gif,
-	  trunk/public_html/styles/img/enabled.gif,
-	  trunk/public_html/styles/img/toggle.gif,
-	  trunk/smarty/templates/admin_categories.tpl:
+	* public_html/admin_categories.php,
+	  public_html/styles/img/delete.gif,
+	  public_html/styles/img/disabled.gif,
+	  public_html/styles/img/edit.gif,
+	  public_html/styles/img/enabled.gif,
+	  public_html/styles/img/toggle.gif,
+	  smarty/templates/admin_categories.tpl:
 
 2006-05-30 21:47  lekeno
 
-	* trunk/public_html/akarru.lib/categories.php,
-	  trunk/public_html/post.php:
+	* public_html/akarru.lib/categories.php, public_html/post.php:
 
 2006-05-08 14:11  eadiaz
 
-	* trunk/ChangeLog: Please change the DOMAIN constant in config.php
-	  with your domain name.
+	* ChangeLog: Please change the DOMAIN constant in config.php with
+	  your domain name.
 
 2006-05-08 14:07  eadiaz
 
-	* trunk/public_html/akarru.gui: akarru.gui deleted from the
-	  repository.
+	* public_html/akarru.gui: akarru.gui deleted from the repository.
 
 2006-05-08 14:06  eadiaz
 
-	* trunk/public_html/config.php,
-	  trunk/public_html/memes_by_tag.php,
-	  trunk/public_html/show_folksonomy.php: display bugs on
+	* public_html/config.php, public_html/memes_by_tag.php,
+	  public_html/show_folksonomy.php: display bugs on
 	  memes_by_tag.php and show_folksonomy.php.
 	  config.php includes the DOMAIN constant, used for cookies.
 
 2006-05-08 14:04  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php,
-	  trunk/public_html/akarru.lib/statistics.php,
-	  trunk/public_html/akarru.lib/users.php: Fix bugs on persistent
-	  session cookies.
+	* public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php: Fix bugs on persistent session
+	  cookies.
 	  You must set your DOMAIN in config.php
 	  More simple queries for memes on memes.php.
 
 2006-05-08 14:02  eadiaz
 
-	* trunk/smarty/templates/java_script.tpl,
-	  trunk/smarty/templates/stats.tpl: Changes in stats display
+	* smarty/templates/java_script.tpl, smarty/templates/stats.tpl:
+	  Changes in stats display
 	  javascript on onclick for url is disabled now.
 
 2006-05-06 16:38  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php,
-	  trunk/public_html/config.php: Fix bugs on persistent session
-	  cookies.
+	* public_html/akarru.lib/users.php, public_html/config.php: Fix
+	  bugs on persistent session cookies.
 	  You must set your DOMAIN in config.php
 
 2006-04-24 18:01  eadiaz
 
-	* trunk/ChangeLog, trunk/IMPORTANT, trunk/IMPORTANTE: Instructions
-	  about promoted flag
+	* ChangeLog, IMPORTANT, IMPORTANTE: Instructions about promoted
+	  flag
 
 2006-04-24 17:51  eadiaz
 
-	* trunk/IMPORTANT, trunk/IMPORTANTE: Important instructions added
+	* IMPORTANT, IMPORTANTE: Important instructions added
 
 2006-04-24 17:36  eadiaz
 
-	* trunk/create.sql: Now uses a promoted flag, this make queries
-	  more faster.
+	* create.sql: Now uses a promoted flag, this make queries more
+	  faster.
 
 2006-04-24 17:10  eadiaz
 
-	* trunk/public_html/memes_by_tag.php: References to akarru.gui
-	  deleted
+	* public_html/memes_by_tag.php: References to akarru.gui deleted
 
 2006-04-24 17:07  eadiaz
 
-	* trunk/smarty/configs/site.conf,
-	  trunk/smarty/templates/about.tpl,
-	  trunk/smarty/templates/master_page.tpl,
-	  trunk/smarty/templates/meme_layout.tpl,
-	  trunk/smarty/templates/memes_grid.tpl,
-	  trunk/smarty/templates/post_1.tpl,
-	  trunk/smarty/templates/post_2.tpl,
-	  trunk/smarty/templates/post_3.tpl,
-	  trunk/smarty/templates/profile.tpl,
-	  trunk/smarty/templates/profile_edit.tpl,
-	  trunk/smarty/templates/promote.tpl: Many changes for a more
-	  faster display of pages.
+	* smarty/configs/site.conf, smarty/templates/about.tpl,
+	  smarty/templates/master_page.tpl,
+	  smarty/templates/meme_layout.tpl,
+	  smarty/templates/memes_grid.tpl, smarty/templates/post_1.tpl,
+	  smarty/templates/post_2.tpl, smarty/templates/post_3.tpl,
+	  smarty/templates/profile.tpl, smarty/templates/profile_edit.tpl,
+	  smarty/templates/promote.tpl: Many changes for a more faster
+	  display of pages.
 	  Better organization of debates.
 
 2006-04-24 16:59  eadiaz
 
-	* trunk/public_html/tag_meme.php: BUG FIX: tags where lost.
+	* public_html/tag_meme.php: BUG FIX: tags where lost.
 
 2006-04-24 16:58  eadiaz
 
-	* trunk/public_html/show_cat.php: add default feeds for categories
-	  when a feed url is not present on database.
+	* public_html/show_cat.php: add default feeds for categories when
+	  a feed url is not present on database.
 
 2006-04-24 16:57  eadiaz
 
-	* trunk/public_html/search.php: hard coded title removed.
+	* public_html/search.php: hard coded title removed.
 
 2006-04-24 16:56  eadiaz
 
-	* trunk/public_html/profile_edit.php: At last, profile edit
-	  doesn't uses akarru.gui.
+	* public_html/profile_edit.php: At last, profile edit doesn't uses
+	  akarru.gui.
 	  Now this page is full smarty compatible.
 
 2006-04-24 16:55  eadiaz
 
-	* trunk/public_html/memes_queue.php:
+	* public_html/memes_queue.php:
 
 2006-04-24 16:54  eadiaz
 
-	* trunk/public_html/index.php: BUG FIX: paging wasn't working
-	  properly
+	* public_html/index.php: BUG FIX: paging wasn't working properly
 
 2006-04-24 16:52  eadiaz
 
-	* trunk/public_html/edit_meme.php: BUG FIX, now check user before
-	  allow modifications.
+	* public_html/edit_meme.php: BUG FIX, now check user before allow
+	  modifications.
 	  Also admin user can edit any meme.
 
 2006-04-24 16:50  eadiaz
 
-	* trunk/public_html/comment.php: When debates allowed we weren't
-	  showing the promotors of the meme, now this info is added.
+	* public_html/comment.php: When debates allowed we weren't showing
+	  the promotors of the meme, now this info is added.
 	  Debates now influence in the promotion algorithm.
 
 2006-04-24 16:49  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: Gravatar md5 hash is
-	  stored directly in database now.
+	* public_html/akarru.lib/users.php: Gravatar md5 hash is stored
+	  directly in database now.
 	  More easy to read implementations of fucntions.
 	  Influence and popularity are disabled in this release, they are
 	  causing an slow display of the profile page.
@@ -464,8 +833,8 @@
 
 2006-04-24 16:46  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: Gravatar md5 hash is
-	  stored directly in database now.
+	* public_html/akarru.lib/memes.php: Gravatar md5 hash is stored
+	  directly in database now.
 	  A more efficient query was implemented.
 	  When an user click this does not change the promotion_date, this
 	  was causing distortion on promote mechanism
@@ -475,359 +844,341 @@
 
 2006-04-24 16:44  eadiaz
 
-	* trunk/public_html/akarru.lib/html_manager.php: Gravatar md5 hash
-	  is stored directly in database now.
+	* public_html/akarru.lib/html_manager.php: Gravatar md5 hash is
+	  stored directly in database now.
 
 2006-04-24 16:43  eadiaz
 
-	* trunk/public_html/akarru.lib/database.php: Better
-	  implementations of query functions.
+	* public_html/akarru.lib/database.php: Better implementations of
+	  query functions.
 
 2006-04-24 16:40  eadiaz
 
-	* trunk/public_html/akarru.lib/common.php: Add default feeds for
+	* public_html/akarru.lib/common.php: Add default feeds for
 	  categories.
 
 2006-04-24 16:39  eadiaz
 
-	* trunk/public_html/ajax_vote.php: Restore the anonymous votes.
-	* trunk/public_html/styles/memes.css: Minor fixes on CSS files.
+	* public_html/ajax_vote.php: Restore the anonymous votes.
+	* public_html/styles/memes.css: Minor fixes on CSS files.
 	  Better look for IE 6.0
 
 2006-04-07 20:31  eadiaz
 
-	* trunk/ChangeLog: Release 0.4.4.100
+	* ChangeLog: Release 0.4.4.100
 
 2006-04-07 20:29  eadiaz
 
-	* trunk/public_html/akarru.lib/common.php:
+	* public_html/akarru.lib/common.php:
 
 2006-04-07 20:27  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: bug on line 84, this
-	  instead of $this.
+	* public_html/akarru.lib/users.php: bug on line 84, this instead
+	  of $this.
 
 2006-04-07 20:23  eadiaz
 
-	* trunk/create.sql: Support for AES.
+	* create.sql: Support for AES.
 	  In Next release we will drop password field, please read the
 	  IMPORTANT document.
 
 2006-04-07 20:20  eadiaz
 
-	* trunk/IMPORTANT: Important notes for release 0.4.4.100 and
-	  superior
+	* IMPORTANT: Important notes for release 0.4.4.100 and superior
 
 2006-04-07 20:19  eadiaz
 
-	* trunk/public_html/config.php: New parameter for AES support.
+	* public_html/config.php: New parameter for AES support.
 
 2006-04-07 20:18  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: This is a better use of
-	  aes, because we added an external key.
+	* public_html/akarru.lib/users.php: This is a better use of aes,
+	  because we added an external key.
 
 2006-04-07 18:06  eadiaz
 
-	* trunk/public_html/akarru.lib/app_vars.php,
-	  trunk/public_html/akarru.lib/common.php: Note the use of
-	  application variables to store categories, this improves
-	  performance in 37%!
+	* public_html/akarru.lib/app_vars.php,
+	  public_html/akarru.lib/common.php: Note the use of application
+	  variables to store categories, this improves performance in 37%!
 
 2006-04-06 18:13  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: Cambio a aes
+	* public_html/akarru.lib/users.php: Cambio a aes
 
 2006-04-06 18:11  eadiaz
 
-	* trunk/smarty/templates/comment.tpl:
+	* smarty/templates/comment.tpl:
 
 2006-04-06 17:16  eadiaz
 
-	* trunk/smarty/templates/help.tpl: help includes more questions
-	  about privacy protection and debates
+	* smarty/templates/help.tpl: help includes more questions about
+	  privacy protection and debates
 
 2006-04-06 17:14  eadiaz
 
-	* trunk/smarty/templates/comment.tpl: Look that we are using a
-	  common file: meme_layout in comment.tpl, tag_meme and other to
-	  simplify changes on layout.
+	* smarty/templates/comment.tpl: Look that we are using a common
+	  file: meme_layout in comment.tpl, tag_meme and other to simplify
+	  changes on layout.
 
 2006-04-06 17:11  eadiaz
 
-	* trunk/smarty/templates/about.tpl: Modification on about, no
-	  mention to others systems.
+	* smarty/templates/about.tpl: Modification on about, no mention to
+	  others systems.
 
 2006-04-06 17:09  eadiaz
 
-	* trunk/smarty/templates/meme_layout.tpl,
-	  trunk/smarty/templates/tag_meme.tpl: Fixed display issues on
-	  tag_meme.
+	* smarty/templates/meme_layout.tpl, smarty/templates/tag_meme.tpl:
+	  Fixed display issues on tag_meme.
 
 2006-04-06 16:56  eadiaz
 
-	* trunk/public_html/register.php: After registration user is sent
-	  to profile.
+	* public_html/register.php: After registration user is sent to
+	  profile.
 
 2006-04-06 16:55  eadiaz
 
-	* trunk/public_html/post.php: Support of debates.
+	* public_html/post.php: Support of debates.
 	  After post the user is redirected to the category of the meme.
 
 2006-04-06 16:54  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: faster promote function
+	* public_html/akarru.lib/memes.php: faster promote function
 	  implementation.
 	  fix bug in calc of next meme.
 
 2006-04-03 02:32  eadiaz
 
-	* trunk/ChangeLog: new release
+	* ChangeLog: new release
 
 2006-04-03 02:29  eadiaz
 
-	* trunk/public_html/edit_meme.php,
-	  trunk/smarty/templates/edit_post.tpl: Memes can be edited by
-	  users now.
+	* public_html/edit_meme.php, smarty/templates/edit_post.tpl: Memes
+	  can be edited by users now.
 
 2006-04-03 02:16  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: Allows editing of memes.
+	* public_html/akarru.lib/memes.php: Allows editing of memes.
 
 2006-04-03 02:12  eadiaz
 
-	* trunk/public_html/styles/img/meme-votar.png:
-	* trunk/smarty/templates/memes_grid.tpl: fixed
+	* public_html/styles/img/meme-votar.png:
+	* smarty/templates/memes_grid.tpl: fixed
 
 2006-04-03 02:09  eadiaz
 
-	* trunk/smarty/templates/community_grid.tpl: This file was missing.
+	* smarty/templates/community_grid.tpl: This file was missing.
 
 2006-03-29 23:52  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: Faster promote code.
+	* public_html/akarru.lib/memes.php: Faster promote code.
 
 2006-03-29 23:49  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: Fix bug #19, when
-	  checkbox was unchecked doesn't allow login.
+	* public_html/akarru.lib/users.php: Fix bug #19, when checkbox was
+	  unchecked doesn't allow login.
 
 2006-03-29 22:45  eadiaz
 
-	* trunk/ChangeLog: new release for SF.
+	* ChangeLog: new release for SF.
 
 2006-03-29 22:44  eadiaz
 
-	* trunk/public_html/community.php: community.php wasn't in
-	  previous distribution.
+	* public_html/community.php: community.php wasn't in previous
+	  distribution.
 
 2006-03-27 16:47  eadiaz
 
-	* trunk/ChangeLog: new release
+	* ChangeLog: new release
 
 2006-03-27 16:27  eadiaz
 
-	* trunk/public_html/anon24.png: anon image 24x24
+	* public_html/anon24.png: anon image 24x24
 
 2006-03-27 16:26  eadiaz
 
-	* trunk/public_html/unpopular.php: ??
+	* public_html/unpopular.php: ??
 
 2006-03-27 16:25  eadiaz
 
-	* trunk/public_html/popular.php: ???
+	* public_html/popular.php: ???
 
 2006-03-27 16:24  eadiaz
 
-	* trunk/public_html/post.php: adds support for external plugins,
-	  like Sociable.
+	* public_html/post.php: adds support for external plugins, like
+	  Sociable.
 
 2006-03-27 16:20  eadiaz
 
-	* trunk/public_html/profile_edit.php: fix bug, people couldn't
-	  change passwords.
+	* public_html/profile_edit.php: fix bug, people couldn't change
+	  passwords.
 
 2006-03-27 16:19  eadiaz
 
-	* trunk/public_html/login.php: Added support for persistent
-	  session.
+	* public_html/login.php: Added support for persistent session.
 
 2006-03-27 16:17  eadiaz
 
-	* trunk/public_html/locale.es: new labels added
-	* trunk/public_html/help.php: help.php was doing unnecesary work
+	* public_html/locale.es: new labels added
+	* public_html/help.php: help.php was doing unnecesary work
 
 2006-03-27 16:16  eadiaz
 
-	* trunk/public_html/config.php:
+	* public_html/config.php:
 
 2006-03-27 16:15  eadiaz
 
-	* trunk/public_html/comment.php: add debate room.
+	* public_html/comment.php: add debate room.
 
 2006-03-27 16:14  eadiaz
 
-	* trunk/public_html/circulation.php: closing brace added, perhaps
-	  this generated bug reported by Claude?
+	* public_html/circulation.php: closing brace added, perhaps this
+	  generated bug reported by Claude?
 
 2006-03-27 16:13  eadiaz
 
-	* trunk/public_html/ajax_click.php: added user as parameter for
-	  click method.
+	* public_html/ajax_click.php: added user as parameter for click
+	  method.
 
 2006-03-27 16:12  eadiaz
 
-	* trunk/public_html/about.php: eliminates hard coded text on
-	  about.php
+	* public_html/about.php: eliminates hard coded text on about.php
 
 2006-03-27 16:11  eadiaz
 
-	* trunk/public_html/styles/img/main-bg.png:
+	* public_html/styles/img/main-bg.png:
 
 2006-03-27 16:10  eadiaz
 
-	* trunk/public_html/styles/memes.css: eliminates some background
-	  images.
+	* public_html/styles/memes.css: eliminates some background images.
 
 2006-03-27 16:08  eadiaz
 
-	* trunk/public_html/akarru.lib/common.php: adds support for
-	  comunity
+	* public_html/akarru.lib/common.php: adds support for comunity
 
 2006-03-27 16:07  eadiaz
 
-	* trunk/public_html/akarru.lib/html_manager.php: find_media_info()
+	* public_html/akarru.lib/html_manager.php: find_media_info()
 	  replaces find_trackback(), it includes a code of favicon
 	  detection.
 
 2006-03-27 15:09  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: First step for a
-	  refactoring, more simples sql query.
+	* public_html/akarru.lib/memes.php: First step for a refactoring,
+	  more simples sql query.
 	  Uses new features on database.php
 
 2006-03-27 15:08  eadiaz
 
-	* trunk/public_html/akarru.lib/users.php: Added persistent
-	  sessions, uses a secure algorithm, please check your database
-	  structure.
+	* public_html/akarru.lib/users.php: Added persistent sessions,
+	  uses a secure algorithm, please check your database structure.
 
 2006-03-27 15:06  eadiaz
 
-	* trunk/smarty/templates/login.tpl,
-	  trunk/smarty/templates/password_sent.tpl: added checkbox for
-	  remember password.
+	* smarty/templates/login.tpl, smarty/templates/password_sent.tpl:
+	  added checkbox for remember password.
 	  added password_sent.tpl
 
 2006-03-27 15:05  eadiaz
 
-	* trunk/smarty/templates/post_1.tpl,
-	  trunk/smarty/templates/post_2.tpl,
-	  trunk/smarty/templates/post_3.tpl: suport for different types of
-	  memes content.
+	* smarty/templates/post_1.tpl, smarty/templates/post_2.tpl,
+	  smarty/templates/post_3.tpl: suport for different types of memes
+	  content.
 
 2006-03-27 15:04  eadiaz
 
-	* trunk/smarty/templates/java_script.tpl,
-	  trunk/smarty/templates/master_page.tpl,
-	  trunk/smarty/templates/memes_grid.tpl,
-	  trunk/smarty/templates/profile.tpl: New layout, support for
-	  debates, site screenshots via simpleapi.
+	* smarty/templates/java_script.tpl,
+	  smarty/templates/master_page.tpl,
+	  smarty/templates/memes_grid.tpl, smarty/templates/profile.tpl:
+	  New layout, support for debates, site screenshots via simpleapi.
 	  Added community, and gravatars on posts and comments
 
 2006-03-27 15:00  eadiaz
 
-	* trunk/smarty/templates/comment.tpl: added debates room (salon de
+	* smarty/templates/comment.tpl: added debates room (salon de
 	  debates).
 	  New layout for comments
-	* trunk/smarty/templates/about.tpl: Added space at bottom
+	* smarty/templates/about.tpl: Added space at bottom
 
 2006-03-27 14:59  eadiaz
 
-	* trunk/smarty/configs/site.conf: New labels associated with the
+	* smarty/configs/site.conf: New labels associated with the
 	  community and debate
 
 2006-03-27 14:30  eadiaz
 
-	* trunk/create.sql: New table debate, for debate room.
+	* create.sql: New table debate, for debate room.
 	  New fields on posts for debate acounting.
 
 2006-03-27 03:07  eadiaz
 
-	* trunk/public_html/akarru.lib/database.php: Introduce
-	  get_record_object and get_recordset methods for better
-	  performance.
+	* public_html/akarru.lib/database.php: Introduce get_record_object
+	  and get_recordset methods for better performance.
 	  Fix bug related to fetch method, always return an array (empty
 	  array when no rows founds).
 
 2006-03-20 00:53  eadiaz
 
-	* trunk/ChangeLog: release to sourceforge
+	* ChangeLog: release to sourceforge
 
 2006-03-20 00:42  eadiaz
 
-	* trunk/create.sql: Includes comments field in posts table
+	* create.sql: Includes comments field in posts table
 
 2006-03-15 19:01  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php,
-	  trunk/public_html/post.php, trunk/smarty/configs/site.conf,
-	  trunk/smarty/templates/comment.tpl,
-	  trunk/smarty/templates/memes_grid.tpl,
-	  trunk/smarty/templates/post_1.tpl,
-	  trunk/smarty/templates/post_2.tpl,
-	  trunk/smarty/templates/post_3.tpl: Support for youtube video
-	  content.
+	* public_html/akarru.lib/memes.php, public_html/post.php,
+	  smarty/configs/site.conf, smarty/templates/comment.tpl,
+	  smarty/templates/memes_grid.tpl, smarty/templates/post_1.tpl,
+	  smarty/templates/post_2.tpl, smarty/templates/post_3.tpl:
+	  Support for youtube video content.
 	  In the future we will enable more content type, we are using the
 	  is_micro_content field, 0 = url, 1=plain text (no url),
 	  2=youtube video.
 
 2006-03-15 14:41  eadiaz
 
-	* trunk/ChangeLog: new release
+	* ChangeLog: new release
 
 2006-03-15 14:37  eadiaz
 
-	* trunk/public_html/index.php, trunk/public_html/locale.es:
-	  Eliminates hard coded text in index.php.
+	* public_html/index.php, public_html/locale.es: Eliminates hard
+	  coded text in index.php.
 	  Check locale.es and compare it with your own locale file.
 
 2006-03-15 14:28  eadiaz
 
-	* trunk/public_html/akarru.gui/recover_pass_form.php,
-	  trunk/public_html/recover_pass.php,
-	  trunk/smarty/configs/site.conf,
-	  trunk/smarty/templates/recover_pass.tpl: Change
-	  recover_pass.php, recover_pass_form.php was removed from the
-	  project and new templates added.
+	* public_html/akarru.gui/recover_pass_form.php,
+	  public_html/recover_pass.php, smarty/configs/site.conf,
+	  smarty/templates/recover_pass.tpl: Change recover_pass.php,
+	  recover_pass_form.php was removed from the project and new
+	  templates added.
 	  Also site.conf modified with new messages supporting password
 	  recovering.
 	  Fixes bugs on email sending of passwords.
 
 2006-03-14 21:15  eadiaz
 
-	* trunk/ChangeLog: fix bug on memes.php
+	* ChangeLog: fix bug on memes.php
 
 2006-03-14 21:13  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: Bug, wasn't checking
-	  anonymous users in memes->filter_result().
+	* public_html/akarru.lib/memes.php: Bug, wasn't checking anonymous
+	  users in memes->filter_result().
 
 2006-03-14 19:59  eadiaz
 
-	* trunk/ChangeLog, trunk/LEEME, trunk/README: Prepare release
-	  0.4.3.36
+	* ChangeLog, LEEME, README: Prepare release 0.4.3.36
 
 2006-03-14 19:54  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php,
-	  trunk/smarty/templates/memes_grid.tpl: Solve Ticket #10 of trac.
+	* public_html/akarru.lib/memes.php,
+	  smarty/templates/memes_grid.tpl: Solve Ticket #10 of trac.
 	  Now if an user already voted for a meme the vote button is
 	  hidden.
 
 2006-03-10 19:26  eadiaz
 
-	* trunk/public_html/tag_meme.php: Fix ticket #4.
+	* public_html/tag_meme.php: Fix ticket #4.
 	  error: You have an error in your SQL syntax; check the manual
 	  that corresponds to your MySQL server version for the right
 	  syntax to use near 'group by
@@ -835,299 +1186,273 @@
 
 2006-03-09 04:21  eadiaz
 
-	* trunk/ChangeLog, trunk/LEEME: Some minor bugs fixes
+	* ChangeLog, LEEME: Some minor bugs fixes
 
 2006-03-09 04:16  eadiaz
 
-	* trunk/public_html/popular.php, trunk/public_html/unpopular.php:
-	  several bugs fixes
-	* trunk/public_html/memes_queue.php: $page was not initializated
+	* public_html/popular.php, public_html/unpopular.php: several bugs
+	  fixes
+	* public_html/memes_queue.php: $page was not initializated
 
 2006-03-09 04:15  eadiaz
 
-	* trunk/public_html/index.php: fix bug, the cantity of memes in
+	* public_html/index.php: fix bug, the cantity of memes in
 	  index.php is fixed and correct now.
 
 2006-03-09 04:13  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php: fix bug in promote_all
+	* public_html/akarru.lib/memes.php: fix bug in promote_all
 
 2006-03-09 03:09  eadiaz
 
-	* trunk/ChangeLog, trunk/LEEME, trunk/README, trunk/smartyEng.zip,
-	  trunk/smarty_fr.zip: This release includes support for Gravatar,
-	  also two files smarty_fr.zip and smartyEng.zip add translations
-	  in french and english.
+	* ChangeLog, LEEME, README, smartyEng.zip, smarty_fr.zip: This
+	  release includes support for Gravatar, also two files
+	  smarty_fr.zip and smartyEng.zip add translations in french and
+	  english.
 	  Thanks to Claude Galliard for this.
 	  Still you must check some .php files, because some messages are
 	  hardcoded.
 
 2006-03-09 02:51  eadiaz
 
-	* trunk/public_html/index.php: $page variable wasn't initializated
+	* public_html/index.php: $page variable wasn't initializated
 	  properly
 
 2006-03-08 18:00  eadiaz
 
-	* trunk/public_html/anon16.png, trunk/public_html/anon40.png,
-	  trunk/public_html/anon80.png: images uses for users without
-	  gravatar
+	* public_html/anon16.png, public_html/anon40.png,
+	  public_html/anon80.png: images uses for users without gravatar
 
 2006-03-08 17:59  eadiaz
 
-	* trunk/public_html/akarru.lib/memes.php,
-	  trunk/smarty/templates/comment.tpl,
-	  trunk/smarty/templates/memes_grid.tpl: Full support of gravatars
-	  along all site.
+	* public_html/akarru.lib/memes.php, smarty/templates/comment.tpl,
+	  smarty/templates/memes_grid.tpl: Full support of gravatars along
+	  all site.
 
 2006-03-08 14:58  eadiaz
 
-	* trunk/public_html/akarru.lib/html_manager.php,
-	  trunk/public_html/akarru.lib/memes.php,
-	  trunk/public_html/akarru.lib/statistics.php,
-	  trunk/public_html/akarru.lib/users.php,
-	  trunk/public_html/profile.php, trunk/smarty/configs/site.conf,
-	  trunk/smarty/templates/comment.tpl,
-	  trunk/smarty/templates/profile.tpl,
-	  trunk/smarty/templates/stats.tpl: Added support for gravatar
-	  (wwww.gravatar.com), now user's gravatar is shown in profile,
-	  and comments.
+	* public_html/akarru.lib/html_manager.php,
+	  public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php, public_html/profile.php,
+	  smarty/configs/site.conf, smarty/templates/comment.tpl,
+	  smarty/templates/profile.tpl, smarty/templates/stats.tpl: Added
+	  support for gravatar (wwww.gravatar.com), now user's gravatar is
+	  shown in profile, and comments.
 	  We will add this display on memes too, on next release.
 
 2006-03-07 14:11  eadiaz
 
-	* trunk/public_html/register.php: fix typo in line 6, was 'passs',
+	* public_html/register.php: fix typo in line 6, was 'passs',
 	  should be 'pass'.
 
 2006-03-07 11:28  eadiaz
 
-	* trunk/ChangeLog, trunk/ChangeLog.cvs: ChangeLog.cvs contains old
-	  ChangeLog when we used cvs as CMS.
+	* ChangeLog, ChangeLog.cvs: ChangeLog.cvs contains old ChangeLog
+	  when we used cvs as CMS.
 
 2006-03-07 11:18  eadiaz
 
-	* trunk/public_html/register.php: register.php didn't allow
-	  registration because variables must be obtained via $_GET now
+	* public_html/register.php: register.php didn't allow registration
+	  because variables must be obtained via $_GET now
 
 2006-03-07 01:28  eadiaz
 
-	* trunk/public_html/akarru.gui/register_form.php:
+	* public_html/akarru.gui/register_form.php:
 
 2006-03-05 16:47  eadiaz
 
-	* trunk/public_html/show_cat.php: Security fix, no more auto
-	  variables, all from $_GET or $_POST
+	* public_html/show_cat.php: Security fix, no more auto variables,
+	  all from $_GET or $_POST
 
 2006-03-05 01:13  eadiaz
 
-	* trunk/public_html/lib/xmlrpc.inc,
-	  trunk/public_html/lib/xmlrpcs.inc:
+	* public_html/lib/xmlrpc.inc, public_html/lib/xmlrpcs.inc:
 
 2006-03-05 01:03  eadiaz
 
-	* trunk/ChangeLog: New ChangeLog Update
+	* ChangeLog: New ChangeLog Update
 	  New Release
 
 2006-03-05 00:51  eadiaz
 
-	* trunk/smarty/templates/master_page.tpl,
-	  trunk/smarty/templates/promote.tpl: Minor changes on
-	  master_page.tpl and promote.tpl
+	* smarty/templates/master_page.tpl, smarty/templates/promote.tpl:
+	  Minor changes on master_page.tpl and promote.tpl
 
 2006-03-05 00:42  eadiaz
 
-	* trunk/public_html/akarru.lib/categories.php,
-	  trunk/public_html/akarru.lib/common.php,
-	  trunk/public_html/akarru.lib/database.php,
-	  trunk/public_html/akarru.lib/memes.php,
-	  trunk/public_html/akarru.lib/statistics.php,
-	  trunk/public_html/akarru.lib/users.php: Security fix. Possibles
-	  sql injections. Thanks to Ricardo Galli for report this.
+	* public_html/akarru.lib/categories.php,
+	  public_html/akarru.lib/common.php,
+	  public_html/akarru.lib/database.php,
+	  public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php: Security fix. Possibles sql
+	  injections. Thanks to Ricardo Galli for report this.
 
 2006-03-05 00:36  eadiaz
 
-	* trunk/public_html/akarru.gui/cat_grid.php,
-	  trunk/public_html/akarru.gui/comment_grid.php,
-	  trunk/public_html/akarru.gui/comments_list_grid.php,
-	  trunk/public_html/akarru.gui/maintenance.php,
-	  trunk/public_html/akarru.gui/meme_grid.php,
-	  trunk/public_html/akarru.gui/meme_queue_grid.php,
-	  trunk/public_html/akarru.gui/paginate.php,
-	  trunk/public_html/akarru.gui/post_form.php,
-	  trunk/public_html/akarru.gui/profile_view.php,
-	  trunk/public_html/akarru.gui/recover_pass_form.php,
-	  trunk/public_html/akarru.gui/register_form.php,
-	  trunk/public_html/akarru.gui/tag_grid.php: Some lost scripts are
+	* public_html/akarru.gui/cat_grid.php,
+	  public_html/akarru.gui/comment_grid.php,
+	  public_html/akarru.gui/comments_list_grid.php,
+	  public_html/akarru.gui/maintenance.php,
+	  public_html/akarru.gui/meme_grid.php,
+	  public_html/akarru.gui/meme_queue_grid.php,
+	  public_html/akarru.gui/paginate.php,
+	  public_html/akarru.gui/post_form.php,
+	  public_html/akarru.gui/profile_view.php,
+	  public_html/akarru.gui/recover_pass_form.php,
+	  public_html/akarru.gui/register_form.php,
+	  public_html/akarru.gui/tag_grid.php: Some lost scripts are
 	  restored.
 	  You should consider akarru.gui scripts obsoletes, will be
 	  deprecated soon.
 
 2006-03-05 00:34  eadiaz
 
-	* trunk/public_html/stats.php: Restrict stats.php to only 50 top
-	  users.
-	* trunk/public_html/search.php: Security fix, no more auto
-	  variables, all from $_GET or $_POST
+	* public_html/stats.php: Restrict stats.php to only 50 top users.
+	* public_html/search.php: Security fix, no more auto variables,
+	  all from $_GET or $_POST
 
 2006-03-05 00:31  eadiaz
 
-	* trunk/public_html/queue_feed.php: More elements of the feed.
+	* public_html/queue_feed.php: More elements of the feed.
 	  This version is faster.
-	* trunk/public_html/profile_edit.php: Security fix, no more auto
+	* public_html/profile_edit.php: Security fix, no more auto
 	  variables, all from $_GET or $_POST
 
 2006-03-05 00:30  eadiaz
 
-	* trunk/public_html/profile.php: Security fix, no more auto
-	  variables, all from $_GET or $_POST
+	* public_html/profile.php: Security fix, no more auto variables,
+	  all from $_GET or $_POST
 	  Fixes a bug on profile.php, pagination was not working.
 
 2006-03-05 00:28  eadiaz
 
-	* trunk/public_html/help.php, trunk/public_html/login.php,
-	  trunk/public_html/memes_by_tag.php,
-	  trunk/public_html/popular.php, trunk/public_html/post.php:
-	  Security fix, no more auto variables, all from $_GET or $_POST
+	* public_html/help.php, public_html/login.php,
+	  public_html/memes_by_tag.php, public_html/popular.php,
+	  public_html/post.php: Security fix, no more auto variables, all
+	  from $_GET or $_POST
 
 2006-03-05 00:26  eadiaz
 
-	* trunk/public_html/index.php: Limit pages to 50 until we have a
-	  better pagination algorithm
+	* public_html/index.php: Limit pages to 50 until we have a better
+	  pagination algorithm
 
 2006-03-05 00:24  eadiaz
 
-	* trunk/public_html/feed.php: More elements of the feed.
+	* public_html/feed.php: More elements of the feed.
 	  This version is faster also.
 
 2006-03-05 00:23  eadiaz
 
-	* trunk/public_html/comment.php: Security fix, no more auto
-	  variables, all from $_GET or $_POST
+	* public_html/comment.php: Security fix, no more auto variables,
+	  all from $_GET or $_POST
 
 2006-03-05 00:22  eadiaz
 
-	* trunk/public_html/circulation.php: Security fix, no more auto
+	* public_html/circulation.php: Security fix, no more auto
 	  variables, all from $_GET or $_POST
 
 2006-03-05 00:21  eadiaz
 
-	* trunk/public_html/cat_feed.php: More elements of the feed.
+	* public_html/cat_feed.php: More elements of the feed.
 	  This version is faster also.
 
 2006-02-27 02:31  eadiaz
 
-	* tags, trunk, trunk/ChangeLog, trunk/LEEME, trunk/LICENCIA,
-	  trunk/LICENSE, trunk/README, trunk/akarru.txt, trunk/create.sql,
-	  trunk/public_html, trunk/public_html/about.php,
-	  trunk/public_html/admin.php, trunk/public_html/ajax_click.php,
-	  trunk/public_html/ajax_vote.php, trunk/public_html/akarru.gui,
-	  trunk/public_html/akarru.gui/button_bar.php,
-	  trunk/public_html/akarru.gui/categories_bar.php,
-	  trunk/public_html/akarru.gui/default_grid.php,
-	  trunk/public_html/akarru.gui/folksonomy_bar.php,
-	  trunk/public_html/akarru.gui/folksonomy_grid.php,
-	  trunk/public_html/akarru.gui/info.php,
-	  trunk/public_html/akarru.gui/java_script.php,
-	  trunk/public_html/akarru.gui/locale.en,
-	  trunk/public_html/akarru.gui/locale.es,
-	  trunk/public_html/akarru.gui/locale.php,
-	  trunk/public_html/akarru.gui/login_form.php,
-	  trunk/public_html/akarru.gui/main_content.php,
-	  trunk/public_html/akarru.gui/master_page.php,
-	  trunk/public_html/akarru.gui/menubar.php,
-	  trunk/public_html/akarru.gui/profile_form.php,
-	  trunk/public_html/akarru.gui/top_banner.php,
-	  trunk/public_html/akarru.lib,
-	  trunk/public_html/akarru.lib/categories.php,
-	  trunk/public_html/akarru.lib/common.php,
-	  trunk/public_html/akarru.lib/database.php,
-	  trunk/public_html/akarru.lib/folksonomy.php,
-	  trunk/public_html/akarru.lib/form_manager.php,
-	  trunk/public_html/akarru.lib/html_manager.php,
-	  trunk/public_html/akarru.lib/mail.php,
-	  trunk/public_html/akarru.lib/memes.php,
-	  trunk/public_html/akarru.lib/statistics.php,
-	  trunk/public_html/akarru.lib/users.php,
-	  trunk/public_html/cat_feed.php,
-	  trunk/public_html/circulation.php,
-	  trunk/public_html/comment.php, trunk/public_html/config.php,
-	  trunk/public_html/feed.php, trunk/public_html/help.php,
-	  trunk/public_html/index.php, trunk/public_html/lib,
-	  trunk/public_html/lib/xmlrpc.inc,
-	  trunk/public_html/lib/xmlrpcs.inc, trunk/public_html/locale.en,
-	  trunk/public_html/locale.es, trunk/public_html/login.php,
-	  trunk/public_html/logo.gif, trunk/public_html/logout.php,
-	  trunk/public_html/memes_by_tag.php,
-	  trunk/public_html/memes_queue.php, trunk/public_html/pngfix.js,
-	  trunk/public_html/popular.php, trunk/public_html/post.php,
-	  trunk/public_html/profile.php,
-	  trunk/public_html/profile_edit.php,
-	  trunk/public_html/promote.php,
-	  trunk/public_html/promote_queue.php,
-	  trunk/public_html/queue.php, trunk/public_html/queue_feed.php,
-	  trunk/public_html/recover_pass.php,
-	  trunk/public_html/register.php, trunk/public_html/scripts,
-	  trunk/public_html/scripts/labels.js,
-	  trunk/public_html/scripts/pngfix.js,
-	  trunk/public_html/search.php, trunk/public_html/show_cat.php,
-	  trunk/public_html/show_folksonomy.php,
-	  trunk/public_html/site_circulation.php,
-	  trunk/public_html/stats.php, trunk/public_html/styles,
-	  trunk/public_html/styles/img,
-	  trunk/public_html/styles/img/header-bar_bg.png,
-	  trunk/public_html/styles/img/header-divider.png,
-	  trunk/public_html/styles/img/header-hover.png,
-	  trunk/public_html/styles/img/header-logo.png,
-	  trunk/public_html/styles/img/info.gif,
-	  trunk/public_html/styles/img/infobox-bottomleft.png,
-	  trunk/public_html/styles/img/infobox-topleft.gif,
-	  trunk/public_html/styles/img/infobox-topleft.png,
-	  trunk/public_html/styles/img/main-bg.gif,
-	  trunk/public_html/styles/img/main-bg.png,
-	  trunk/public_html/styles/img/main-bottom.gif,
-	  trunk/public_html/styles/img/main-bottom.png,
-	  trunk/public_html/styles/img/main-end.png,
-	  trunk/public_html/styles/img/main-top.gif,
-	  trunk/public_html/styles/img/main-top.png,
-	  trunk/public_html/styles/img/main_bg.png,
-	  trunk/public_html/styles/img/meme-globo.gif,
-	  trunk/public_html/styles/img/meme-globo.png,
-	  trunk/public_html/styles/img/meme-votar.gif,
-	  trunk/public_html/styles/img/meme-votar.png,
-	  trunk/public_html/styles/img/sidebar-bg.png,
-	  trunk/public_html/styles/img/tab_azul.png,
-	  trunk/public_html/styles/img/tab_cat-bg.png,
-	  trunk/public_html/styles/img/tab_cat-bot.png,
-	  trunk/public_html/styles/img/tab_cat-top.png,
-	  trunk/public_html/styles/img/tab_rojo.png,
-	  trunk/public_html/styles/img/tab_verde.png,
-	  trunk/public_html/styles/memes.css,
-	  trunk/public_html/tag_meme.php, trunk/public_html/unpopular.php,
-	  trunk/smarty, trunk/smarty/configs,
-	  trunk/smarty/configs/site.conf, trunk/smarty/templates,
-	  trunk/smarty/templates/about.tpl,
-	  trunk/smarty/templates/admin.tpl,
-	  trunk/smarty/templates/circulation.tpl,
-	  trunk/smarty/templates/comment.tpl,
-	  trunk/smarty/templates/donations_thanks.tpl,
-	  trunk/smarty/templates/folksonomy_grid.tpl,
-	  trunk/smarty/templates/form_footer.tpl,
-	  trunk/smarty/templates/form_header.tpl,
-	  trunk/smarty/templates/help.tpl,
-	  trunk/smarty/templates/inner_ads.tpl,
-	  trunk/smarty/templates/java_script.tpl,
-	  trunk/smarty/templates/login.tpl,
-	  trunk/smarty/templates/master_page.tpl,
-	  trunk/smarty/templates/memes_grid.tpl,
-	  trunk/smarty/templates/paginate.tpl,
-	  trunk/smarty/templates/post_1.tpl,
-	  trunk/smarty/templates/post_2.tpl,
-	  trunk/smarty/templates/post_3.tpl,
-	  trunk/smarty/templates/profile.tpl,
-	  trunk/smarty/templates/profile_edit.tpl,
-	  trunk/smarty/templates/promote.tpl,
-	  trunk/smarty/templates/register.tpl,
-	  trunk/smarty/templates/site_circulation.tpl,
-	  trunk/smarty/templates/stats.tpl,
-	  trunk/smarty/templates/tag_meme.tpl: Added to sourceforge svn
+	* tags, ., ChangeLog, LEEME, LICENCIA, LICENSE, README,
+	  akarru.txt, create.sql, public_html, public_html/about.php,
+	  public_html/admin.php, public_html/ajax_click.php,
+	  public_html/ajax_vote.php, public_html/akarru.gui,
+	  public_html/akarru.gui/button_bar.php,
+	  public_html/akarru.gui/categories_bar.php,
+	  public_html/akarru.gui/default_grid.php,
+	  public_html/akarru.gui/folksonomy_bar.php,
+	  public_html/akarru.gui/folksonomy_grid.php,
+	  public_html/akarru.gui/info.php,
+	  public_html/akarru.gui/java_script.php,
+	  public_html/akarru.gui/locale.en,
+	  public_html/akarru.gui/locale.es,
+	  public_html/akarru.gui/locale.php,
+	  public_html/akarru.gui/login_form.php,
+	  public_html/akarru.gui/main_content.php,
+	  public_html/akarru.gui/master_page.php,
+	  public_html/akarru.gui/menubar.php,
+	  public_html/akarru.gui/profile_form.php,
+	  public_html/akarru.gui/top_banner.php, public_html/akarru.lib,
+	  public_html/akarru.lib/categories.php,
+	  public_html/akarru.lib/common.php,
+	  public_html/akarru.lib/database.php,
+	  public_html/akarru.lib/folksonomy.php,
+	  public_html/akarru.lib/form_manager.php,
+	  public_html/akarru.lib/html_manager.php,
+	  public_html/akarru.lib/mail.php,
+	  public_html/akarru.lib/memes.php,
+	  public_html/akarru.lib/statistics.php,
+	  public_html/akarru.lib/users.php, public_html/cat_feed.php,
+	  public_html/circulation.php, public_html/comment.php,
+	  public_html/config.php, public_html/feed.php,
+	  public_html/help.php, public_html/index.php, public_html/lib,
+	  public_html/lib/xmlrpc.inc, public_html/lib/xmlrpcs.inc,
+	  public_html/locale.en, public_html/locale.es,
+	  public_html/login.php, public_html/logo.gif,
+	  public_html/logout.php, public_html/memes_by_tag.php,
+	  public_html/memes_queue.php, public_html/pngfix.js,
+	  public_html/popular.php, public_html/post.php,
+	  public_html/profile.php, public_html/profile_edit.php,
+	  public_html/promote.php, public_html/promote_queue.php,
+	  public_html/queue.php, public_html/queue_feed.php,
+	  public_html/recover_pass.php, public_html/register.php,
+	  public_html/scripts, public_html/scripts/labels.js,
+	  public_html/scripts/pngfix.js, public_html/search.php,
+	  public_html/show_cat.php, public_html/show_folksonomy.php,
+	  public_html/site_circulation.php, public_html/stats.php,
+	  public_html/styles, public_html/styles/img,
+	  public_html/styles/img/header-bar_bg.png,
+	  public_html/styles/img/header-divider.png,
+	  public_html/styles/img/header-hover.png,
+	  public_html/styles/img/header-logo.png,
+	  public_html/styles/img/info.gif,
+	  public_html/styles/img/infobox-bottomleft.png,
+	  public_html/styles/img/infobox-topleft.gif,
+	  public_html/styles/img/infobox-topleft.png,
+	  public_html/styles/img/main-bg.gif,
+	  public_html/styles/img/main-bg.png,
+	  public_html/styles/img/main-bottom.gif,
+	  public_html/styles/img/main-bottom.png,
+	  public_html/styles/img/main-end.png,
+	  public_html/styles/img/main-top.gif,
+	  public_html/styles/img/main-top.png,
+	  public_html/styles/img/main_bg.png,
+	  public_html/styles/img/meme-globo.gif,
+	  public_html/styles/img/meme-globo.png,
+	  public_html/styles/img/meme-votar.gif,
+	  public_html/styles/img/meme-votar.png,
+	  public_html/styles/img/sidebar-bg.png,
+	  public_html/styles/img/tab_azul.png,
+	  public_html/styles/img/tab_cat-bg.png,
+	  public_html/styles/img/tab_cat-bot.png,
+	  public_html/styles/img/tab_cat-top.png,
+	  public_html/styles/img/tab_rojo.png,
+	  public_html/styles/img/tab_verde.png,
+	  public_html/styles/memes.css, public_html/tag_meme.php,
+	  public_html/unpopular.php, smarty, smarty/configs,
+	  smarty/configs/site.conf, smarty/templates,
+	  smarty/templates/about.tpl, smarty/templates/admin.tpl,
+	  smarty/templates/circulation.tpl, smarty/templates/comment.tpl,
+	  smarty/templates/donations_thanks.tpl,
+	  smarty/templates/folksonomy_grid.tpl,
+	  smarty/templates/form_footer.tpl,
+	  smarty/templates/form_header.tpl, smarty/templates/help.tpl,
+	  smarty/templates/inner_ads.tpl,
+	  smarty/templates/java_script.tpl, smarty/templates/login.tpl,
+	  smarty/templates/master_page.tpl,
+	  smarty/templates/memes_grid.tpl, smarty/templates/paginate.tpl,
+	  smarty/templates/post_1.tpl, smarty/templates/post_2.tpl,
+	  smarty/templates/post_3.tpl, smarty/templates/profile.tpl,
+	  smarty/templates/profile_edit.tpl, smarty/templates/promote.tpl,
+	  smarty/templates/register.tpl,
+	  smarty/templates/site_circulation.tpl,
+	  smarty/templates/stats.tpl, smarty/templates/tag_meme.tpl: Added
+	  to sourceforge svn
 
