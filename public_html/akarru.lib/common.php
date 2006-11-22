@@ -3,7 +3,7 @@ include_once("akarru.lib/app_vars.php");
 
 session_start();
 
-mb_http_output("UTF-8");
+mb_http_output("utf-8");
 require('Smarty/Smarty.class.php');
 
 class BM_Smarty extends Smarty {

@@ -49,6 +49,9 @@ function processCache($meme_id)
     }
 
     closedir($dp);
+	if (empty($files)) {
+		return;
+	}
     asort($files);
 
     $currentTime = time();

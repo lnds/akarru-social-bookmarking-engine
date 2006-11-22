@@ -181,7 +181,7 @@ function get_myvideoes($url)
 		return '';
 	}
 	$url = 'http://www.myvideo.es/movie/'.$matches[1];
-    return '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="300" height="250"><param name="movie" value="'.$url.'" /><embed src="'.$url.'" width="300" height="250" type="application/x-shockwave-flash" /></object>';
+    return '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="425" height="350"><param name="movie" value="'.$url.'" /><embed src="'.$url.'" width="425" height="350" type="application/x-shockwave-flash" /></object>';
 }
 
 function get_googlevideo($url)
@@ -192,7 +192,7 @@ function get_googlevideo($url)
 		return get_myvideoes($url);
 	}
 	$url = 'http://video.google.com/googleplayer.swf?docId='.$matches[1];
-	return '<embed style="width:300px; height:250px;" type="application/x-shockwave-flash" src="'.$url.'" allowScriptAccess="sameDomain" > </embed>';
+	return '<embed style="width:425px; height:350px;" type="application/x-shockwave-flash" src="'.$url.'" allowScriptAccess="sameDomain" > </embed>';
 }
 
 function get_youtube($url)

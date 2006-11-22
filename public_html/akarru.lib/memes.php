@@ -457,8 +457,6 @@ class memes {
 		{
 			$tags = $data['meme_tags'];
 			$this->post_tags($meme_id, $user_id, $tags);
-	  //  	$this->ping('ping.feedburner.com', 'weblogUpdates.ping', $meme_id);
-	//		$this->ping('ping.bitacoras.com', 'weblogUpdates.ping', $meme_id);
 		}
 		return true;
 	}
@@ -528,15 +526,14 @@ class memes {
 		$nv = $meme->votes + $add_votes;
 		$nc = $meme->comments + $add_comments;
 		$now = time();
-		$hours_posted = ceil(($now - $meme->date_posted)/3600);
-		$hours_promoted = ceil(($now - $meme->date_promo)/3600);
-        if ($hours_promoted < 0) 
+		$hours_posted = 1000*ceil(($now - $meme->date_posted)/3600);
+		$hours_promoted = 10*ceil(($now - $meme->date_promo)/3600);
+		if ($hours_promoted < 0) 
 			$hours_promoted = 1;
-		if ($hours_posted < 0) 
+		if ($hour_posted < 0) 
 			$hours_posted = 1;
-		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->social_clicks+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
-		$rank *=  1/(1+log10(10+$hours_posted*1000));
- 		$rank *=  10/(1+log10(10+$hours_promoted));
+		$rank = 1000 + log10($meme->votes+$meme->comments+$meme->clicks+$meme->views+$meme->debate_pos+$meme->debate_neg+$meme->debate_0+10);
+		$rank *=  1/(1+log10(10+$hours_posted));
 
 		if ($update_promo_date)
 			$sql = "update posts set rank = $rank, date_promo = $now";
@@ -576,14 +573,15 @@ class memes {
 		$this->debate($meme_id, $user_id, 0, true);
 	}
 
-    function send_trackback($data) {
+    function send_trackback($data) 
+	{
         // This is to include a "Liked what you just read here ? Vote for it on Blogmemes !"
         // kind of message at the beginning of the excerpt of the trackback
         global  $bl_vote_for_it_message_in_trackback;
 
         $title = urlencode($data['title']);
         $excerpt = urlencode($bl_vote_for_it_message_in_trackback . $data['content_body']);
-        $blog_name = urlencode('www.blogmemes.jp');
+        $blog_name = urlencode('blogmemes.com');
         $tb_url = $data['meme_trackback'];
         $url = urlencode($this->get_permalink($data['meme_id']));
         $query_string = "charset=UTF-8&title=$title&url=$url&blog_name=$blog_name&excerpt=$excerpt";
@@ -592,7 +590,7 @@ class memes {
         $http_request .= 'Host: '.$trackback_url['host']."\r\n";
         $http_request .= 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8'."\r\n";
         $http_request .= 'Content-Length: '.strlen($query_string)."\r\n";
-        $http_request .= "User-Agent: AKARRU (http://www.blogmemes.jp) ";
+        $http_request .= "User-Agent: AKARRU (http://www.blogmemes.com) ";
         $http_request .= "\r\n\r\n";
         $http_request .= $query_string;
 		$http_request = utf8_encode($http_request);

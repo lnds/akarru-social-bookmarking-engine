@@ -11,7 +11,7 @@ function sanitize($value)
 }
 
 
-  class database {
+class database {
 
 	var $db_user= DATABASE_USER;
 	var $db_pass= DATABASE_PASS;
@@ -71,6 +71,18 @@ function sanitize($value)
 		return $returned;
 	}
 
+
+	function fetch_rows($sql)
+	{
+		$query = $this->do_query($sql);
+		$this->rows = mysql_num_rows($query);
+		$returned = array();
+		while($row= @mysql_fetch_assoc($query))
+		{
+			$returned[] = $row;
+		}
+		return $returned;
+	}
 
 	function fetch_scalar($sql)
 	{
