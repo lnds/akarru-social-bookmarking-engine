@@ -4,12 +4,11 @@
 		<Link href="http://www.blogmemes.jp"/>
 		<Title>Post to BlogMemes Japan</Title>
 		<Description>
-			Post this item on the blogmemes.jp japanese social news site
+			Post this item on blogmemes
 		</Description>
 	</Catalog>
  	<FeedFlare>
-		<!-- Bookmark items with BlogMemes Japan (http://www.blogmemes.jp) -->
-		<Text>Post to Blogmemes Japan</Text>
-		<Link href="http://www.blogmemes.jp/post.php?url=${link}&amp;title=${title}"/>
+		<Text>Post to Blogmemes</Text>
+		<Link href="http://www.blogmemes.com/post.php?url=${link}&amp;title=${title}"/>
 	</FeedFlare>
 </FeedFlareUnit>

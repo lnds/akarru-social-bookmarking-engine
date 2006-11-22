@@ -32,6 +32,7 @@ $bm_login_url =  '';
 
 // You need to get your own API key for Akismet. The easiest way is to register a wordpress blog at wordpress.com
 //  Then follow the instructions at http://faq.wordpress.com/2005/10/19/api-key/
+// 
 $bm_akismet_api_key = '';
 
 ?>

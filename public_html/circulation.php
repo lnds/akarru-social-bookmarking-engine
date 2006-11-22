@@ -62,7 +62,6 @@ function end_element()
 $xml_parser = xml_parser_create();
 xml_set_element_handler($xml_parser, "start_element", "end_element");
 
-# CHANGE THIS!!!
 $feed_uri = $bm_url_feeds;
 $item_url = $bm_url . 'meme/' . $meme_id;
 $dates = date('Y-m-d', time()-86400*30).','.date('Y-m-d');
