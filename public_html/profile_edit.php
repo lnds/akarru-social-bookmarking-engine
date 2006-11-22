@@ -16,11 +16,13 @@
 
   if (empty($_POST))
   {
-	  $smarty->assign('user_id', $bm_users->get_user_id());
-	  $smarty->assign('email', $bm_users->user->email);
-	  $smarty->assign('website', $bm_users->user->website);
-	  $smarty->assign('blog', $bm_users->user->blog);
-	  $smarty->assign('fullname', $bm_users->user->fullname);
+  	  $user_id = intval($_GET['user_id']);
+	  $profile = $bm_users->get_user_profile_by_id($user_id);
+	  $smarty->assign('user_id', $user_id);
+	  $smarty->assign('email', $profile->email);
+	  $smarty->assign('website', $profile->website);
+	  $smarty->assign('blog', $profile->blog);
+	  $smarty->assign('fullname', $profile->fullname);
   }
   else
   {
@@ -31,12 +33,8 @@
 	  {
 		  if (!empty($_POST['pass'])) {
 			  $pass = $_POST['pass'];
-			  //Kenji : security problem with the next line
-              //$user_id = (int) $_POST['user_id'];
-			  $user_id = $bm_users->get_user_id();
 			  $confirm_pass = $_POST['confirm_pass'];
 			  if (!$bm_users->change_password($user_id, $pass, $confirm_pass)) 
-              {
 				  $smarty->assign('error_pass', true);
                   $smarty->assign('user_id', $bm_users->get_user_id());
                   $smarty->assign('email', $bm_users->user->email);
@@ -61,11 +59,6 @@
 		  }
 		  else {
 			  $smarty->assign('error_profile', true);
-              $smarty->assign('user_id', $bm_users->get_user_id());
-              $smarty->assign('email', $bm_users->user->email);
-              $smarty->assign('website', $bm_users->user->website);
-              $smarty->assign('blog', $bm_users->user->blog);
-              $smarty->assign('fullname', $bm_users->user->fullname);
 		  }
 	  }
   }
