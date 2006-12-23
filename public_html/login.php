@@ -1,67 +1,48 @@
 <?php
-  include_once('akarru.lib/common.php');
-  include_once('common_elements.php');
-  if (!empty($_POST))
-  {
+/**
+ * @package AkarruCPE
+ * @version 0.6
+ * @copyright (c) 2006 Eduardo Diaz Cortes
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+ * @author Eduardo Diaz <ediaz@lnds.net>
+ */
+require_once('akarru/common.php');
+$template = new Template('master');
+$template->hide_tabstrip();
+$template->no_preview();
+$template->add_css('blogmemes_forms.css');
+if (is_post_back()) 
+{
+	$req = request_uri();
+	if ($req == '/do_login')
+	{
+		$user = User::login(request_value('username'), request_value('pass'), request_value('remember', 0));
+		if ($user->ID)
+		{
+			redirect_to('/');
+			return;
+		}
+		else
+			$template->add_error('usuario no existe o la clave es incorrecta');
+	}
+	else if ($req == '/do_recover') 
+	{
+		$email = request_value('email');
+		if (empty($email)) {
+			$template->add_error('debe ingresar email');
+		}
+		else
+		{
+			User::gen_password($email, '[blogmemes] recuperar clave', $bf_recover_pass, 'http://www.blogmemes.com/logon');
+			$template->message('Si su email es correcto recibir&aacute; un email con su clave a la brevedad', 'Atenci&oacute;n');
+			$template->set_destination('/', 'continuar');
+			$template->display('result');
+			return;
+		}
+	}
+}
+$template->assign('cats', false);
+$template->display('loginform');
 
-	  $user = $_POST['user'];
-	  $pass = $_POST['pass'];
-	  $bm_errors = 0;
-	  if (empty($user)) {
-		  $smarty->assign('error_user', true);
-		  $bm_errors++;
-	  }
-	  else{
-		  $smarty->assign('user', $user);
-	  }
-	  if (empty($pass)) {
-		  $smarty->assign('error_pass', true);
-		  $bm_errors++;
-	  }
-	  if ($bm_errors == 0) {
-		  if ($bm_users->do_login($_POST['user'],$_POST['pass'],$_POST['remember'])) {
-			  $url = $_POST['from'];
-			  header("Location: $url");
-			  exit;
-			  return;
-		  }
-		  else
-		  {
-              if ($bm_users->is_user_banned($_POST['user']))
-              {
-			    $smarty->assign('error_banned', true);
-              }
-              else
-              {
-                $smarty->assign('error_login', true);
-              }
-          }
-	  }
-  }
-  if (empty($_GET['from'])) {
-	  $from = $bm_home;
-  }
-  else
-  {
-       if (stristr($_GET['from'], ".php") === FALSE )
-       {
-	    $from = $_GET['from'].'.php?post=1';
-      }
-      else
-      {
-        $from = $_GET['from'].'?post=1';
-      }
-	  if (!empty($_GET['url'])) {
-		  $from .= '&url='.$_GET['url'];
-	  }
-	  if (!empty($_GET['title'])) {
-		  $from .= '&title='.$_GET['title'];
-	  }
 
-  }
-  $smarty->assign('community', true);
-  $smarty->assign('content_title', $content_title_login);
-  $smarty->assign('from', $from);
-  $smarty->assign('content', 'login');
-  $smarty->display('master_page.tpl');
 ?>

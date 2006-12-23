@@ -1,20 +1,22 @@
 <?php
-  include_once('akarru.lib/common.php');
-  include_once('common_elements.php');
-  $smarty->assign('content_title', $content_title_meme_queue);
-  $memes = new memes($bm_db, $bm_user, $bm_promo_level);
-  $data = $memes->get_new_memes($bm_page);
+/**
+ * @package AkarruCPE
+ * @subpackage index
+ * @version 0.6
+ * @copyright (c) 2006 Eduardo Diaz Cortes
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+ * @author Eduardo Diaz <ediaz@lnds.net>
+ */
 
-  $smarty->assign('memes', $data);
-  $smarty->assign('bm_message', $bm_message_meme_queue);
-  $smarty->assign('in_queue', true);
-  if ($memes->pages > 1) 
-	  $smarty->assign('pages', $memes->pages+1);
-  $smarty->assign('content_feed_link', $bm_queue_feeds);
-  $smarty->assign('show_ads', showGGAds());
-  $smarty->assign('content', 'memes_grid');
-  $smart_id = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
-  $smarty->assign('pag_id', 'new');
-  $smarty->display('master_page.tpl', $smart_id);
+include_once('akarru/common.php');
+$page = request_value('page', 1);
+if (empty($page)) {
+	$page = 1;
+}
+$memes = new MemeList($page, 'where promoted = false', 0, 'order by date_posted desc');
+$template = new GridTemplate('master');
+$template->set_data($memes);
+$template->set_selector(1);
+$template->display();
 ?>
 
