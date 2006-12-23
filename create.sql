@@ -42,8 +42,7 @@ CREATE TABLE `post_cats` (
   `lang` char(2) default 'es',
   `feed` text,
   `disabled` tinyint(1) default '0',
-  PRIMARY KEY  (`ID`),
-  KEY `idx_cat_title` (`cat_title`)
+  PRIMARY KEY  (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

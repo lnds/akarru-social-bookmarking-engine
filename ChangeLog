@@ -1,3 +1,45 @@
+2006-12-23 22:27  eadiaz
+
+	* public_html/.htaccess, public_html/about.php,
+	  public_html/comment.php, public_html/gradient.png,
+	  public_html/help.php, public_html/index.php,
+	  public_html/json_vote.php, public_html/login.php,
+	  public_html/logout.php, public_html/memes_by_tag.php,
+	  public_html/memes_queue.php, public_html/niftyCorners.css,
+	  public_html/post.php, public_html/profile.php,
+	  public_html/recover_pass.php, public_html/search.php,
+	  public_html/show_cat.php, public_html/show_folksonomy.php,
+	  public_html/videos.php: New look and feel.
+	  This scripts are using /akarru directory instead of /akarru.lib.
+
+2006-12-23 22:26  eadiaz
+
+	* public_html/styles/blogmemes.css,
+	  public_html/styles/blogmemes_forms.css,
+	  public_html/styles/gradient.png: New look and feel.
+
+2006-12-23 22:19  eadiaz
+
+	* public_html/akarru/CategoryList.class.php,
+	  public_html/akarru/Tag.class.php,
+	  public_html/akarru/Template.class.php,
+	  public_html/akarru/User.class.php,
+	  public_html/akarru/common.php, public_html/akarru/database.php,
+	  public_html/akarru/functions.php: Refactoring, akarru replaces
+	  akarru.lib.
+
+2006-12-23 22:17  eadiaz
+
+	* public_html/akarru, public_html/akarru/Category.class.php,
+	  public_html/akarru/GridTemplate.class.php,
+	  public_html/akarru/Meme.class.php,
+	  public_html/akarru/MemeList.class.php,
+	  public_html/akarru/MemeTemplate.class.php: New classes.
+
+2006-11-22 14:32  eadiaz
+
+	* ChangeLog: release 0.5
+
 2006-11-22 14:28  eadiaz
 
 	* create.sql: support for spam fighting
