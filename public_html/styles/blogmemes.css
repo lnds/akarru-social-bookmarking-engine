@@ -1,0 +1,407 @@
+/* CSS para Blog Memes por Eduardo Diaz */
+/* Este codigo esta bajo licencia GNU General Public Licence */
+body {
+	font-family: helvetica, arial, sans-serif;
+	color: #333;
+	margin: 0px;padding: 0px;
+	background: #ffffff;
+	}
+html, body, #container {
+min-height: 100%;
+width: 100%;
+height: 100%;
+}
+html>body, html>body #container {
+height: auto;
+}
+a {
+text-decoration:none;
+font-size:10pt;
+}
+a:link {
+text-decoration:none;
+font-size:10pt;
+}
+a:hover{
+text-decoration:underline;
+font-size:10pt;
+}
+
+a:visited {
+text-decoration:none;
+font-size:10pt;
+}
+
+#container {
+position:absolute;
+top:0;
+left:0;
+	margin: 0; 
+	padding: 0;
+	min-height:2000px;
+	height:2000px;
+	}
+
+#header {
+	background: url("img/header-bar_bg.png")  top right no-repeat; 
+	height: 174px;
+	background-color:white; color:#fff;
+	position: relative;
+	}
+#header a { 
+	color: #fff;
+	background-color:white;
+	text-decoration: none;
+}
+#header a:hover {
+	text-decoration: underline;
+	}
+#header h1 {
+	font-size: 100%;
+	margin: 0;
+	}
+#header h1 a, #header h1 span {
+	display: block;
+	height: 174px;
+	width: 225px;
+	background: url("img/header-logo.png") bottom left no-repeat;
+	text-indent: -2000em;
+	position: absolute;
+	top: 0;left: 0;
+	text-decoration: none;
+	z-index: 1000; /* para IE */}
+#header form {
+	display: block;
+	position: relative;
+	float:right;
+	padding-top: 19px;
+	height: 29px;
+	padding-left: 230px;
+	padding-right:32px;
+	}
+#header form input {margin: 0;font-size: 11px; width: 10em;color: #145693;background:#fff;}
+#header label.inside {
+	color: #145693;background:#fff;
+	position: absolute;
+	visibility: hidden;
+	}
+#header form input:focus, #header form input:hover {
+	color: #000;
+	background-color: #fff;
+	}
+#header #search-submit {
+	display: none;
+	}
+#header-banner {
+	height: 90px;
+	width: 728px;
+	top: 80px;
+	left: 225px;
+	position: absolute;z-index: 1001;
+	}
+#content {
+position:relative;
+background-color:#fff;
+color:#000;
+}
+#navbar{
+	position:absolute;
+	top: 180px;
+	width:12em;
+	height:auto;
+	}
+#navbar ul {
+	list-style:none;
+	margin-left: 1em;
+	padding-left:0;
+}	
+#navbar li {
+	font-size: 80%;
+	border-bottom: 1px dotted #B2BCC6;
+}
+#navbar a {
+text-decoration:none;
+}
+#navbar a:link, #navbar a:visited {
+text-decoration: none;
+color: #2A4F6F;
+background-color: white;
+}
+#navbar a:hover {
+color: #778899;
+background-color:#fff;
+}
+#navbar h2 {
+margin-left:4px;
+font: 110% Georgia, "Times New Roman", Times, serif;
+color: #2A4F6F;
+background-color: white;
+border-bottom: 1px dotted #cccccc;
+}
+#content {
+margin-top: 1em;
+margin-left: 12em;
+margin-right: 2em;
+margin-bottom: 3em;
+}
+
+
+#footer {
+position:absolute;
+bottom:0;
+width:100%;
+border-top: 1px dotted green;
+height:3em;
+margin-top:1em;
+background:#cfa;
+color:#000;
+}
+#footer p {
+margin:0.5em;
+padding:0.5em;
+}
+
+.meme-box-class {
+display:block;
+position:relative;
+margin-left:2em;
+min-height:130px;
+margin-bottom:2em;
+}
+
+
+#tabstrip {
+margin-left:14em;
+}
+
+.votenum {
+	color: black;  
+	background: #9CC0FF url(gradient.png) repeat-x;
+
+}
+.vote-class {
+	float:left;
+	margin-left:2.5em; 
+	height:3.5em;
+	min-height:3.5em;
+	width:3em;
+	padding:2px;
+	text-align:center;
+	display: block;
+}
+.vote-class  a  { 
+	border:none;
+	text-decoration: none; 
+	font-weight:bold; 
+	font-size:14pt;
+	text-align:center;
+	color: black;
+	background-color:transparent;
+}
+.vote-class p {
+}
+.vote-link  {
+font-size:8pt;
+color:green;
+background-color:#fff;
+text-align:center;
+}
+.vote-link a {
+font-size:10pt;
+text-decoration:none;
+color:green;
+background-color:white;
+}
+.vote-link a:hover {
+text-decoration: underline;
+}
+
+.meme-class{
+	display:block;
+	margin-left:4.5em;
+}
+.meme-class a {
+	text-decoration:none;
+	font-size:14pt; font-weight:bold;
+	margin-left:0.5em;
+}
+.meme-class a: {
+	text-decoration:underline;
+	font-size:14pt; font-weight:bold;
+	margin-left:0.5em;
+}
+.meme-class a:visited {
+	text-decoration:none;
+	font-size:14pt; font-weight:bold;
+	margin-left:0.5em;
+}
+.meme-class p {
+	margin-top: 2px;
+	margin-left:2.5em;
+	font-size:9pt;
+	margin-bottom: 2em;
+}
+.who-when-class {
+color:green;
+background-color:white;
+margin-left: 2.5em;
+display:block;
+font-size:8pt;
+}
+.who-when-class a {
+color:gray;
+background-color:white;
+text-decoration:underline;
+font-size:8pt;
+}
+.who-when-class a:visited {
+color:gray;
+background-color:white;
+text-decoration:underline;
+font-size:8pt;
+}
+
+.meme-footer-class {
+height:2em;
+color:green;
+background-color:white;
+margin-left: 2.5em;
+margin-bottom: 2.5em;
+display:block;
+font-size:8pt;
+border-bottom: 1px dotted gray;
+}
+.meme-footer-class a {
+text-decoration:underline;
+font-size:8pt;
+}
+.meme-footer-class a:visited {
+text-decoration:underline;
+font-size:8pt;
+}
+
+.meme-footer img { border:none; }
+.more-link  {
+font-size:9pt;
+}
+.more-link a {
+color:gray;
+background-color:white;
+font-size:9pt;
+}
+.more-link a:hover {
+color:gray;
+background-color:#fff;
+text-decoration:underline;
+font-size:9pt;
+}
+.more-link a:visited {
+color:gray;
+background-color:#fff;
+text-decoration:underline;
+font-size:9pt;
+}
+
+.basictab {
+padding: 3px 0;
+margin-left: 3px;
+font-family: verdana, arial, sans-serif;
+font-weight: bold;
+font-size: 14px;
+border-bottom: 1px solid gray;
+list-style-type: none;
+text-align: center;; /*set to left, center, or right to align the menu as desired*/
+}
+.basictab li{
+display: inline;
+margin: 0;
+}
+
+.basictab li a{
+text-decoration: none;
+padding: 3px 7px;
+margin-right: 3px;
+margin-left: 10px;
+border-top: 1px solid gray;
+border-left: 1px solid gray;
+border-right: 1px solid gray;
+border-bottom: none;
+background-color: #8FA3BA;
+color: white;
+}
+
+.basictab li a:visited{
+color: white;
+background-color: #8FA3BA;
+}
+
+.basictab li a:hover{
+background-color: #284EBA;
+color: white;
+}
+
+.basictab li a:active{
+color: white;
+background-color: #fff;
+}
+
+.basictab li.selected a{ /*selected tab effect*/
+position: relative;
+top: 1px;
+padding-top: 4px;
+background-color: #fff;
+color: black;
+}
+
+
+.comment-class {
+font-size:10pt;
+border:1px dotted green;
+}
+
+.comment p {
+boder: none;
+}
+.comment-class a {
+font-size:10pt;
+}
+
+.comment-class a:visited {
+font-size:10pt;
+}
+
+.meme-detail-class {
+font-size:10pt;
+}
+.meme-detail-class h2 {
+font-size:10pt;
+color:gray;
+background-color:#fff;
+}
+.meme-detail-class a {
+font-size:10pt;
+}
+.meme-detail-class a:hover {
+font-size:10pt;
+}
+
+.meme-detail-class a:visited {
+font-size:10pt;
+}
+
+
+#message {
+display:block;
+margin-left: 2em;
+margin-top: 2px;
+border: 1px dotted green;
+padding:1em;
+}
+
+#message h1 {
+font-size: 14pt;
+}
+
+#message a {
+text-decoration:underline;
+}

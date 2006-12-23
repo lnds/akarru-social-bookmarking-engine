@@ -1,0 +1,147 @@
+#login_form {
+display:block;
+margin-left: 2em;
+margin-top: 2px;
+font-family: verdana,arial,helvetica,sans-serif;
+font-weight: normal;
+font-size: 10pt;
+}
+#login_form h2 {
+font-weight: normal;
+font-size: 14pt;
+margin-bottom: 2px;		
+}
+#login_form p {
+font-size: 9pt;
+margin-bottom:2px;
+}
+#post_form {
+display:block;
+margin-left: 2em;
+margin-top: 2px;
+font-family: verdana,arial,helvetica,sans-serif;
+font-weight: normal;
+font-size: 10pt;
+}
+#post_form p {
+font-size: 12pt;
+color:green;
+}
+login_form h2 {
+font-weight: normal;
+font-size: 14pt;
+margin-bottom: 2px;		
+}
+.post-text-class {
+font-size:12pt;
+width:40em;
+height:10em;
+margin-left:0.1em;
+}
+.post-input-class {
+border:1px solid green;
+font-size:16pt;
+width:30em;
+background: url("img/gradient.png");
+}
+#recover_form {
+position:relative;
+top:1px;
+float:right;
+margin:1em;
+padding:1em;
+border: 1px solid gray;
+}
+#recover_form h2 {
+position:relative;
+font-size:10pt;
+font-weight:bold;
+margin-bottom:8px;
+top:-2.5em;
+left:1em;
+margin-left:1em;
+margin-right:1em;
+}
+#recover_form h3 {
+margin-top:2px;
+}
+#recover_form input {
+font-size: 12pt;
+padding-left:1em;
+margin-bottom:0.5em;
+}
+#error_messages
+{
+border: 1px dotted red;
+font-weight: bold;
+font-size: 14pt;
+}
+.groupbox-class 
+{
+border:1px solid gray;
+font-size:16pt;
+margin-top: 4px;
+padding-left:1em;
+padding-top:4px;
+}
+.groupbox-class h2
+{
+position:relative;
+top:-1em;
+left:1em;
+margin-left:1em;
+margin-right:1em;
+margin-bottom:4px;
+background-color:#fff;
+color:green;
+display:inline;
+}
+.groupbox-class input
+{
+display: block;
+}
+.groupbox-class h3
+{
+color:#555555;
+font-weight:bold;
+font-size:12pt;
+margin-top: 8px;
+margin-bottom:4px;
+}
+.groupbox-class b 
+{
+color:#555555;
+font-weight:bold;
+font-size:12pt;
+margin-bottom:2px;
+}
+.groupbox-input-class {
+border:1px solid green;
+font-size:16pt;
+width:12em;
+background: url("img/gradient.png");
+}
+.groupbox-button
+{
+font-size:16pt;
+margin-left:2em;
+}
+.form-foot 
+{
+margin:0px;
+padding-top:0.5em;
+padding-bottom:0.5em;
+margin-left:-1em;
+background-color: gray;
+height:2em;
+}
+.select-class
+{
+width:40em;
+font-size:12pt;
+}
+.input-text-class
+{
+width:40em;
+font-size:12pt;
+}
