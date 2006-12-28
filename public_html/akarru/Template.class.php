@@ -9,9 +9,13 @@ class Template extends Smarty
 	var $form_errors;
 	var $cats;
 	var $user;
+	var $rss;
+	var $caption;
 
-	function __construct($template)
+	function __construct($template, $caption=SITE_CAPTION, $rss=RSS_FEED)
 	{
+		$this->rss = $rss;
+		$this->caption = $caption;
 		$this->css_files = array();
 		$this->form_errors = array();
 		application_start();
@@ -42,6 +46,10 @@ class Template extends Smarty
 		$this->cats = $cats;
 	}
 
+	public function set_rss($rss)
+	{
+		$this->rss = $rss;
+	}
 
 	public function hide_tabstrip()
 	{
@@ -67,6 +75,8 @@ class Template extends Smarty
 	public function display($content='')
 	{
 		$this->assign('css_files', $this->css_files);
+		$this->assign('rss', $this->rss);
+		$this->assign('caption', $this->caption);
 		if (count($this->form_errors) > 0)
 		{
 			$this->assign('form_errors', $this->form_errors);
