@@ -194,4 +194,20 @@ function media_filter($url, $width, $height)
 	}
 	return '';
 }
+
+function is_valid_email($addr)
+{
+	if(substr_count($addr,"@")!=1)
+		return false;
+	list($local, $domain) = explode("@", $addr);
+	
+	$pattern_local = '^([0-9a-z]*([-|_]?[0-9a-z]+)*)(([-|_]?)\.([-|_]?)[0-9a-z]*([-|_]?[0-9a-z]+)+)*([-|_]?)$';
+	$pattern_domain = '^([0-9a-z]+([-]?[0-9a-z]+)*)(([-]?)\.([-]?)[0-9a-z]*([-]?[0-9a-z]+)+)*\.[a-z]{2,4}$';
+
+	$match_local = eregi($pattern_local, $local);
+	$match_domain = eregi($pattern_domain, $domain);
+	
+	return ($match_local && $match_domain && gethostbyname($domain));
+}
+
 ?>
