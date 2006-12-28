@@ -38,6 +38,8 @@ class Database extends mysqli {
 
 	public function sanitize($str)
 	{
+		$str = htmlentities($str, ENT_QUOTES);
+		$str = strip_tags($str, '<a><b><em><br><p><h1><h2><h3><h4><ul><li>');
 		return $this->real_escape_string($str);
 	}
 
