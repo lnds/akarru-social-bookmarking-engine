@@ -1,82 +1,45 @@
 <?php
-  include_once('akarru.lib/common.php');
-  include_once('common_elements.php');
-  if (!empty($_POST))  {
+require('akarru/common.php');
+$template = new Template('master');
+$template->hide_tabstrip();
+$template->no_preview();
+$template->add_css('blogmemes_forms.css');
+if (is_post_back()) 
+{
+	$req = request_uri();
+	if ($req == '/do_register') {
+		$email = request_value('email', '');
+		if (empty($email) || !is_valid_email($email)) 
+			$template->add_error('debe ingresar una direcci&oacute;n correcta de email');
+		else if (User::check_email_exists($email)) 
+			$template->add_error('Este email ya tiene una cuenta registrada intente con otro email, o recuperando la clave');
 
-	  $user = $_POST['user'];
-	  $pass = $_POST['pass'];
-	  $email = $_POST['email'];
-	  $confirm_pass = $_POST['confirm_pass'];
-	  $bm_errors = 0;
-	  if (empty($user) || ! preg_match('/^[a-z0-9_]+$/i', $user)) {
-		  $smarty->assign('error_user', true);
-          $smarty->assign('user', $user);
-		  $bm_errors++;
-	  }
-	  else{
-		  $smarty->assign('user', $user);
-	  }
-	  if (empty($pass)) {
-		  $smarty->assign('error_pass', true);
-		  $bm_errors++;
-	  }
-	  if (empty($confirm_pass)) {
-		  $smarty->assign('error_confirm_pass', true);
-		  $bm_errors++;
-	  }
-	  if (empty($email)) {
-		  $smarty->assign('error_email', true);
-          $smarty->assign('email', $email);
-		  $bm_errors++;
-	  }
-	  else
-		  $smarty->assign('email', $email);
-	  if ($bm_errors == 0) {
-		  if ($pass != $confirm_pass) {
-			  $smarty->assign('error_bad_pass', true);
-			  $bm_errors++;
-		  }
-		  if ($bm_users->check_email_exists($email)) {
-			  $smarty->assign('error_email_exists', true);
-			  $bm_errors++;
-		  }
-		  if ($bm_users->check_user_exists($user)) {
-			  $smarty->assign('error_user_exists', true);
-			  $bm_errors++;
-		  }
-	  }
-	  if ($bm_errors == 0) {
-		  if (!$bm_users->register_user($user, $email, $pass)) {
-			  $smarty->assign('error_cant_register', true);
-			  $bm_errors++;
-		  }
-		  else if (!$bm_users->sendValidationLink($user, $email))
-          {
-              $smarty->assign('error_cant_send_validation_link', true);
-			  $bm_errors++;
-          }
-	  }
-
-	  if ($bm_errors == 0) 
-	  {
-		  $url = "/validate_user.php";
-  		  header("Location: $url");
-		  exit();
-		  return;
-	  }
-	  else
-	  {
-		  $smarty->assign('from', isset($_GET['from']) ? $_GET['from'] : "");
-    		  $smarty->assign('content_title', $content_title_register);
-		  $smarty->assign('content', 'register');
-	  }
-  }
-  else
-  {
-	  $smarty->assign('from', isset($_GET['from']) ? $_GET['from'] : "");
-	  $smarty->assign('content_title', $content_title_register);
-	  $smarty->assign('content', 'register');
-  }
-  $smarty->display('master_page.tpl');
+		$username = request_value('username','');
+		if (empty($username)) 
+			$template->add_error('debe ingresar un nombre de usuario');
+		else if (User::check_user_exists($username)) {
+			$template->add_error('El usuario: '.$username.' ya ha sido registrado, intente con otro nombre');
+		$pass = request_value('pass', '');
+		$pass2 = request_value('pass2', '');
+		if (empty($pass)) 
+			$template->add_error('Debe ingresar la clave');
+		else if ($pass != $pass2) 
+			$template->add_error('Las claves deben coincidir');
+		if ($template->has_errors() == 0) 
+		{
+			if (User::create_user($username, $email, $pass))
+			{
+				$template->message('Bienvenido a Blogmemes, su usuario ha sido dado de alta en el sistema');
+				$template->set_destination('/', 'continuar');
+				$template->display('result');
+				return;
+			}
+			else
+				$template->add_error('No fue posible crear el usuario');
+		}
+	}
+}
+$template->assign('cats', false);
+$template->display('registerform');
 ?>
 
