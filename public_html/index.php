@@ -8,7 +8,7 @@
  * @author Eduardo Diaz <ediaz@lnds.net>
  */
 
-include_once('akarru/common.php');
+require('akarru/common.php');
 $page = request_value('page', 1);
 $memes = new MemeList($page);
 $template = new GridTemplate('master');

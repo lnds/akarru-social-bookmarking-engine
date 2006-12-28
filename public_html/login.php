@@ -6,7 +6,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License 
  * @author Eduardo Diaz <ediaz@lnds.net>
  */
-require_once('akarru/common.php');
+require('akarru/common.php');
 $template = new Template('master');
 $template->hide_tabstrip();
 $template->no_preview();
