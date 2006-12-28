@@ -10,6 +10,8 @@ RewriteRule ^user/(.*) /profile.php?user_name=$1 [QSA]
 RewriteRule ^votes/(.*) /profile.php?user_name=$1&view=v [QSA]
 RewriteRule ^comments/(.*) /profile.php?user_name=$1&view=c
 RewriteRule ^login$ /login.php
+RewriteRule ^register$ /register.php
+RewriteRule ^do_register$ /register.php
 RewriteRule ^do_login$ /login.php
 RewriteRule ^do_recover$ /login.php
 RewriteRule ^post$	/post.php
