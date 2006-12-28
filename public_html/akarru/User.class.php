@@ -83,6 +83,36 @@ class User {
 	   return $user;
 	}
 
+	public static function check_email_exists($email)
+	{
+		$db = Database::singleton();
+		return $db->fetch_scalar("select count(*) from users where email = '$email'");
+	}
+
+	public static function check_user_exists($username)
+	{
+		$db = Database::singleton();
+		return $db->fetch_scalar("select count(*) from users where username = '$username'");
+	}
+
+
+	public static function create_user($username, $email, $password, $key=AES_KEY)
+	{
+		$db = Database::singleton();
+		$username = $db->sanitize($username);
+		$email = $db->sanitize($email);
+		$password = $db->sanitize($password);
+		if (User::check_user_exists($username)) 
+			return false;
+		
+		if (User::check_email_exists($email)) 
+			return false;
+		
+
+		$now = time();
+		$db->execute("insert into users(username,email,strong_pass,join_date,gravatar) values('$username','$email', aes_encrypt(md5('$password'), md5($now || '$key')), $now, md5('$email'))");
+		return User::login($username, $password, false);
+	}
 
 	public static function gen_password($email, $subject, $body, $login_url)
 	{
